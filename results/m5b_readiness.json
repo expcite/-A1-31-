@@ -1,0 +1,112 @@
+{
+  "milestone": "M5B",
+  "assessment": "M5B_SMOKE_TOOLS_AND_SMALL_SCALE_VERIFIED_PENDING",
+  "run_id": "m5b-20260930T032912Z",
+  "parent_run_id": "m5a_r2_final-20260930T004433Z",
+  "source_manifest_sha256": "2a1848b04d74e2367c6d58dc80f90f4018729f55a3173c42f8fc48ed6f4e8492",
+  "source_files": 156,
+  "cli_patch": {
+    "applied": true,
+    "files": [
+      "cmd/bench/main.go",
+      "cmd/bench/validation_result.go",
+      "cmd/bench/validation_result_test.go"
+    ],
+    "regressions": "5/5 pass + 4 existing pass"
+  },
+  "modules": {
+    "cpu_peak_memory": {
+      "platform": "windows (GetProcessTimes + GetProcessMemoryInfo)",
+      "roles": "gateway and device in separate processes",
+      "metrics": [
+        "process_cpu_user_ns",
+        "process_cpu_kernel_ns",
+        "process_cpu_total_ns (process_lifetime)",
+        "window_cpu_user_ns/kernel_ns (window_delta, device role only)",
+        "peak_working_set_bytes",
+        "working_set_bytes",
+        "private_usage_bytes",
+        "go_heap_alloc_bytes/go_sys_bytes (separate metric)"
+      ],
+      "results": {
+        "T": "results/m5b/m5b-resource-traditional-*",
+        "H": "results/m5b/m5b-resource-hybrid-*",
+        "status": "PASS",
+        "note": " gw_peak ~14.5-15.3MB, dev_peak ~19.1-19.6MB"
+      }
+    },
+    "throughput": {
+      "design": "3 rounds x 200 transactions per mode, real Telemetry->Control->HandleControl->ACK, fresh session per round",
+      "numerator": "gateway telemetry-accepted events x per-message plaintext bytes",
+      "denominator": "device monotonic window (first send -> last ACK sent), confirmation observation cost included",
+      "results": {
+        "T": "600/600 completed, avg ~213-234 KB/s, ~3.7-4.1k tps",
+        "H": "600/600 completed, avg ~216-233 KB/s, ~3.8-4.1k tps"
+      },
+      "gateway_window": "null + reason (cross-process UTC subtraction forbidden)"
+    },
+    "public_hybrid_P": {
+      "implemented": "internal/pbench + cmd/pbench",
+      "negotiated": {
+        "version": "TLS1.3",
+        "cipher": "TLS_AES_128_GCM_SHA256",
+        "curve": "X25519MLKEM768",
+        "did_resume": false,
+        "peer_cn": "gateway.edgehybrid.test"
+      },
+      "handshake_smoke": "10/10 PASS",
+      "throughput": "3x200, 600/600, avg ~691 KB/s, ~12.1k tps",
+      "rejections": [
+        "wrong_server_identity",
+        "missing_client_certificate",
+        "wrong_negotiated_group"
+      ],
+      "p_cpu_rss": "null + reason (server/client same process in M5B)"
+    },
+    "contract": "new result types use explicit schemas (m5b-resource/1, m5b-throughput/1, m5b-public-hybrid/1) with dedicated validators; T/H acceptance NOT relaxed; summaries recomputed from raw"
+  },
+  "regression": {
+    "full_go": {
+      "top_level_pass": 308,
+      "subtests_pass": 218,
+      "fail": 0,
+      "real_exit_code": 0
+    },
+    "self_tests": {
+      "summarizer": "17/17",
+      "m4case_extractor": "45/45",
+      "fleet_verifier": "23/23",
+      "bench_validator": "9/9"
+    },
+    "e2e": "suite1 PASS, suite2 PASS",
+    "fleet": {
+      "20x3": "PASS 60/60/180/180",
+      "19plus1": "PASS 57 sessions"
+    }
+  },
+  "verification_gaps": [
+    "race ENVIRONMENT_BLOCKED",
+    "SM2 key-agreement independent cross-check unavailable",
+    "Linux resource path NOT_TESTED",
+    "empty-worker baseline and P per-role process attribution not implemented"
+  ],
+  "not_claimed": [
+    "a full verification pass",
+    "race-detector clean",
+    "formal performance data",
+    "a post-quantum secure system",
+    "a security audit"
+  ],
+  "formal_results_eligible": false,
+  "formal_1000_locked": true,
+  "modularization": {
+    "bench_go_1688": "split into types/run/trial/events/stats/persist/judge",
+    "m5b_go_1101": "split into m5b_common/m5b_resource/m5b_throughput",
+    "service_go_1083": "split into events/gateway/gateway_business/device",
+    "judge_results_434": "kept as single rule set (schema.go tables + judge.go flow), not duplicated",
+    "mapping": "docs/ARCHITECTURE.md",
+    "post_split_regression": "308 top-level / 218 subtests / 0 fail, exit 0; smokes + E2E + fleet PASS",
+    "source_manifest": "506abe671b26580f0e0fce26346a0dc2e32ec58d3b01824e7a09c12598992218",
+    "source_files": 171
+  }
+}

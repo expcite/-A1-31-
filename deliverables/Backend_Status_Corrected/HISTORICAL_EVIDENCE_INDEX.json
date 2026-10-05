@@ -1,0 +1,28 @@
+{
+  "current_version": "interactive-v1.2-backend2-status1",
+  "current_source_manifest_sha256": "d4622b841e570e511f06c61f40174111544c5e3b73e2aa08a87734b4ce50abcc",
+  "current_raw": "source/edgehybrid-agent-starter/results/raw/backend_status_20261002",
+  "historical_backend2": {
+    "version": "interactive-v1.2-backend2-reviewed",
+    "source_manifest_sha256": "21a723b1443f33e9e9fcbfa766060f0100df780b5a8c069f21cac172a8396d1b",
+    "review_zip": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_Backend_Reviewed_Fixed_Review_Package.zip",
+    "review_zip_sha256": "d0757cae1f1a9f74ca92c455b24d62ccf648046e055ac6edc40edce191fbf69d",
+    "race": "results/raw/backend_friend_20261002/final_regression/commands/go_race",
+    "BC_SM2_core14_and_OpenSSL": "results/raw/backend_friend_20261002/W1",
+    "copied_paths_are_original_sources": true
+  },
+  "historical_backend1": {
+    "source_manifest_sha256": "52de021cd4f322432448e6e65b45d2b28e56cc6b54f54bb2d8c7b62c965b0d3b",
+    "review_zip_sha256": "e213c49ca69cbe515cdf15ab92f8e9b15ecece4860516940465c52ba650cfe37",
+    "review_zip": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_Backend_Completed_Review_Package.zip",
+    "formal16": "results/raw/backend_20261002/formal/results_index.json",
+    "failed300": "results/raw/backend_20261002/live_1800",
+    "passed1800": "results/raw/backend_20261002/live_1800_v2",
+    "corrected_reproduction_script": "scripts/backend_live_acceptance.py",
+    "old_data_not_relabelled": true
+  },
+  "historical_M5_M6": "results/milestone_M5.md, results/m5_formal_readiness.json, results/milestone_M6.md and frozen docs/FINAL_DESIGN_REPORT.md etc retain their original version/run. See old source reports/ZIP. No formal data resampling in this revision.",
+  "frontend": "V12 bytes unchanged; no new screenshot/recording or F07 completion claimed",
+  "standard_SM2_S1_S2": "NOT_EXECUTED",
+  "new_full_race": "NOT_EXECUTED; executed historical source21a record is preserved"
+}

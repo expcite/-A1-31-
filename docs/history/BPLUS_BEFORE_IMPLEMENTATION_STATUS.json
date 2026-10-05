@@ -1,0 +1,17 @@
+{
+  "version": "interactive-v1.2-backend2-status1-releasefix",
+  "scope": "F07 and four evidence/document release fixes only; no new milestone",
+  "frontend": "logs.js refresh logic authorized; all other assets frozen",
+  "previous_backend1_checks": {
+    "Windows_full_race": "EXECUTED",
+    "SM2_independent_core_exchange_cases": 14,
+    "OpenSSL_signature_interoperation": "EXECUTED",
+    "scope": "finite paths, not exhaustive certification"
+  },
+  "current_evidence": "results/raw/release_five_20261003",
+  "current_closure": "Review package documents/ISSUE_CLOSURE.md",
+  "historical_results": "unchanged M5/M6/backend1 run/source hashes; new small regression only; no new formal 1000 or 1800s",
+  "current_validation": "read actual new command logs, browser exports, 32 offline batch acceptance and external ZIP receipts; do not infer PASS",
+  "historical_validation_source": "21a723b1443f33e9e9fcbfa766060f0100df780b5a8c069f21cac172a8396d1b / backend_friend_20261002",
+  "status_command": "capabilities + build provenance + explicitly historical verification references; does not execute tests/read receipts"
+}

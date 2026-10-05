@@ -1,0 +1,115 @@
+{
+  "milestone": "M5A",
+  "assessed_at_utc": "2026-09-28",
+  "assessment": "M5A_HARNESS_SMOKE_VERIFIED_PENDING",
+  "parent_run_id": "m4_2_r1-20260927T131136Z",
+  "run_id": "m5a-20260928T085056Z",
+  "audit_package": "EdgeHybrid_R1_Review_Next",
+  "scope": "F1-F4 preflight fixes + measurement harness development + T/H 10-trial smoke. No formal 1000-trial sampling, no final performance conclusions, no new lifecycle features.",
+  "preflight_fixes": {
+    "F1_policy_gate": {
+      "problem": "PeerSnapshot.Matches accepted a revision argument but never used it, and admitSession checked only lifecycle/key ids/generation, so a Suite 1 session was admitted after the trusted minimum mode was raised to hybrid without changing keys",
+      "fix": "policy.ModeOf/Satisfies added and enforced in admitSession against the freshly read per-device MinimumMode; PeerSnapshot.Matches now compares the per-entry revision (not the whole-registry revision, so unrelated device updates do not reject unrelated sessions)",
+      "tests": "review regression TestReviewAdmissionAfterMinimumModeUpgrade upgrade=true (refused) and upgrade=false (positive control); the original N->N+1 and N+1-success tests are retained"
+    },
+    "F2_truncated_and_pending": {
+      "problem": "the gateway terminal switch folded err==nil, ErrPeerClosed and ErrTruncated into peer-closed with Incomplete=false, so a truncated stream and a close with an unacknowledged control were recorded as complete",
+      "fix": "ErrTruncated -> terminated with ErrorStage=record and Incomplete=true (real error detail, no 'between frames'); a close is clean only when SentControls <= ConfirmedControls, otherwise Incomplete=true with the pending count in the detail; the clean-close positive control stays non-incomplete; the underlying wire.ErrTruncated classification was not weakened",
+      "tests": "TestReviewGatewayTerminalDoesNotHideIncompleteExchange clean_idle_close / pending_control_no_ack (SentControls=1, ConfirmedControls=0, Incomplete=true) / partial_record"
+    },
+    "F3_required_tri_state": {
+      "problem": "parse_m4_case validated tri-state values only when the key was present, so deleting business_accepted / plaintext_delivered / either channel_created still produced PASS",
+      "fix": "one strict parser (parse_kv_case) shared by M4CASE and M2NEG: required string keys must be present and non-empty, required tri-state keys must be PRESENT (explicit null allowed, absence is not null), duplicate keys are rejected instead of silently overwritten, unknown keys preserved; unparseable marker lines are recorded as problems and make the run incomplete (non-zero exit)",
+      "real_data_effect": "the guard immediately caught 5 emitters in internal/handshake that emitted empty or missing target/mutation; all were completed, and the full stream returned from INCOMPLETE to PASS",
+      "self_test": "scripts/m4case_extractor_selftest.py, 45 checks including per-field deletion, reordering, extra fields, duplicate keys and M2NEG positives/negatives"
+    },
+    "F4_fleet_correlation": {
+      "problem": "the fleet verifier accepted a foreign operation_id that merely contained the device id, a confirmed sample_id that matched no telemetry, all business of one device collapsed into its first session, and a mismatched summary run_id; controls_sent was reported as the confirmed count even though no control-sent events existed",
+      "fix": "production emits a control-sent event right after ch.Send succeeds; the verifier correlates by (run_id, device_id, session_id, sample_id, operation_id), checks per-session volume, the exact per-session sample set, same-session telemetry-to-control pairing, emitter-format ownership of operation_id (not substring), sent/confirmed counted from their own events with controls_sent=null when no send evidence exists, and exactly one result row per expected device with boolean ok",
+      "self_test": "scripts/fleet_verifier_selftest.py, 19 checks (untampered PASS plus variants A-D, deleted send events, duplicated sample, missing good-device row)",
+      "real_data": "the untouched 20x3 evidence still verifies PASS with 60 unique session ids"
+    }
+  },
+  "harness": {
+    "entry": "cmd/bench -mode <traditional|hybrid> -run-kind smoke -trials N -out DIR",
+    "real_components": "handshake.Client / Gateway / record / cryptosuite; no simplified handshake, no mock Channel",
+    "isolation": "every trial uses a fresh TCP connection and fresh ephemeral material; no downgrade, no session reuse",
+    "status_file": "RUNNING written first; PASS/FAIL/INCOMPLETE only from the real outcome, so a stale PASS cannot survive",
+    "formal_mode": "run-kind formal is explicitly refused with exit code 2; the fixed 1000-trial protocol is designed in docs/BENCHMARK_PLAN.md and stays locked",
+    "metrics": {
+      "tcp_connect_ns": "measured around net.Dial",
+      "handshake_total_ns": "device side, from immediately before ephemeral key generation to the return of handshake.Client (H4/Finished verified)",
+      "probe_ns": "full telemetry->control->ACK round trip",
+      "wire_bytes": "counting Conn wrapper on the client connection, C->S and S->C separately, includes the 4-byte framing prefix, excludes IP/TCP kernel headers",
+      "cpu_per_trial": "null + reason: per-trial isolation needs a subprocess harness; a process counter would attribute unrelated goroutine work to one handshake",
+      "peak_rss_per_trial": "null + reason: not exposed by the Go standard library on this platform; a process peak must not be divided across trials",
+      "go_heap_alloc_bytes": "measured and clearly labelled as a DIFFERENT metric from RSS"
+    }
+  },
+  "smoke": {
+    "run_kind": "smoke",
+    "formal_results_eligible": false,
+    "traditional": {
+      "trials": 10,
+      "successes": 10,
+      "failures": 0,
+      "status": "PASS",
+      "handshake_median_ns": 1702400,
+      "handshake_p95_ns": 2175400,
+      "handshake_c2s_bytes": 3080,
+      "handshake_s2c_bytes": 2720
+    },
+    "hybrid": {
+      "trials": 10,
+      "successes": 10,
+      "failures": 0,
+      "status": "PASS",
+      "handshake_median_ns": 1599700,
+      "handshake_p95_ns": 3076000,
+      "handshake_c2s_bytes": 14920,
+      "handshake_s2c_bytes": 13600
+    },
+    "note": "single host, single process, small scale; these numbers are not formal performance results and must not be quoted as competition data"
+  },
+  "self_tests": {
+    "summarizer": "17/17",
+    "m4case_extractor": "45/45",
+    "fleet_verifier": "19/19",
+    "bench_result": "12/12"
+  },
+  "verification_gaps": [
+    "the race detector still cannot run on this machine; functional concurrency tests are NOT race-detector results",
+    "SM2 key agreement still has no independent implementation cross-check",
+    "P (public hybrid comparison) remains NOT IMPLEMENTED; a compatibility probe and the design only"
+  ],
+  "not_claimed": [
+    "a full verification pass",
+    "race-detector clean",
+    "formal performance data or rankings",
+    "a post-quantum secure system (SM2 identity authentication is not post-quantum)",
+    "a security audit or compliance certification"
+  ],
+  "evidence": {
+    "full_stream": "results/raw/m5a_tests.jsonl",
+    "full_exit_code": "results/raw/m5a_go_test_exit_code",
+    "summary": "results/raw/m5a_summary.txt",
+    "preflight_cases": "results/raw/m5a_negative_cases.jsonl",
+    "m4_cases": "results/raw/m5a_cases.jsonl",
+    "selftests": "results/raw/m5a_selftests.txt",
+    "e2e": [
+      "results/raw/m5a_e2e_suite1.txt",
+      "results/raw/m5a_e2e_suite2.txt"
+    ],
+    "fleet": [
+      "results/raw/m5a_fleet_20x3.txt",
+      "results/raw/m5a_fleet_bad.txt",
+      "results/raw/m5a_fleet_summary.json"
+    ],
+    "bench": "results/bench/m5a-traditional-20260928T094257Z, results/bench/m5a-hybrid-20260928T094258Z",
+    "verification_log": "results/raw/m5a_verification.txt",
+    "source_manifest": "results/raw/m5a_source_manifest.sha256"
+  },
+  "formal_results_eligible": false,
+  "may_proceed_to_M5B": true,
+  "may_proceed_note": "F1-F4 evidence closed, the harness runs real T/H measurements, smoke is credible, and the formal 1000-trial protocol is defined. M5B sampling stays locked until it is explicitly authorised."
+}

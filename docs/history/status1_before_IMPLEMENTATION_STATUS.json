@@ -1,0 +1,15 @@
+{
+  "version": "interactive-v1.2-backend2-reviewed",
+  "scope": "engineering prototype; targeted backend friend findings repair; NOT security certification",
+  "frontend": "V12 frozen; F07 PENDING_FRONTEND_AUTHORIZATION",
+  "previous_backend1_checks": {
+    "Windows_full_race": "EXECUTED",
+    "SM2_independent_core_exchange_cases": 14,
+    "OpenSSL_signature_interoperation": "EXECUTED",
+    "scope": "finite paths, not exhaustive certification"
+  },
+  "current_evidence": "results/raw/backend_friend_20261002",
+  "current_closure": "deliverables/Backend_Reviewed_Fixed/ISSUE_CLOSURE.md",
+  "historical_results": "unchanged M5/M6/backend1 run/source hashes; new small regression only; no new formal 1000 or 1800s",
+  "current_validation": "read actual command_index/final regression/build/independent extraction receipts; do not infer from package filename"
+}

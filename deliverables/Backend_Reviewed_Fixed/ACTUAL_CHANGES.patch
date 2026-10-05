@@ -1,0 +1,1287 @@
+--- backend1/IMPLEMENTATION_STATUS.json
++++ reviewed-fixed/IMPLEMENTATION_STATUS.json
+@@ -1,163 +1,15 @@
+ {
+-  "version": "0.7.0-m5a-r2-fix",
+-  "scope": "engineering prototype; functional traditional and hybrid suites, plus device/key lifecycle, rekey, secure reconnect and a dynamic multi-device gateway; NOT audited and NOT post-quantum-secure",
+-  "milestone": "M5B",
+-  "readiness": "M5B_CORRECTED_PENDING_CURRENT_EVIDENCE",
+-  "readiness_reason": "G1/G2/G3 corrected source; status is determined only by results/m5b_corrected_readiness.json and current raw logs, not historical closure prose.",
+-  "m2_1_fixes": {
+-    "cancellation": {
+-      "problem": "Send/Receive checked ctx once before taking a sync.Mutex and never again; a blocked read, a blocked write and a queued sender were all uninterruptible",
+-      "fix": "cancellable semaphore replaces the mutex; in-flight I/O is interrupted by expiring the direction's deadline; a waiter cancelled before it starts does not send",
+-      "tests": "internal/handshake/cancel_test.go"
+-    },
+-    "handshake_budget": {
+-      "problem": "frameIO reset time.Now().Add(timeout) on every frame, so the caller's handshake deadline did not bound the network operations",
+-      "fix": "one absolute deadline for H1..H4: the earlier of the caller's deadline and the local budget; never renewed",
+-      "tests": "TestHandshakeBudgetIsNotRenewedPerMessage, TestHandshakeFailsWithinItsBudget"
+-    },
+-    "handshake_scope_leak": {
+-      "problem": "a handshake-scoped context could in principle outlive the handshake",
+-      "fix": "the handshake installs no connection watcher; per-operation watchers are stopped and invalidated by generation, so a late callback cannot expire a later operation's deadline",
+-      "tests": "TestHandshakeContextExpiryDoesNotKillEstablishedChannel, TestBusinessContextCancellationClosesSession"
+-    },
+-    "frame_eof": {
+-      "problem": "a fully read length prefix with the body missing returned io.EOF, so a peer that died mid-frame was reported as a clean close",
+-      "fix": "wire.ErrTruncated (wrapping io.ErrUnexpectedEOF); only 'no byte of the next frame' is a clean close",
+-      "tests": "internal/wire/review_truncation_test.go (the review's own regression)"
+-    },
+-    "summarizer": {
+-      "problem": "empty, garbage and truncated input all exited 0; a failure with no fail event could be reported as a pass",
+-      "fix": "non-empty, strict JSON, field types, lifecycle closure, expected package set and the real go exit code are all required; exit 2 = unusable evidence, exit 1 = failed run",
+-      "tests": "scripts/summarize_selftest.py (17 cases)"
+-    },
+-    "e2e_and_evidence": {
+-      "problem": "acceptance used grep/sed counts on one endpoint only; session_id was truncated to 8 bytes; a failed run could leave a stale PASS; per-endpoint channel state was collapsed into one false; DeliveredPlaintext was written as a constant true",
+-      "fix": "shared strict verifier for shell and PowerShell; full 32-hex session id plus a separate short display field; per-run directories with RUNNING/PASS/FAIL/INTERRUPTED; per-endpoint channel flags; counters from actual observation with null for unobserved",
+-      "tests": "scripts/verify_e2e_events.py, scripts/m2-e2e.sh, scripts/m2-e2e.ps1"
+-    },
+-    "line_endings": {
+-      "problem": "scripts/m2-e2e.sh shipped with CRLF; bash -n on Linux exited 2",
+-      "fix": "all text files normalised to LF; .gitattributes pins it; no global Git setting is changed",
+-      "tests": "bash -n scripts/m2-e2e.sh"
+-    },
+-    "run_correlation": {
+-      "problem": "events carried no run identifier, so a log could not be tied to one run except by file modification time",
+-      "fix": "gateway/device accept -run-id and stamp every event; the e2e harness generates one per run",
+-      "tests": "scripts/verify_e2e_events.py requires it"
+-    }
++  "version": "interactive-v1.2-backend2-reviewed",
++  "scope": "engineering prototype; targeted backend friend findings repair; NOT security certification",
++  "frontend": "V12 frozen; F07 PENDING_FRONTEND_AUTHORIZATION",
++  "previous_backend1_checks": {
++    "Windows_full_race": "EXECUTED",
++    "SM2_independent_core_exchange_cases": 14,
++    "OpenSSL_signature_interoperation": "EXECUTED",
++    "scope": "finite paths, not exhaustive certification"
+   },
+-  "preserved": [
+-    "real SM2 signatures and the full SM2 key exchange (SM2MQV + SM2SharedKey), not plain ECDH",
+-    "all identity, key-id, role, signature and Finished checks",
+-    "real SM4-GCM records (never an AES stand-in)",
+-    "sequence numbers never rolled back, sender never rebuilt with an old key",
+-    "no post-quantum claim: suite 2 mixes SM2 and ML-KEM-768 secrets, but SM2 identity authentication is not post-quantum",
+-    "the default minimum_mode remains hybrid; Suite 2 is implemented and no automatic hybrid-to-traditional fallback is allowed",
+-    "cmd/bench implements smoke measurements only; the formal 1000-trial mode remains locked until M5B/M5 formal validation"
+-  ],
+-  "verification_gaps": [
+-    "race detector NOT executed: -race cannot run on this machine (the MinGW import library requests __iob_func, which the system msvcrt.dll does not export). An environment block is NOT evidence that the project has no races.",
+-    "SM2 key agreement has no independent implementation cross-check (OpenSSL exposes no SM2MQV on the command line)",
+-    "no formal analysis, no external audit, no compliance certification"
+-  ],
+-  "recorded_limitations": [
+-    "reuse of an ML-KEM encapsulation key across sessions is not detectable by the responder; only degenerate cases such as all-zero are caught",
+-    "the control message only updates a parameter value; no timer drives periodic sampling at that interval",
+-    "a repeated operation_id with different parameters returns Duplicate=true and does not change the applied value (pinned contract)",
+-    "exactly-once delivery across process restarts is NOT IMPLEMENTED and no database was introduced",
+-    "suite 2 does not make the system post-quantum: SM2 identity authentication is not post-quantum",
+-    "key destruction is best effort, not secure erasure"
+-  ],
+-  "not_claimed": [
+-    "a standard protocol",
+-    "a security proof",
+-    "a security audit or compliance certification",
+-    "a post-quantum or hybrid secure channel",
+-    "that a passing Finished check means the peer's public key was honestly generated",
+-    "that the absence of a race-detector run means there are no data races"
+-  ],
+-  "suites": {
+-    "suite_1_traditional": {
+-      "status": "implemented_tested",
+-      "gate": "open"
+-    },
+-    "suite_2_hybrid": {
+-      "status": "implemented_tested",
+-      "gate": "opened_in_M3_after_all_conditions_passed",
+-      "mlkem768": "Go standard library crypto/mlkem (FIPS 203)",
+-      "ikm": "E(\"edgehybrid/v1/ikm\", u16(2), \"sm2\", Zsm2, \"mlkem768\", Zpq) — real, dual dependency"
+-    },
+-    "suite_2_open_conditions": [
+-      "real ML-KEM-768 reaches the handshake",
+-      "Suite 2 E2E succeeds",
+-      "dual-secret dependency tests succeed",
+-      "implicit rejection is caught by Finished",
+-      "wire-level downgrade tests succeed",
+-      "no automatic fallback tests succeed",
+-      "Suite 1 regression succeeds"
+-    ]
+-  },
+-  "m3_fixes": {
+-    "hybrid_handshake": "H1 carries a per-handshake ML-KEM-768 ekA; H2 carries a real kem_ct that SigB authenticates; the device really decapsulates; the IKM depends on both secrets",
+-    "negotiation_rules": "advertising suite 2 and selecting suite 2 are separate; ekA follows the offer, kem_ct follows the selection; an H1 that advertised hybrid but ends on suite 1 still keeps its offer and ekA in the transcript",
+-    "downgrade_resistance": "client recomputes the expected suite; the capability list and kem_ct are inside the transcript; 9 wire-level scenarios rejected, 3 of them at the signature stage",
+-    "implicit_rejection": "same-length tampered ciphertext produces a different Zpq with no error; caught at finished_confirmation with identical transcripts",
+-    "no_auto_fallback": "a failed hybrid handshake ends the connection; exactly one ClientHello is sent",
+-    "traditional_contract": "ikm for suite 1 now REJECTS a PQ secret instead of ignoring it"
+-  },
+-  "m4": {
+-    "dynamic_device_set": {
+-      "generic_over_k": true,
+-      "hardcoded_ids": false,
+-      "state": "map[device_id]*SessionState, per-device keys, SID, record state, revocation and lifecycle"
+-    },
+-    "lifecycle": {
+-      "states": [
+-        "ACTIVE",
+-        "ROTATING",
+-        "REVOKED",
+-        "RETIRED"
+-      ],
+-      "rotation_policy": "atomic replacement (no dual-key window), requires new key ids AND new public keys",
+-      "retirement": "by key_id through Peer.UsableForNewSessions",
+-      "revocation_observed_by": "reload before every handshake + periodic sweep (250ms)"
+-    },
+-    "rekey": {
+-      "style": "full new handshake, not in-band",
+-      "triggers": [
+-        "MaxRecords",
+-        "MaxAge"
+-      ],
+-      "freshness": "new SID, new record keys, new nonce prefixes, seq restarts at 0"
+-    },
+-    "resource_bounds": [
+-      "MaxHandshakes",
+-      "MaxSessions",
+-      "MaxPerIdentity",
+-      "handshake timeout",
+-      "max frame",
+-      "per-session deadline"
+-    ],
+-    "exactly_once": {
+-      "in_session_idempotent": true,
+-      "cross_restart": "NOT IMPLEMENTED"
+-    },
+-    "production_test_hooks": "none - fault injection only via Config.KEM in _test.go files"
+-  },
+-  "m5a_r2_patch": {
+-    "smoke_bench": "implemented, formal_results_eligible=false",
+-    "formal_1000_trials": "locked / not executed",
+-    "validator_fixes": [
+-      "strict one-object JSON with duplicate/trailing-data rejection",
+-      "traditional=Suite1 / hybrid=Suite2 binding",
+-      "exact 32-hex SID validation",
+-      "required final artifact fields"
+-    ],
+-    "evidence_finalization_fixes": [
+-      "stop/wait event producers before event-file close",
+-      "propagate event/trial/manifest/summary write/sync/close failures",
+-      "validation.json write errors are fatal to validation"
+-    ]
+-  },
+-  "corrected_evidence": "results/raw/m5b_corrected_20260930"
++  "current_evidence": "results/raw/backend_friend_20261002",
++  "current_closure": "deliverables/Backend_Reviewed_Fixed/ISSUE_CLOSURE.md",
++  "historical_results": "unchanged M5/M6/backend1 run/source hashes; new small regression only; no new formal 1000 or 1800s",
++  "current_validation": "read actual command_index/final regression/build/independent extraction receipts; do not infer from package filename"
+ }
+--- backend1/README.md
++++ reviewed-fixed/README.md
+@@ -1,297 +1,25 @@
+-<!-- M6 current index -->
+-# 当前交付状态 M6
+-
+-M5正式实验与M6测试改进/最终材料已完成。最新事实以 [PACKAGE_INFO.md](PACKAGE_INFO.md)、[最终设计说明](docs/FINAL_DESIGN_REPORT.md)、[M6报告](docs/INNOVATION_REPORT.md) 和 results/m6_readiness.json 为准。下文保留原阶段说明，含历史未完成状态，不能据此覆盖最新证据。Demo与M5原始文件未修改，race与独立SM2交换仍pending。
+-
+----
+-
+-> **当前阶段：M5 正式实验。** 当前规则见 [FORMAL_EXPERIMENT_PLAN](docs/FORMAL_EXPERIMENT_PLAN.md)，入口和复现命令见本文件末尾“M5 正式实验入口”。完成状态仅取自 results/milestone_M5.md 和 results/m5_formal_readiness.json。以下 M5A/M5B 的锁定状态及旧数值属于历史记录；Windows Demo ZIP 保持原样，不进入 M6。
+-
+-/# EdgeHybrid Agent Starter
+-
+-M5B state: T/H (SM2 \u00b1 ML-KEM-768) measurement harness with resource/throughput/P comparison smokes; formal 1000-trial sampling locked.
+-也不是完整的安全通信系统。**
+-
+-当前里程碑：**M5A-R2（测量器/证据收口）**。Suite 1 / Suite 2、生命周期与 20 设备联调已经实现；`cmd/bench` 已实现**小规模 smoke 测量**，但正式 1000 次性能实验仍锁定。
+-
+-本次审查补丁修复了结果验收与证据收尾中的确定问题：严格 JSON 对象解析、模式与套件绑定、完整 SID 语法、事件持久化错误传播，以及“先停止事件生产者再关闭事件文件”的顺序。由于当前审查环境只有 Go 1.23.2，而项目要求 Go >=1.25，**补丁后的完整工程仍需在原开发机重新执行 go test/vet/build、Suite 1/2 E2E 与 smoke 验证后，才可进入正式 M5 采样。**
+-
+-`-race` 仍是环境阻塞；SM2 密钥交换的独立第二实现对照仍待补。这些验证缺口不能被写成 PASS。
+-
+----
+-
+-## 一分钟了解现在能跑什么
+-
+-| 能力 | 状态 |
+-|---|---|
+-| SM2 签名 / SM2 完整密钥协商 / SM3 / HMAC-SM3 / HKDF-SM3 / SM4-GCM | **已实现并测试** |
+-| ML-KEM-768 适配（Go 标准库） | **已实现并测试**（组件级） |
+-| 传统套件（Suite 1）双向认证握手 | **已实现并测试** |
+-| 真实 SM4-GCM 记录层、串行发送、反重放、会话隔离 | **已实现并测试** |
+-| 本地可信身份初始化（`secctl init-demo`） | **已实现** |
+-| 一网关一设备的真实 TCP 联调脚本 | **已实现并通过** |
+-| **混合套件（Suite 2 / ML-KEM 参与建钥）** | **已实现并开放**（M3 起默认配置即可运行） |
+-| 密钥轮换 / 吊销 / 20 设备并发 | **已实现并测试**（M4，M4.1/M4.2 收口） |
+-| 性能测量（M5） | **smoke 已实现**（传统/混合小规模验证）；正式 1000 次、CPU/RSS、吞吐与公开混合对照仍未完成 |
+-| `-race` 竞态检测 | **环境阻塞，未执行**（见下文） |
+-
+-**默认配置继续保持 `minimum_mode=hybrid`，且 Suite 2 已实现。** 混合握手失败时不得自动回退到传统模式；显式传统配置仍用于存量设备兼容。当前尚未完成的是 M5 的正式性能采样与对照，而不是混合协议本身。
+-
+----
+-
+-## M2.1 修补了什么（在 M2 之上）
+-
+-| 修补项 | M2 的问题 | M2.1 的做法 |
+-|---|---|---|
+-| 取消 | `Send`/`Receive` 只在加锁前检查一次 ctx；等待锁、阻塞读写都无法被取消 | 用**可取消的信号量**替代 `sync.Mutex`；读写通过过期 deadline 被立即打断；被取消的排队者**不会**继续发送 |
+-| 握手总超时 | `frameIO` 每帧重置 `time.Now().Add(timeout)`，外层 deadline 管不住实际网络读写 | 整个 H1–H4 使用**一个绝对截止时间**（取调用方 deadline 与本地预算中更早者），后续消息**不可续期** |
+-| 分帧 EOF | 长度前缀读完但正文全缺时返回普通 `io.EOF`，被当成"对端正常关闭" | 已开始的帧不完整一律报 `ErrTruncated`（并满足 `errors.Is(err, io.ErrUnexpectedEOF)`）；只有"下一帧一字节未收"才是干净关闭 |
+-| 测试汇总器 | 空、乱码、截断输入都退出 0，把不可用证据当成成功 | 非空、严格 JSON、字段类型、生命周期闭合、预期包集合、**真实 go 退出码**全部检查；不可用证据退出 2，失败运行退出 1 |
+-| 端到端验收 | 只用 grep/sed 数事件、只看单端身份 | `scripts/verify_e2e_events.py` 为 shell 与 PowerShell **共用**的严格验收器；校验双方角色/身份/Suite 1/**完整 32 位十六进制 SID**/遥测-控制-ACK 一一对应 |
+-| 结果保存 | 失败时可能不建输出目录或残留旧 PASS | 每次运行独立目录 `results/raw/e2e/<run_id>/`，先写 `RUNNING`，结束写本次 `PASS`/`FAIL`/`INTERRUPTED` |
+-| 观测口径 | 用**一个** `false` 概括两个端点；终态无条件写 `DeliveredPlaintext: true` | 分端点记录 `device_channel_created` / `gateway_channel_created`；计数按实测；未知值写 `null` |
+-| 换行符 | `m2-e2e.sh` 是 CRLF，Linux 上 `bash -n` 退出 2 | 全部文本文件规范化为 **LF**，并加入 `.gitattributes` |
+-| run_id | 事件没有可归属的运行标识 | `gateway`/`device` 支持 `-run-id`，每个事件都带该标识 |
+-
+-## M4 做了什么（在 M3 之上）
+-
+-协议与密钥日程**未改动**。新增的是生命周期、换钥与多设备能力。
+-
+-| 项 | 做法 |
+-|---|---|
+-| **动态设备集** | 网关按 `map[device_id]*SessionState` 维护；`cmd/fleet -devices N` 与 `secctl init-demo -devices N` 都是参数化的。**代码中没有任何逐设备分支**，20 只是传入的验收规模 |
+-| **生命周期状态** | `ACTIVE` / `ROTATING` / `REVOKED` / `RETIRED`（见 `docs/LIFECYCLE.md`）。空值按 `ACTIVE`，M4 前的注册表可直接加载 |
+-| **吊销** | 握手前 reload + 周期 sweep（250ms）。**不是**"下次启动读一次"。状态持久化，reconnect 无法恢复 |
+-| **轮换** | 注册表**原子提交**；密钥文件按 **failure-safe** 顺序写入新世代（按 key_id 命名，不先删旧文件），提交后 best-effort 退役旧文件。必须同时提供新 key_id **与新公钥** |
+-| **换钥** | 完整新握手，不做 in-band rekey。触发：消息数阈值、时间阈值。新 SID + 新记录密钥 + 新 nonce 前缀 + seq 从 0 |
+-| **重放** | 旧会话记录在新会话下全部拒绝；跨设备记录（载荷声称他人身份）拒绝并终止会话 |
+-| **资源边界** | 并发握手/会话上限、单身份上限、超时、帧长、每会话 deadline。是**避免无界增长**，不是抗 DoS |
+-
+-### 常用命令
+-
+-```bash
+-# 20 台真实 Suite 2 设备联调（含换钥）
+-MODE=hybrid bash scripts/m2-e2e.sh           # 单设备
+-DEVICES=20 SESSIONS=3 REKEY_RECORDS=4 bash scripts/m4-fleet-e2e.sh
+-DEVICES=20 BAD_DEVICE=D010 bash scripts/m4-fleet-e2e.sh   # 19 good + 1 bad
+-
+-# 批量登记设备
+-go run ./cmd/secctl init-demo -dir runtime -devices 20 -id-pattern 'D%03d'
+-```
+-
+----
+-
+-## M3 做了什么（在 M2.1 之上）
+-
+-**Suite 2（SM2 + ML-KEM-768 混合）已完整实现并开放。**
+-
+-保留未动：H1–H4 四消息结构、双向 SM2 签名、完整 SM2 密钥协商、HKDF-SM3、
+-FinishedA/B、SM4-GCM 记录层、身份注册表与 key_id 绑定，
+-以及 M2.1 的取消/超时/截断/事件验收/三态观测。
+-
+-只增加 Suite 2 所需的数据与逻辑：
+-
+-| 项 | 做法 |
+-|---|---|
+-| H1 | 设备为**本次握手**生成新的 ML-KEM-768 密钥对，`ekA` 随 Hello 发出（每次不同、非全零） |
+-| H2 | 网关**真实 Encapsulate** 得到 `Zpq` 与 `kem_ct`；`kem_ct` 进入 ServerCore，因此被 SigB 认证 |
+-| 设备收到 H2 | 按选中套件**真实 Decapsulate** 得到本地 `Zpq` |
+-| IKM | 真实依赖 `Zsm2` **和** `Zpq`；禁止只用其一、XOR、截断、填零、复用 |
+-
+-协商必须区分**"声明支持套件 2"** 与 **"最终选中套件 2"**：
+-声明含 2 → `ekA` 必须存在且尺寸正确；选中 2 → `kem_ct` 必须存在且尺寸正确；
+-选中 1 → `kem_ct` 必须为空，且 `ikm` **显式拒绝**任何 PQ 秘密。
+-即使最终走套件 1，H1 已发出的能力列表与 `ekA` **仍然是认证转录的一部分**，
+-不得删除或规范化；双方**都不得**对能力列表排序后再参与转录。
+-
+-### 防降级不是只靠 `minimum_mode`
+-
+-三个机制叠加：客户端**重算**应得套件并比对、能力列表进入转录、`kem_ct` 进入转录。
+-九个 wire 级场景全部被拒（见 `results/raw/m3_downgrade_cases.jsonl`），
+-其中三个是**合法编码、正确长度**，真正失败在**签名/转录绑定**阶段。
+-
+-### ML-KEM 隐式拒绝由 Finished 捕获
+-
+-等长非法密文**不会**报错，只会给出另一个共享秘密。实测：单元级证明两边 `Zpq` 不同且无 error；
+-握手级在**转录完全相同**的前提下，最终在 **`finished_confirmation`** 阶段被拒。
+-
+-### 禁止自动回退
+-
+-混合握手一旦失败就**直接失败**，不允许 `try hybrid → 失败 → 自动重连传统`。
+-失败时只发出**一次** H1（测试按帧计数固定）。传统连接必须从一开始就是
+-由本地可信迁移策略明确允许的套件 1 连接。
+-
+-### Suite 2 的开放条件
+-
+-`suiteReadiness[SuiteHybrid]` 在七项条件全部满足**之前**一直是 `false`。
+-满足后开放，默认 `configs/gateway.json` / `device.json`（`minimum_mode=hybrid`）
+-**真正运行 Suite 2**；默认配置**没有**被改成 traditional 来制造 PASS
+-（由 `TestShippedDefaultConfigurationsSelectSuiteTwo` 固定）。
+-
+----
+-
+-## 已知局限（不要当成已实现的功能）
+-
+-- **控制只更新参数状态，没有按周期驱动采样。** 设备收到"设置采样周期"后
+-  更新一个变量并回 ACK，**没有**任何定时器按该周期去采样。
+-  当前演示证明的是**参数状态更新**，不是真实定时采样。
+-- **同一 `operation_id` 配不同参数会回 `Duplicate=true` 且不改变已生效值。**
+-  这是 `internal/app/service_test.go` 里**明确固定**的现行契约，
+-  记录为局限，而不是被悄悄重写的业务语义。跨重启 exactly-once 仍未实现。
+-- `docs/` 与 `results/` 中的 **M1 / M1.1 / M2 报告是历史材料**，
+-  引用前请先看 `docs/M1_ERRATA.md` 与 `results/milestone_M2_1.md`。
+-- 项目根目录的 `MANIFEST.sha256` 是**原始 Starter 骨架的 47 文件清单**，
+-  不是当前源码清单，**不能**用它校验收到的审查包。
+-- **`ekA` 跨会话复用在响应端不可检测**，只能拦住全零这类退化情形。已如实记录，不谎称已防御。
+-- **Suite 2 真实存在 ≠ 系统已抗量子**：SM2 身份认证不是后量子身份认证。
+-  Suite 2 只是让会话密钥同时依赖 SM2 与 ML-KEM-768 两份秘密。
+-- **`go test -race` 仍未在本机执行**（环境阻塞），这**不等于**项目不存在数据竞争。
+-- **SM2 密钥交换仍缺独立实现对照**（OpenSSL 命令行不暴露 SM2MQV）。
+-
+-## 快速开始
+-
+-前置：Go 1.25 或更新的受维护版本（本项目用 `go1.27.1` 验证）。
+-`go` 需要在 `PATH` 上（脚本可用 `GO=/path/to/go` 覆盖）。
+-
+-### 1. 创建本地测试身份
+-
+-```bash
+-go run ./cmd/secctl init-demo -dir runtime
+-```
+-
+-这会在 `runtime/`（已被 `.gitignore` 忽略）下生成：
+-一个网关和一台设备各自的**独立签名密钥**与**独立静态协商密钥**，
+-以及只含公钥的 `runtime/trust.json`。
+-
+-**这不是在线注册**，不信任握手报文自带公钥。私钥只留在本地密钥目录，
+-从不打印、不写日志、不进 Git。
+-
+-### 2. 跑一次真实的端到端联调
+-
+-```bash
+-# Linux / macOS / Git Bash
+-bash scripts/m2-e2e.sh
+-
+-# Windows PowerShell
+-powershell -ExecutionPolicy Bypass -File scripts\m2-e2e.ps1
+-```
+-
+-脚本会：隔离构建 → 生成全新测试身份 → 用**操作系统选定的端口**启动真实网关 →
+-**等待网关自己的“已监听”事件**（而不是 sleep）→ 运行真实设备完成
+-握手 → 遥测 → 控制 → 确认 → 校验事件 → 清理进程。**任何失败都会非零退出。**
+-
+-### 3. 手工运行
+-
+-```bash
+-# 终端 A：网关（用一个显式允许传统模式的配置）
+-go run ./cmd/gateway -config configs/gateway.traditional.demo.json -max-sessions 1
+-
+-# 终端 B：设备
+-go run ./cmd/device -config configs/device.traditional.demo.json -samples 3
+-```
+-
+-看到成对出现的 `"stage":"handshake","outcome":"established"` 且两端
+-`session_id` 相同，就说明真实握手成功了。
+-
+-### 4. 常用检查
+-
+-```bash
+-go test ./... -count=1          # 全部测试
+-go vet ./...                    # 静态检查
+-go build ./cmd/...              # 构建
+-go run ./cmd/secctl status      # 分组件 / 分模式状态
+-go run ./cmd/secctl check-trust -trust runtime/trust.json
+-go run ./cmd/lab -devices 20 -messages 3   # 明文实验（不是安全联调）
+-```
+-
+----
+-
+-## 目录
+-
+-```text
+-cmd/
+-  gateway/     安全网关：并发服务 K 台设备；hybrid 为默认模式
+-  device/      安全设备：同上
+-  secctl/      status / check-config / check-trust / init-demo
+-  bench/       安全基准入口；仍拒绝生成虚假结果（M5）
+-  lab/         明文回环实验（有醒目标记，不是安全通道）
+-internal/
+-  cryptosuite/ SM2/SM3/SM4/ML-KEM 适配层（不含自写底层算法）
+-  handshake/   编解码、转录、密钥日程、客户端/服务端状态机、安全通道
+-  identity/    文件信任库、私钥存储、本地初始化
+-  record/      记录头、AAD、方向、会话、序号、真实 SM4-GCM
+-  wire/        有界分帧
+-  config/      严格配置解析
+-  policy/      模式与套件策略
+-  app/         业务数据结构与服务循环
+-configs/       不含私钥的示例配置（含 traditional demo）
+-scripts/       端到端脚本与测试结果汇总器
+-docs/          需求、协议草案、协议审查、勘误、测试矩阵、依赖、威胁模型、来源
+-results/       真实运行记录与阶段报告（milestone_M1.md / milestone_M2.md）
+-```
+-
+----
+-
+-## 安全设计的硬约束（不要绕过）
+-
+-- **不自写底层密码算法。** 只做接口适配、KDF 编码与协议状态逻辑。
+-- **SM2 协商不是普通 ECDH。** 必须调用完整协商，含 ZA/ZB 顺序与身份绑定。
+-- **签名密钥与协商密钥分开。** 二者字节编码形状相同，靠信任注册表与带类型的句柄区分。
+-- **`Finished` 只证明双方对同一转录达成一致**，不证明对方公钥诚实生成、也不证明随机性质量。
+-- **ML-KEM 等长非法密文不返回 error**（FIPS 203 隐式拒绝），必须由 Finished 拒绝。
+-  这与“公钥格式检查”是两件事。
+-- **GCM 不提供 nonce 重用防护**，由会话层结构化保证：方向专用前缀 + 严格递增序号 + 上下行独立密钥。
+-- **认证和密钥确认完成前，不向业务交付明文、不发送应用记录。**
+-- **接收序号只在 AEAD 验证成功后推进**；失败关闭会话，序号不回退。
+-- **默认 hybrid 配置不得降级。** 当前默认配置即运行 Suite 2；不实现的能力就是拒绝，而不是悄悄降级。
+-
+----
+-
+-## 如何判断工作能不能接受
+-
+-必须同时给出：修改文件、实际执行命令、返回码、测试结果、未完成项和风险。
+-不能只看“编译成功”“连接成功”。
+-
+-- `docs/TEST_MATRIX.csv`：题目要求 → 用例映射与**真实状态**
+-- `docs/M1_ERRATA.md`：M1 阶段的表述勘误（含一处被证伪的故障归因）
+-- `docs/PROTOCOL_REVIEW_M2.md`：协议冻结与审查
+-- `results/milestone_M2.md`：本阶段报告
+-- `results/m2_readiness.json`：机器可读的验收等级
+-
+----
+-
+-## 已知限制（必须如实转述）
+-
+-1. **`-race` 未执行。** 三个独立证据表明这是**环境问题**而非代码问题：
+-   三行无关程序在全新构建缓存下同样失败；race 产物请求 `msvcrt.dll` 并未导出的
+-   `__iob_func`；普通 cgo 正常。详见 `docs/M1_ERRATA.md` E1。
+-   因此状态是 `M2_FUNCTIONAL_VERIFICATION_PENDING`，**不是** `M2_LEGACY_VERIFIED`。
+-2. **SM2 密钥交换没有独立实现对照。** 签名已与 OpenSSL 双向互操作，
+-   但 OpenSSL 命令行不暴露 SM2MQV。该组件的证据等级仍为 `partially_verified`。
+-3. **混合模式完全没有实现。** 没有任何后量子成分参与会话，因此
+-   **不能**声称整个系统抗量子。
+-4. **未做**：0-RTT、会话恢复、跨重启 exactly-once、在线吊销传播、长期密钥轮换、
+-   20 设备并发服务、正式性能基准。
+-5. **Windows 上的密钥文件权限不由本工具强制。** `os.Chmod` 无法设置 ACL，
+-   `init-demo` 会返回 `os_permission_restriction_enforced: false`。
+-6. **原型未经安全审计，没有形式化安全证明。** 集成测试不能替代安全证明。
+-
+-**项目声明：自定义握手仍需独立的协议审查与实现审查；本工程没有给出整个系统的形式化安全证明。**
+-# Windows 一键演示
+-
+-本轮用户优先交付最小演示。运行包 EdgeHybrid_Demo_Windows.zip 中双击 EdgeHybridDemo.exe（默认 1 台）或固定 20 台启动入口，自动打开本机只读状态页；不需要安装开发工具。使用、停止和日志位置见 docs/DEMO_QUICKSTART.md。实际验收与未完成项见 DEMO_TEST_REPORT.md。真实 Suite2、模拟业务，不展示正式性能成绩。
+-# M5 正式实验入口（2026-10-01）
+-
+-本轮保持已交付 Windows Demo ZIP 及哈希，结束界面开发。正式测量按 [冻结实验方案](docs/FORMAL_EXPERIMENT_PLAN.md) 执行：T/H/P 各 1000 次独立尝试；T/H 各 5×100 分角色资源；T/H/P 各 5×200 真实业务吞吐。失败不替换，中断不改分母。下文 M5A/M5B 的“formal 锁定”等文字保留为历史阶段记录，以本节和新方案为当前入口说明。
+-
+-`cmd/bench` 测量 T/H；`cmd/pbench` 测量公开 TLS 混合对照 P；两者的 `-run-kind formal` 只接受冻结参数、显式 run_id 和源码 SHA-256。旧 smoke 继续标为非正式。`scripts/m5_formal_prepare.py` 完整回归并冻结源码/二进制，`m5_formal_run.py` 顺序执行固定矩阵，`m5_formal_report.py` 调用生产验收器并从 raw 重算报告，`m5_formal_controls.py` 在副本上检查篡改拒绝。实际成功、失败、未执行情况以 `results/milestone_M5.md`、`results/m5_formal_readiness.json` 和原始命令为准；代码入口存在不等于实验已完成。
+-
+-复现实例（在解压源码目录执行，使用本机 Go/Python 路径；脚本中的 Go 路径可按实际工具链调整，这将形成新的源码版本）：
+-
+-```powershell
+-python scripts/m5_formal_prepare.py --out results/raw/m5_formal_20261001/freeze --bin-dir ../EdgeHybrid_M5_Formal_Binaries_20261001
+-python scripts/m5_formal_run.py --freeze results/raw/m5_formal_20261001/freeze/freeze.json --out results/raw/m5_formal_20261001/data
+-python scripts/m5_formal_report.py --freeze results/raw/m5_formal_20261001/freeze/freeze.json --data results/raw/m5_formal_20261001/data --out results/raw/m5_formal_20261001/report
+-```
+-
+-这不是密码合规认证或安全证明。单次握手 CPU/RSS 与 P 分角色资源未支持时输出 null+原因，整批资源不得冒称单次指标。Linux/race/独立 SM2 交换验证历史缺口保留。完成 M5 后停止，不进入 M6。
++# EdgeHybrid 当前后端复查修复版
++
++版本 interactive-v1.2-backend2-reviewed，延续原 backend1 工作区；前端 V12 继续冻结。当前复查范围和补验理由见 [影响分析](docs/FRIEND_FIX_IMPACT.md)，完成状态只依据 [问题关闭表](deliverables/Backend_Reviewed_Fixed/ISSUE_CLOSURE.md) 和当前原始记录 results/raw/backend_friend_20261002。文件名不是全部通过或安全认证。
++
++已实现 T/H 双向认证真实 SM2 完整密钥交换、SM3/HKDF-SM3、SM4-GCM；H 额外绑定真实 ML-KEM-768。混合失败不降级。P 是独立 TLS 1.3/X25519MLKEM768 公开对照，不是国密套件。签名、Finished、抗重放、序号写入顺序、限额和会话隔离保留。
++
++交互版有八个页面、真实手动温度上报、网关主动控制、真实采样 timer、1/20 设备、受控设备/网关生命周期、有界筛选分页日志与导出、授权/CSRF/Host/Origin 校验。有限 gateway/device Demo、bench/pbench 与持续 live 的运行模式分别保留。HTTP 排队成功不等于远端确认，超时不等于对端未执行。网关维护影响全部相关设备，不会自动重连或恢复被吊销身份。
++
++本轮修复保护消息 ACK 状态机和截断错误链、独立 CLI 网关本地身份失效、轮换事务与 legacy 0 世代兼容、P 拒绝健康前提以及同 host 多实例 Cookie 覆盖。F07 日志选择项刷新尚未修复，状态 PENDING_FRONTEND_AUTHORIZATION。此项不能视为完整体验验收完成。
++
++backend1 的 Windows 全量 race、BC 第二实现 SM2 核心交换 14 组、OpenSSL 双向签名互操作已经实际执行。它们覆盖已执行路径，不是全面安全认证；本版须读本轮日志，不能把旧记录绑定到新源码。独立 SM2 对照范围不含对标准 S1/S2 的独立认证。
++
++旧 M5/M6、backend1 的 16 批正式实验以及原 300 秒失败/随后完整 1800 秒长测保持原 run 和源码哈希。本版仅做小规模 T/H/P、短持续运行及缺陷回归，没有新 1000 次正式性能或 1800 秒结论。计时保留 0ns 及限制，批次 CPU/峰值内存不是单次指标，P 与 T/H 的整体差异不能全部归于 ML-KEM。历史 P 拒绝记录若缺同素材健康基线，不能证明目标机制。
++
++## 运行与复查
++
++Windows 包解压后使用启动1设备.cmd / 启动20设备.cmd，启动窗口的一次口令用于本机授权。暂停采样、断开设备、退出软件含义不同。运行不依赖 Go/Python/Node/Java/CDN；scenario.exe 仅隔离测试。不要同时运行 Demo/live 与测量程序。
++
++开发与复查使用 Go 1.27.1；执行 go mod verify、go vet ./...、go test -count=1 -json ./...，Windows race 使用经授权的隔离便携 GCC（仅测试进程 CC/PATH）。scripts/backend_regression.py 保存真实 JSON、stderr、退出码；scripts/backend_w1.py 使用本机已有 Java/BC/OpenSSL，不安装依赖；scripts/friend_review_run.py 保存每次源清单和命令。
++
++构建：python scripts/backend_build.py --out <新二进制目录> --evidence <新日志目录>。不覆盖现有发布包。各 EXE、源码哈希、版本通过 build_info.json / API build / 回执关联。
++
++长测复现使用已修正 scripts/backend_live_acceptance.py：设备 connect 预期 HTTP 202。原 backend1 修正版外置测量脚本与原失败/完整通过记录由 EdgeHybrid_Backend_Final_Receipts.zip 保留；原冻结脚本和原实验哈希不改写。
++
++现有详细手册见 deliverables/Interactive_V12/EdgeHybrid_Interactive_V12_Manual.md，后端接口见 docs/INTERACTIVE_API.md 和 docs/BACKEND_BUILD_AND_VERIFY.md。原 README 字节在 [历史 README](docs/history/README_backend1_original.md) 原样保留；历史未实现/未验证描述不表示当前功能状态。
+--- backend1/VERSION
++++ reviewed-fixed/VERSION
+@@ -1 +1 @@
+-M5B-smoke
++interactive-v1.2-backend2-reviewed
+--- backend1/cmd/secctl/lifecycle.go
++++ reviewed-fixed/cmd/secctl/lifecycle.go
+@@ -19,6 +19,7 @@
+ 	"sort"
+ 
+ 	"example.com/edgehybrid/internal/identity"
++	"example.com/edgehybrid/internal/management"
+ )
+ 
+ func loadRegistry(path string) (identity.Registry, error) {
+@@ -199,70 +200,21 @@
+ 		return 2
+ 	}
+ 
+-	// 1. generate and write the NEW generation.
+-	keys, err := identity.GenerateRotationKeys()
+-	if err != nil {
+-		fmt.Fprintln(os.Stderr, "rotate: generating keys:", err)
+-		return 1
+-	}
+-	next := before.KeyGeneration
+-	if next < 1 {
+-		next = 1 // a pre-M4 entry reads as generation 1
+-	}
+-	next++
+-	signID := fmt.Sprintf("%s-SIG-%d", *id, next)
+-	agreeID := fmt.Sprintf("%s-AGR-%d", *id, next)
+-	if _, _, err := identity.WriteRotatedKeys(*keyDir, *id, signID, agreeID, keys); err != nil {
+-		fmt.Fprintln(os.Stderr, "rotate: writing the new generation failed; the old generation is untouched:", err)
+-		return 1
+-	}
+-
+-	// 2. commit the registry atomically.
+-	rot := identity.Rotation{
+-		DeviceID: *id, FromGeneration: before.KeyGeneration, ToGeneration: next,
+-		SignKeyID: signID, AgreementKeyID: agreeID,
+-		SignPublic: keys.SignPublic, AgreementPublic: keys.AgreementPublic,
+-		RetiredSignKeyID:      before.Public.SignKeyID,
+-		RetiredAgreementKeyID: before.Public.AgreementKeyID,
+-		// Carry the state this rotation was prepared against, so a revoke or a
+-		// policy edit landing between here and the commit is detected rather
+-		// than overwritten.
+-		PreparedRevision:  before.Revision,
+-		PreparedLifecycle: before.EffectiveLifecycle(),
+-	}
+-	if err := rot.Validate(); err != nil {
+-		fmt.Fprintln(os.Stderr, "rotate:", err)
+-		return 1
+-	}
+-	rev, err := identity.ApplyRotation(reg, rot)
+-	if err != nil {
+-		fmt.Fprintln(os.Stderr, "rotate: committing the registry failed; the old generation is untouched:", err)
+-		return 1
+-	}
+-
+-	// 3. retire the old key files, best effort. The old key ids are already
+-	// refused by the registry, so a leftover file is only pending cleanup.
+-	retireErr := identity.RetireGeneration(*keyDir, *id,
+-		[]string{before.Public.SignKeyID, before.Public.AgreementKeyID})
+-	if retireErr != nil {
+-		fmt.Fprintln(os.Stderr, "rotate: warning: old key files could not all be removed:", retireErr)
+-	}
+-
+-	after, err := reg.Lookup(context.Background(), *id)
+-	if err != nil {
+-		fmt.Fprintln(os.Stderr, "rotate: the rotated identity no longer resolves:", err)
+-		return 1
++	r, err := management.Apply(reg, *keyDir, *id, "rotate", "")
++	if err != nil {
++		fmt.Fprintln(os.Stderr, "rotate: transaction failed; registry commit was not accepted:", err)
++		return 1
++	}
++	if r.CleanupError != "" {
++		fmt.Fprintln(os.Stderr, "rotate: committed; cleanup pending:", r.CleanupError)
+ 	}
+ 	return emit("rotate", map[string]any{
+-		"id":                  *id,
+-		"generation":          after.KeyGeneration,
+-		"previous_generation": before.KeyGeneration,
+-		"sign_key_id":         after.Public.SignKeyID,
+-		"agreement_key_id":    after.Public.AgreementKeyID,
+-		"retired_key_ids":     []string{before.Public.SignKeyID, before.Public.AgreementKeyID},
+-		"registry_revision":   rev,
+-		"old_files_removed":   retireErr == nil,
+-		"note":                "the registry committed atomically; the old key ids are refused from now on",
++		"id": *id, "generation": r.Generation, "previous_generation": before.KeyGeneration,
++		"sign_key_id": r.SignKey, "agreement_key_id": r.AgreementKey,
++		"retired_key_ids":   []string{before.Public.SignKeyID, before.Public.AgreementKeyID},
++		"registry_revision": r.Revision, "old_files_removed": r.OldFilesRemoved,
++		"registry_committed": r.Committed, "cleanup_error": r.CleanupError,
++		"note": "shared API/CLI rotation transaction; CAS committed; cleanup is a separate outcome",
+ 	})
+ }
+ 
+--- backend1/cmd/secctl/lifecycle_test.go
++++ reviewed-fixed/cmd/secctl/lifecycle_test.go
+@@ -194,8 +194,9 @@
+ 	keyDir := filepath.Join(dir, "keys")
+ 	m4Provision(t, dir)
+ 
+-	// Occupy the path the new agreement key would use.
+-	if err := os.MkdirAll(filepath.Join(keyDir, "D002", "D002-AGR-2.key"), 0o700); err != nil {
++	// Random per-attempt key IDs avoid collisions. Inject a real registry
++	// persistence failure instead of guessing the next agreement filename.
++	if err := os.MkdirAll(trust+".tmp", 0o700); err != nil {
+ 		t.Fatal(err)
+ 	}
+ 
+--- backend1/internal/app/device.go
++++ reviewed-fixed/internal/app/device.go
+@@ -180,6 +180,9 @@
+ 
+ 	session := deviceSession{index: index, channel: ch, startedAt: time.Now()}
+ 	stats, err := d.business(ctx, ch, samples, baseTemp, session.startedAt)
++	if err == nil && !stats.RekeyDue && (stats.SentTelemetry != samples || stats.AppliedControls != samples || stats.SentAcks != samples) {
++		err = fmt.Errorf("%w: incomplete telemetry/control/ACK transaction", ErrBusiness)
++	}
+ 	// COUNTING RULE: every successfully written or read ProtectedRecord counts
+ 	// one, so a complete transaction is three records (telemetry + control + ACK).
+ 	session.records = stats.Records()
+@@ -210,7 +213,13 @@
+ 	case err == nil && stats.SentTelemetry == samples && stats.AppliedControls == samples:
+ 		base.Outcome = "completed"
+ 		d.Log.Emit(base)
+-	case errors.Is(err, handshake.ErrPeerClosed), errors.Is(err, handshake.ErrTruncated):
++	case errors.Is(err, handshake.ErrTruncated):
++		base.Outcome = "terminated"
++		base.Detail = err.Error()
++		base.ErrorStage = "record"
++		base.Incomplete = true
++		d.Log.Emit(base)
++	case errors.Is(err, handshake.ErrPeerClosed):
+ 		base.Outcome = "peer-closed"
+ 		base.Detail = "gateway closed the connection"
+ 		base.Incomplete = true
+@@ -275,13 +284,10 @@
+ 			return stats, err
+ 		}
+ 		stats.ReceivedRecords++
+-		// Direction authorisation: a device only accepts control and
+-		// acknowledgements from a gateway.
+-		if kind != record.Control && kind != record.Ack {
++		// This finite protocol waits for one Control after each Telemetry.
++		// ACKs flow from the device to the gateway, never in this direction.
++		if kind != record.Control {
+ 			return stats, fmt.Errorf("%w: device received content type %d", ErrDirection, kind)
+-		}
+-		if kind == record.Ack {
+-			continue
+ 		}
+ 		// The shared handler: parse -> operation validation -> production range
+ 		// -> per-session idempotency -> real state update -> ACK. It is the same
+--- backend1/internal/app/gateway.go
++++ reviewed-fixed/internal/app/gateway.go
+@@ -35,8 +35,58 @@
+ 	// defaults in sessions.go.
+ 	Limits Limits
+ 
+-	mu     sync.Mutex
+-	active map[net.Conn]struct{}
++	mu              sync.Mutex
++	active          map[net.Conn]struct{}
++	localGeneration uint64
++	localCaptured   bool
++	localInvalid    error
++}
++
++// checkLocal binds this CLI owner's loaded key identifiers and generation to
++// current trust. It never adopts replacement private handles in place.
++func (g *Gateway) checkLocal(ctx context.Context) error {
++	p, err := g.Trust.Lookup(ctx, g.Local.ID)
++	if err != nil {
++		if s, ok := g.Trust.(identity.Store); ok {
++			if meta, e := identity.Metadata(s, g.Local.ID); e == nil {
++				p = meta
++			}
++		}
++	}
++	if err == nil {
++		if p.Role != identity.RoleGateway || p.Public.SignKeyID != g.Local.SignKeyID || p.Public.AgreementKeyID != g.Local.AgreeKeyID {
++			err = fmt.Errorf("%w: loaded gateway keys no longer current", identity.ErrRetiredKey)
++		} else {
++			err = p.UsableForNewSessions(g.Local.SignKeyID, g.Local.AgreeKeyID)
++		}
++	}
++	g.mu.Lock()
++	if err == nil && g.localCaptured && p.KeyGeneration != g.localGeneration {
++		err = fmt.Errorf("%w: loaded gateway generation changed", identity.ErrRetiredKey)
++	}
++	if err == nil && !g.localCaptured {
++		g.localCaptured = true
++		g.localGeneration = p.KeyGeneration
++	}
++	first := err != nil && g.localInvalid == nil
++	if first {
++		g.localInvalid = err
++	}
++	err = g.localInvalid
++	g.mu.Unlock()
++	if first {
++		g.closeActive()
++		g.Log.Emit(Event{Role: "gateway", Stage: "lifecycle", Outcome: "local-identity-invalid", ErrorStage: "local-identity", Detail: fmt.Sprintf("loaded local identity invalid; adopted peer revision=%d generation=%d; %v", p.Revision, p.KeyGeneration, err)})
++	}
++	return err
++}
++
++// Business uses the admission owner's sticky invalidation decision. Trust
++// validation is performed at Run/handshake/admission and each lifecycle sweep.
++func (g *Gateway) localBusinessError() error {
++	g.mu.Lock()
++	defer g.mu.Unlock()
++	return g.localInvalid
+ }
+ 
+ // sessions returns the registry, creating it on first use so an embedder that
+@@ -96,6 +146,9 @@
+ 						Detail: err.Error()})
+ 				}
+ 			}
++			if g.checkLocal(ctx) != nil {
++				continue
++			}
+ 			terminated := g.sessions().SweepRevoked(reg)
+ 			for _, id := range terminated {
+ 				g.Log.Emit(Event{Role: "gateway", Stage: "lifecycle", Outcome: "session-terminated",
+@@ -111,7 +164,11 @@
+ 		g.active = make(map[net.Conn]struct{})
+ 	}
+ 	g.active[conn] = struct{}{}
++	invalid := g.localInvalid != nil
+ 	g.mu.Unlock()
++	if invalid {
++		_ = conn.Close()
++	}
+ 	return func() {
+ 		g.mu.Lock()
+ 		delete(g.active, conn)
+@@ -147,6 +204,11 @@
+ // Admission is bounded: in-flight handshakes and established sessions are capped
+ // (see Limits). These are resource bounds, not a complete DoS defence.
+ func (g *Gateway) Run(ctx context.Context) error {
++	ctx, cancel := context.WithCancel(ctx)
++	defer cancel()
++	if err := g.checkLocal(ctx); err != nil {
++		return err
++	}
+ 	timeout := time.Duration(g.Cfg.HandshakeTimeoutMS) * time.Millisecond
+ 	ln := g.Listener
+ 	if ln == nil {
+@@ -173,7 +235,7 @@
+ 	go g.watchLifecycle(ctx, g.Trust, 250*time.Millisecond)
+ 
+ 	var wg sync.WaitGroup
+-	defer wg.Wait()
++	defer func() { cancel(); g.closeActive(); wg.Wait() }()
+ 
+ 	// MaxSessions still means "serve this many sessions and then stop", which is
+ 	// what the single-device integration harness relies on. Serving is now
+@@ -376,6 +438,10 @@
+ 				Outcome: "registry-reload-failed", Detail: err.Error()})
+ 		}
+ 	}
++	if err := g.checkLocal(ctx); err != nil {
++		releaseHandshake()
++		return nil, err
++	}
+ 
+ 	hctx, cancel := context.WithTimeout(ctx, timeout)
+ 	defer cancel()
+@@ -430,6 +496,9 @@
+ 				Outcome: "registry-reload-failed", Detail: err.Error()})
+ 		}
+ 	}
++	if err := g.checkLocal(ctx); err != nil {
++		return nil, err
++	}
+ 
+ 	// The handshake completed, but the device may have been revoked, retired or
+ 	// rotated WHILE it was running. This lookup is the last gate before the
+--- backend1/internal/app/gateway_business.go
++++ reviewed-fixed/internal/app/gateway_business.go
+@@ -16,14 +16,14 @@
+ 		if err != nil {
+ 			return stats, err
+ 		}
++		if err := g.localBusinessError(); err != nil {
++			return stats, err
++		}
+ 		stats.ReceivedRecords++
+-		// Direction authorisation: a gateway only accepts telemetry and
+-		// acknowledgements from a device.
+-		if kind != record.Telemetry && kind != record.Ack {
++		// No control is outstanding at this boundary. An ACK is only legal
++		// in the explicit waiting-for-ACK state below.
++		if kind != record.Telemetry {
+ 			return stats, fmt.Errorf("%w: gateway received content type %d", ErrDirection, kind)
+-		}
+-		if kind == record.Ack {
+-			continue
+ 		}
+ 		var t Telemetry
+ 		if err := json.Unmarshal(pt, &t); err != nil {
+@@ -70,6 +70,9 @@
+ 			// incomplete and the caller must not record it as confirmed.
+ 			return stats, err
+ 		}
++		if err := g.localBusinessError(); err != nil {
++			return stats, err
++		}
+ 		stats.ReceivedRecords++
+ 		if kind != record.Ack {
+ 			return stats, fmt.Errorf("%w: expected an acknowledgement, received content type %d", ErrDirection, kind)
+--- backend1/internal/console/auth.go
++++ reviewed-fixed/internal/console/auth.go
+@@ -15,13 +15,14 @@
+ 	expiry time.Time
+ }
+ type auth struct {
+-	mu       sync.Mutex
+-	code     string
+-	sessions map[string]session
+-	attempts int
+-	reset    time.Time
+-	window   time.Time
+-	requests int
++	cookieName string
++	mu         sync.Mutex
++	code       string
++	sessions   map[string]session
++	attempts   int
++	reset      time.Time
++	window     time.Time
++	requests   int
+ }
+ 
+ func token() (string, error) {
+@@ -31,7 +32,16 @@
+ }
+ func newAuth() (*auth, error) {
+ 	s, e := token()
+-	return &auth{code: s, sessions: map[string]session{}, reset: time.Now().Add(time.Minute)}, e
++	if e != nil {
++		return nil, e
++	}
++	instance, e := token()
++	if e != nil {
++		return nil, e
++	}
++	// Cookies are scoped by host, not port. An instance-specific name prevents
++	// unrelated local consoles from overwriting one another's owner session.
++	return &auth{cookieName: "edgehybrid_owner_" + instance, code: s, sessions: map[string]session{}, reset: time.Now().Add(time.Minute)}, nil
+ }
+ func equal(a, b string) bool {
+ 	return len(a) == len(b) && subtle.ConstantTimeCompare([]byte(a), []byte(b)) == 1
+@@ -61,7 +71,7 @@
+ 	}
+ 	a.code = ""
+ 	a.sessions[id] = session{csrf, now.Add(time.Hour)}
+-	http.SetCookie(w, &http.Cookie{Name: "edgehybrid_owner", Value: id, Path: "/", HttpOnly: true, SameSite: http.SameSiteStrictMode, MaxAge: 3600})
++	http.SetCookie(w, &http.Cookie{Name: a.cookieName, Value: id, Path: "/", HttpOnly: true, SameSite: http.SameSiteStrictMode, MaxAge: 3600})
+ 	return csrf, nil
+ }
+ func (a *auth) authorized(r *http.Request, write bool) (string, bool) {
+@@ -69,7 +79,7 @@
+ 	return csrf, ok
+ }
+ func (a *auth) authorizedReason(r *http.Request, write bool) (string, bool, string) {
+-	c, e := r.Cookie("edgehybrid_owner")
++	c, e := r.Cookie(a.cookieName)
+ 	if e != nil {
+ 		return "", false, "missing_session"
+ 	}
+@@ -100,7 +110,7 @@
+ 	return a.requests <= 120
+ }
+ func (a *auth) expires(r *http.Request) time.Time {
+-	c, e := r.Cookie("edgehybrid_owner")
++	c, e := r.Cookie(a.cookieName)
+ 	if e != nil {
+ 		return time.Time{}
+ 	}
+--- backend1/internal/handshake/channel.go
++++ reviewed-fixed/internal/handshake/channel.go
+@@ -295,13 +295,13 @@
+ 		case errors.Is(err, wire.ErrTruncated):
+ 			// The peer began a frame and the stream ended inside it. That is not
+ 			// a clean close and must not be reported as one.
+-			return 0, nil, fmt.Errorf("%w: %w: peer stopped in the middle of a record", ErrProtocol, ErrTruncated)
++			return 0, nil, fmt.Errorf("%w: %w: %w", ErrProtocol, ErrTruncated, err)
+ 		case errors.Is(err, io.EOF), errors.Is(err, net.ErrClosed):
+ 			// Nothing of a next frame was received: an ordinary end of
+ 			// conversation.
+ 			return 0, nil, ErrPeerClosed
+ 		default:
+-			return 0, nil, fmt.Errorf("%w: record read failed: %v", ErrProtocol, err)
++			return 0, nil, fmt.Errorf("%w: record read failed: %w", ErrProtocol, err)
+ 		}
+ 	}
+ 	if f.Kind != wire.ProtectedRecord {
+--- backend1/internal/identity/keystore.go
++++ reviewed-fixed/internal/identity/keystore.go
+@@ -339,9 +339,16 @@
+ 	}
+ 	if _, err := f.Write(rec); err != nil {
+ 		_ = f.Close()
++		_ = os.Remove(p)
++		return "", false, err
++	}
++	if err := f.Sync(); err != nil {
++		_ = f.Close()
++		_ = os.Remove(p)
+ 		return "", false, err
+ 	}
+ 	if err := f.Close(); err != nil {
++		_ = os.Remove(p)
+ 		return "", false, err
+ 	}
+ 	dirOK, err := restrictSecretPath(keyDir, true)
+--- backend1/internal/identity/lifecycle.go
++++ reviewed-fixed/internal/identity/lifecycle.go
+@@ -131,17 +131,17 @@
+ // replacement is simpler to audit, and the requirement to support a window is
+ // met by documenting the choice rather than by building the more complex option.
+ type Rotation struct {
+-	DeviceID        string
+-	FromGeneration  uint64
+-	ToGeneration    uint64
++	DeviceID       string
++	FromGeneration uint64
++	ToGeneration   uint64
+ 	// SignKeyID / AgreementKeyID and the matching PUBLIC keys. The public keys
+ 	// must be supplied as well as the ids: installing a new key id while leaving
+ 	// the old public key in place would make the registry claim a key the key
+ 	// file does not hold, and every later load would fail the binding check.
+-	SignKeyID        string
+-	AgreementKeyID   string
+-	SignPublic       []byte
+-	AgreementPublic  []byte
++	SignKeyID             string
++	AgreementKeyID        string
++	SignPublic            []byte
++	AgreementPublic       []byte
+ 	RetiredSignKeyID      string
+ 	RetiredAgreementKeyID string
+ 
+@@ -167,7 +167,7 @@
+ 	}
+ 	// Exactly +1. Allowing a jump would let a stale rotation skip generations and
+ 	// make a later comparison meaningless; allowing 0 or negative is a rollback.
+-	if r.ToGeneration != r.FromGeneration+1 {
++	if r.FromGeneration == ^uint64(0) || r.ToGeneration != r.FromGeneration+1 {
+ 		return fmt.Errorf("%w: generation must advance by exactly one (%d -> %d, want %d)",
+ 			ErrBadPeer, r.FromGeneration, r.ToGeneration, r.FromGeneration+1)
+ 	}
+@@ -177,6 +177,9 @@
+ 	// The two kinds must never collapse into one key.
+ 	if r.SignKeyID == r.AgreementKeyID {
+ 		return fmt.Errorf("%w: the rotated signing and agreement key ids are identical", ErrBadPeer)
++	}
++	if r.SignKeyID == r.RetiredSignKeyID || r.AgreementKeyID == r.RetiredAgreementKeyID {
++		return fmt.Errorf("%w: rotation must replace both key identifiers", ErrBadPeer)
+ 	}
+ 	if r.RetiredSignKeyID != "" && !ValidName(r.RetiredSignKeyID) {
+ 		return fmt.Errorf("%w: invalid retired signing key id", ErrBadPeer)
+@@ -235,19 +238,19 @@
+ // device with no usable key while the registry still named the old generation.
+ // The order is now:
+ //
+-//	1. write BOTH new key files, named by their key id;
+-//	2. verify they parse back and that the public key matches what was written;
+-//	3. return. The caller then updates the registry (atomic) and only afterwards
+-//	   retires the old files, best effort.
++//  1. write BOTH new key files, named by their key id;
++//  2. verify they parse back and that the public key matches what was written;
++//  3. return. The caller then updates the registry (atomic) and only afterwards
++//     retires the old files, best effort.
+ //
+ // Consequences, all of which are the point:
+ //
+-//	- a failure while writing the new files leaves the old generation intact;
+-//	- a failure while updating the registry leaves the old generation intact
+-//	  (the new files simply sit there unused until they are overwritten);
+-//	- once the registry has moved, the old key ids are refused by the registry
+-//	  even if the old files have not been deleted yet. Leftover files are then
+-//	  just pending cleanup, not a usable alternate identity.
++//   - a failure while writing the new files leaves the old generation intact;
++//   - a failure while updating the registry leaves the old generation intact
++//     (the transaction removes only its own provably uncommitted files);
++//   - once the registry has moved, the old key ids are refused by the registry
++//     even if the old files have not been deleted yet. Leftover files are then
++//     just pending cleanup, not a usable alternate identity.
+ //
+ // Key files are named by KEY ID rather than by kind for exactly this reason:
+ // two generations can coexist on disk without overwriting each other.
+@@ -358,7 +361,6 @@
+ 	sort.Strings(out)
+ 	return out, nil
+ }
+-
+ 
+ // --- registry mutation ------------------------------------------------------
+ 
+--- backend1/internal/live/gateway_lifecycle.go
++++ reviewed-fixed/internal/live/gateway_lifecycle.go
+@@ -49,6 +49,7 @@
+ 		e = plan.VerifyPrepared(keyDir)
+ 	}
+ 	if e != nil {
++		e = errors.Join(e, plan.Abandon(m.reg))
+ 		m.maintenancePhase("preparation_failed", false, e)
+ 		return nil, e
+ 	}
+@@ -82,6 +83,7 @@
+ 		}
+ 		if time.Now().After(deadline) {
+ 			e = errors.New("网关旧会话清理超时；未提交，准入保持关闭")
++			e = errors.Join(e, plan.Abandon(m.reg))
+ 			m.maintenancePhase("drain_failed", true, e)
+ 			return nil, e
+ 		}
+--- backend1/internal/management/gateway.go
++++ reviewed-fixed/internal/management/gateway.go
+@@ -3,21 +3,19 @@
+ import (
+ 	"bytes"
+ 	"context"
+-	"crypto/rand"
+-	"encoding/hex"
+ 	"errors"
+ 	"example.com/edgehybrid/internal/cryptosuite"
+ 	"example.com/edgehybrid/internal/identity"
+-	"fmt"
+ )
+ 
+ // GatewayPlan holds only public metadata. The live owner must stop admission
+ // and drain every old session BEFORE Commit. There is no concurrent old/new
+ // generation window and no trust-on-first-use.
+ type GatewayPlan struct {
+-	Before identity.Peer
+-	Next   identity.Peer
+-	Action string
++	Before   identity.Peer
++	Next     identity.Peer
++	Action   string
++	rotation *identity.PreparedRotation
+ }
+ 
+ func PrepareGateway(reg identity.Registry, keyDir, id, action string) (GatewayPlan, error) {
+@@ -34,27 +32,11 @@
+ 		if err = p.UsableForNewSessions("", ""); err != nil {
+ 			return plan, err
+ 		}
+-		if p.KeyGeneration == ^uint64(0) {
+-			return plan, errors.New("世代上限")
+-		}
+-		keys, e := identity.GenerateRotationKeys()
++		txn, e := identity.PrepareRotation(reg, keyDir, id, identity.RoleGateway)
+ 		if e != nil {
+ 			return plan, e
+ 		}
+-		n := p.KeyGeneration + 1
+-		var suffix [8]byte
+-		if _, e = rand.Read(suffix[:]); e != nil {
+-			return plan, e
+-		}
+-		tag := hex.EncodeToString(suffix[:])
+-		sign, agree := fmt.Sprintf("%s-SIG-%d-%s", id, n, tag), fmt.Sprintf("%s-AGR-%d-%s", id, n, tag)
+-		if _, _, e = identity.WriteRotatedKeys(keyDir, id, sign, agree, keys); e != nil {
+-			return plan, e
+-		}
+-		plan.Next.Public.SignKeyID, plan.Next.Public.AgreementKeyID = sign, agree
+-		plan.Next.Public.SignPublic, plan.Next.Public.AgreementPublic = keys.SignPublic, keys.AgreementPublic
+-		plan.Next.KeyGeneration = n
+-		plan.Next.RetiredKeyIDs = append(append([]string{}, p.RetiredKeyIDs...), p.Public.SignKeyID, p.Public.AgreementKeyID)
++		plan.Before, plan.Next, plan.rotation = txn.Before, txn.Next, txn
+ 	case "revoke":
+ 		if err = p.UsableForNewSessions("", ""); err != nil {
+ 			return plan, err
+@@ -79,7 +61,13 @@
+ 		return r, nil
+ 	}
+ 	b := p.Before
+-	rev, e := reg.CompareAndReplaceSnapshot(p.Next, identity.SnapshotPrecondition{Revision: b.Revision, Generation: b.KeyGeneration, SignKeyID: b.Public.SignKeyID, AgreementKeyID: b.Public.AgreementKeyID, Lifecycle: b.EffectiveLifecycle()})
++	var rev uint64
++	var e error
++	if p.rotation != nil {
++		rev, e = p.rotation.Commit(reg)
++	} else {
++		rev, e = reg.CompareAndReplaceSnapshot(p.Next, identity.SnapshotPrecondition{Revision: b.Revision, Generation: b.KeyGeneration, SignKeyID: b.Public.SignKeyID, AgreementKeyID: b.Public.AgreementKeyID, Lifecycle: b.EffectiveLifecycle()})
++	}
+ 	if e != nil {
+ 		return r, e
+ 	}
+@@ -90,6 +78,13 @@
+ 	r.AgreementKey = p.Next.Public.AgreementKeyID
+ 	r.Lifecycle = p.Next.EffectiveLifecycle()
+ 	return r, nil
++}
++
++func (p GatewayPlan) Abandon(reg identity.Registry) error {
++	if p.rotation == nil {
++		return nil
++	}
++	return p.rotation.Abandon(reg)
+ }
+ 
+ func (p GatewayPlan) Cleanup(reg identity.Registry, keyDir string, r *Result) error {
+--- backend1/internal/management/service.go
++++ reviewed-fixed/internal/management/service.go
+@@ -7,7 +7,6 @@
+ 	"errors"
+ 	"example.com/edgehybrid/internal/identity"
+ 	"example.com/edgehybrid/internal/policy"
+-	"fmt"
+ )
+ 
+ type Result struct {
+@@ -36,18 +35,12 @@
+ 	var rev uint64
+ 	switch action {
+ 	case "rotate":
+-		keys, e := identity.GenerateRotationKeys()
++		txn, e := identity.PrepareRotation(reg, keyDir, id, identity.RoleDevice)
+ 		if e != nil {
+ 			return result, e
+ 		}
+-		next := p.KeyGeneration + 1
+-		sign := fmt.Sprintf("%s-SIG-%d", id, next)
+-		agree := fmt.Sprintf("%s-AGR-%d", id, next)
+-		if _, _, e = identity.WriteRotatedKeys(keyDir, id, sign, agree, keys); e != nil {
+-			return result, e
+-		}
+-		r := identity.Rotation{DeviceID: id, FromGeneration: p.KeyGeneration, ToGeneration: next, SignKeyID: sign, AgreementKeyID: agree, SignPublic: keys.SignPublic, AgreementPublic: keys.AgreementPublic, RetiredSignKeyID: p.Public.SignKeyID, RetiredAgreementKeyID: p.Public.AgreementKeyID, PreparedRevision: p.Revision, PreparedLifecycle: p.EffectiveLifecycle()}
+-		rev, e = identity.ApplyRotation(reg, r)
++		p = txn.Before
++		rev, e = txn.Commit(reg)
+ 		if e != nil {
+ 			return result, e
+ 		}
+@@ -57,9 +50,9 @@
+ 		if cleanup != nil {
+ 			result.CleanupError = cleanup.Error()
+ 		}
+-		result.Generation = next
+-		result.SignKey = sign
+-		result.AgreementKey = agree
++		result.Generation = txn.Next.KeyGeneration
++		result.SignKey = txn.Next.Public.SignKeyID
++		result.AgreementKey = txn.Next.Public.AgreementKeyID
+ 	case "revoke":
+ 		rev, e = identity.Revoke(reg, id)
+ 		result.Lifecycle = identity.LifecycleRevoked
+--- backend1/internal/pbench/rejections.go
++++ reviewed-fixed/internal/pbench/rejections.go
+@@ -3,6 +3,7 @@
+ import (
+ 	"context"
+ 	"crypto/tls"
++	"errors"
+ 	"fmt"
+ 	"net"
+ 	"path/filepath"
+@@ -18,6 +19,12 @@
+ 		return nil, e
+ 	}
+ 	var rows []map[string]any
++	if e = rejectionBaseline(ctx, opt, sc, cc); e != nil {
++		for _, name := range []string{"wrong_server_identity", "missing_client_certificate", "wrong_negotiated_group"} {
++			rows = append(rows, map[string]any{"schema_version": SchemaP, "run_id": opt.RunID, "name": name, "status": "PRECONDITION_FAIL", "rejected": false, "target_mechanism_passed": false, "observed_client_rejected": nil, "observed_server_rejected": nil, "detail": e.Error()})
++		}
++		return rows, errors.Join(e, WriteJSONLinesP(filepath.Join(opt.OutDir, "p_rejections.jsonl"), rows))
++	}
+ 	for _, name := range []string{"wrong_server_identity", "missing_client_certificate", "wrong_negotiated_group"} {
+ 		budget := opt.Timeout
+ 		if budget <= 0 {
+@@ -81,8 +88,12 @@
+ 		serverErr := <-done
+ 		stopAccept()
+ 		cancel()
+-		rejected := e != nil && serverErr != nil
+-		rows = append(rows, map[string]any{"schema_version": SchemaP, "run_id": opt.RunID, "run_kind": "smoke", "formal_results_eligible": false, "name": name, "expected": "rejected", "rejected": rejected, "detail": fmt.Sprint(e), "server_error": fmt.Sprint(serverErr), "worker_waited": true})
++		rejected, category := targetRejection(name, e, serverErr)
++		status := "PASS"
++		if !rejected {
++			status = "FAIL"
++		}
++		rows = append(rows, map[string]any{"schema_version": SchemaP, "run_id": opt.RunID, "run_kind": "smoke", "formal_results_eligible": false, "name": name, "expected": "rejected", "status": status, "rejected": rejected, "target_mechanism_passed": rejected, "category": category, "observed_client_rejected": e != nil, "observed_server_rejected": serverErr != nil, "detail": fmt.Sprint(e), "server_error": fmt.Sprint(serverErr), "worker_waited": true})
+ 	}
+ 	if e := WriteJSONLinesP(filepath.Join(opt.OutDir, "p_rejections.jsonl"), rows); e != nil {
+ 		return rows, e
+--- backend1/internal/wire/frame.go
++++ reviewed-fixed/internal/wire/frame.go
+@@ -51,6 +51,7 @@
+ 	copy(out[6:], f.Payload)
+ 	return out, nil
+ }
++
+ // WriteEncoded writes an already-encoded frame, looping until every byte is
+ // delivered. Use this together with Encode when the exact bytes put on the wire
+ // must also be captured (for example, as a handshake transcript input): encode
+@@ -81,8 +82,7 @@
+ }
+ 
+ // ErrTruncated means a frame had already started and the stream ended before it
+-// was complete: the length prefix was fully read, so the peer definitely began a
+-// frame, but the body did not all arrive. This is NOT a clean end of stream and
++// was complete, including a partial length prefix. This is NOT a clean end of stream and
+ // must never be reported as one — a peer that stops mid-frame may have been
+ // killed, or a record may have been cut short by an attacker.
+ //
+@@ -99,7 +99,7 @@
+ // distinguished, because conflating them hid a real defect:
+ //
+ //   - nothing read at all            -> io.EOF          (clean end between frames)
+-//   - part of the length prefix read -> io.ErrUnexpectedEOF (frame had started)
++//   - part of the length prefix read -> ErrTruncated    (frame had started)
+ //   - prefix read, body missing/part -> ErrTruncated    (frame had started)
+ //
+ // Before the fix the last case returned io.EOF, so a peer that died mid-frame
+@@ -110,9 +110,9 @@
+ 	}
+ 	var prefix [4]byte
+ 	if _, err := io.ReadFull(r, prefix[:]); err != nil {
+-		// No byte was consumed -> the stream simply ended. A partial prefix
+-		// means a frame had started, and io.ReadFull already reports that as
+-		// io.ErrUnexpectedEOF.
++		if errors.Is(err, io.ErrUnexpectedEOF) {
++			return Frame{}, nil, ErrTruncated
++		}
+ 		return Frame{}, nil, err
+ 	}
+ 	n := binary.BigEndian.Uint32(prefix[:])
+--- backend1/scripts/backend_build.py
++++ reviewed-fixed/scripts/backend_build.py
+@@ -5,9 +5,9 @@
+ GO=pathlib.Path(os.environ.get('GO',r'C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe'))
+ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+ def main():
+- ap=argparse.ArgumentParser();ap.add_argument('--out',type=pathlib.Path,required=True);ap.add_argument('--evidence',type=pathlib.Path,required=True);a=ap.parse_args();out=a.out.resolve();logs=a.evidence.resolve();out.mkdir(parents=True,exist_ok=False);logs.mkdir(parents=True,exist_ok=False)
++ ap=argparse.ArgumentParser();ap.add_argument('--out',type=pathlib.Path,required=True);ap.add_argument('--evidence',type=pathlib.Path,required=True);ap.add_argument('--version',default='interactive-v1.2-backend2-reviewed');a=ap.parse_args();out=a.out.resolve();logs=a.evidence.resolve();out.mkdir(parents=True,exist_ok=False);logs.mkdir(parents=True,exist_ok=False)
+  lines=''.join(source_manifest.sha256_file(p)+'  '+pathlib.Path(p).relative_to(R).as_posix()+'\n'for p in source_manifest.collect(str(R))).encode();h=hashlib.sha256(lines).hexdigest();(logs/'source_manifest.sha256').write_bytes(lines)
+- env=os.environ.copy();env['GOTOOLCHAIN']='local';env['PATH']=str(GO.parent)+os.pathsep+env.get('PATH','');version='interactive-v1.2-backend1';flags=f'-X example.com/edgehybrid/internal/console.SourceHash={h} -X example.com/edgehybrid/internal/console.Version={version}';binaries={}
++ env=os.environ.copy();env['GOTOOLCHAIN']='local';env['PATH']=str(GO.parent)+os.pathsep+env.get('PATH','');version=a.version;flags=f'-X example.com/edgehybrid/internal/console.SourceHash={h} -X example.com/edgehybrid/internal/console.Version={version}';binaries={}
+  for n,pkg in [('bench','./cmd/bench'),('pbench','./cmd/pbench'),('gateway','./cmd/gateway'),('device','./cmd/device'),('fleet','./cmd/fleet'),('secctl','./cmd/secctl'),('scenario','./internal/handshake'),('EdgeHybridInteractive','./cmd/console')]:
+   if n=='EdgeHybridInteractive':
+    for b,f in [('bench.exe','BenchSHA'),('pbench.exe','PBenchSHA'),('scenario.exe','ScenarioSHA')]:flags+=f' -X example.com/edgehybrid/internal/console.{f}={binaries[b]["sha256"]}'
+--- backend1/scripts/backend_live_acceptance.py
++++ reviewed-fixed/scripts/backend_live_acceptance.py
+@@ -375,7 +375,7 @@
+     save(r.out / (label + "_offline.json"), offline)
+     if any(d["status"] != "online" for d in offline["devices"] if d["id"] != id):
+         raise AssertionError("single-device disconnect affected another identity")
+-    r.req("/devices/" + id + "/connect", {})
++    r.req("/devices/" + id + "/connect", {}, 202)
+     after = r.wait_observed(lambda s: all_online(s) and devices(s)[id]["sid"] != old)
+     validate_state(after, r.run)
+     start_count = devices(after)[id]["accepted_samples"]
+--- backend1/scripts/backend_regression.py
++++ reviewed-fixed/scripts/backend_regression.py
+@@ -16,7 +16,7 @@
+  def run(name,cmd,timeout=600):
+   print('START '+name,flush=True);subprocess.run([sys.executable,str(R/'scripts/run_checked.py'),'--log-dir',str(out/'commands'),'--name',name,'--timeout',str(timeout),'--',*map(str,cmd)],cwd=R,env=env,check=False)
+   p=out/'commands'/name;d=json.loads((p/'command.json').read_text('utf-8'));rows.append({'name':name,'status':'PASS'if d['exit_code']==0 and not d['timeout_cleanup'] else'FAIL','source_manifest_sha256':source,**d});write(out/'command_index.json',rows);return p,d
+- run('mod_verify',[GO,'mod','verify']);run('vet',[GO,'vet','./...']);pkg,_=run('packages',[GO,'list','./...']);packages=(pkg/'stdout.txt').read_text('utf-8').splitlines()
++ run('mod_verify',[GO,'mod','verify']);run('vet',[GO,'vet','./...']);run('build_all',[GO,'build','./...']);pkg,_=run('packages',[GO,'list','./...']);packages=(pkg/'stdout.txt').read_text('utf-8').splitlines()
+  for name,flags in [('go_test',[]),('go_race',['-race'])]:
+   log,d=run(name,[GO,'test',*flags,'-count=1','-json','./...'],1200)
+   args=[sys.executable,R/'scripts/summarize-go-test-json.py',log/'stdout.txt','--go-exit-code',str(d['exit_code']),'--require-tests','--out',out/(name+'_summary.txt'),'--json',out/(name+'_summary.json')]
+--- backend1/scripts/source_manifest.py
++++ reviewed-fixed/scripts/source_manifest.py
+@@ -25,7 +25,7 @@
+ 
+ INCLUDE_DIRS = ("cmd", "internal", "configs", "scripts", "docs", ".github")
+ INCLUDE_ROOT_FILES = (
+-    "go.mod", "go.sum", "README.md", "AGENTS.md", "TASKS.md", "VERSION",
++    "go.mod", "go.sum", "README.md", "AGENTS.md", "TASKS.md", "VERSION", "CURRENT_HANDOFF.md", "CURRENT_COMPLETION.md",
+     "IMPLEMENTATION_STATUS.json", ".gitignore", ".gitattributes",
+     "AGENT_PROMPT.md", "CODEX_HANDOFF_M5B.md", "PACKAGE_INFO.md", "PATCH_REVALIDATION.md", "main.go", "LICENSE.txt", "THIRD_PARTY_NOTICES.md",
+ )

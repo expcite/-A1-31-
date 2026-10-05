@@ -1,0 +1,12 @@
+{
+  "role": "gateway",
+  "id": "GW001",
+  "address": "127.0.0.1:9443",
+  "minimum_mode": "traditional",
+  "allow_legacy": true,
+  "supported_suites": [1],
+  "handshake_timeout_ms": 5000,
+  "max_frame_bytes": 16384,
+  "trust_store": "runtime/trust.json",
+  "key_directory": "runtime/keys"
+}

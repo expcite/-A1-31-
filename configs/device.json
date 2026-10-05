@@ -1,0 +1,12 @@
+{
+  "role": "device",
+  "id": "D001",
+  "address": "127.0.0.1:9443",
+  "minimum_mode": "hybrid",
+  "allow_legacy": false,
+  "handshake_timeout_ms": 5000,
+  "max_frame_bytes": 16384,
+  "trust_store": "runtime/trust.json",
+  "key_directory": "runtime/keys",
+  "expected_peer_id": "GW001"
+}

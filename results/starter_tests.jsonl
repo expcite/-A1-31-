@@ -1,0 +1,196 @@
+{"Time":"2026-09-24T07:38:15.296400634Z","Action":"start","Package":"example.com/edgehybrid/cmd/bench"}
+{"Time":"2026-09-24T07:38:15.296490889Z","Action":"output","Package":"example.com/edgehybrid/cmd/bench","Output":"?   \texample.com/edgehybrid/cmd/bench\t[no test files]\n"}
+{"Time":"2026-09-24T07:38:15.296500564Z","Action":"skip","Package":"example.com/edgehybrid/cmd/bench","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.304754682Z","Action":"start","Package":"example.com/edgehybrid/cmd/device"}
+{"Time":"2026-09-24T07:38:15.304817436Z","Action":"output","Package":"example.com/edgehybrid/cmd/device","Output":"?   \texample.com/edgehybrid/cmd/device\t[no test files]\n"}
+{"Time":"2026-09-24T07:38:15.304823905Z","Action":"skip","Package":"example.com/edgehybrid/cmd/device","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.306971194Z","Action":"start","Package":"example.com/edgehybrid/cmd/gateway"}
+{"Time":"2026-09-24T07:38:15.306992837Z","Action":"output","Package":"example.com/edgehybrid/cmd/gateway","Output":"?   \texample.com/edgehybrid/cmd/gateway\t[no test files]\n"}
+{"Time":"2026-09-24T07:38:15.306997844Z","Action":"skip","Package":"example.com/edgehybrid/cmd/gateway","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.307160552Z","Action":"start","Package":"example.com/edgehybrid/cmd/lab"}
+{"Time":"2026-09-24T07:38:15.307169766Z","Action":"output","Package":"example.com/edgehybrid/cmd/lab","Output":"?   \texample.com/edgehybrid/cmd/lab\t[no test files]\n"}
+{"Time":"2026-09-24T07:38:15.307172991Z","Action":"skip","Package":"example.com/edgehybrid/cmd/lab","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.307183016Z","Action":"start","Package":"example.com/edgehybrid/cmd/secctl"}
+{"Time":"2026-09-24T07:38:15.30718592Z","Action":"output","Package":"example.com/edgehybrid/cmd/secctl","Output":"?   \texample.com/edgehybrid/cmd/secctl\t[no test files]\n"}
+{"Time":"2026-09-24T07:38:15.307187603Z","Action":"skip","Package":"example.com/edgehybrid/cmd/secctl","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.307876734Z","Action":"start","Package":"example.com/edgehybrid/internal/app"}
+{"Time":"2026-09-24T07:38:15.307902473Z","Action":"output","Package":"example.com/edgehybrid/internal/app","Output":"?   \texample.com/edgehybrid/internal/app\t[no test files]\n"}
+{"Time":"2026-09-24T07:38:15.30790735Z","Action":"skip","Package":"example.com/edgehybrid/internal/app","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.424099342Z","Action":"start","Package":"example.com/edgehybrid/internal/config"}
+{"Time":"2026-09-24T07:38:15.424255666Z","Action":"start","Package":"example.com/edgehybrid/internal/cryptosuite"}
+{"Time":"2026-09-24T07:38:15.424272301Z","Action":"output","Package":"example.com/edgehybrid/internal/cryptosuite","Output":"?   \texample.com/edgehybrid/internal/cryptosuite\t[no test files]\n"}
+{"Time":"2026-09-24T07:38:15.424278199Z","Action":"skip","Package":"example.com/edgehybrid/internal/cryptosuite","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.424492911Z","Action":"start","Package":"example.com/edgehybrid/internal/handshake"}
+{"Time":"2026-09-24T07:38:15.424671438Z","Action":"start","Package":"example.com/edgehybrid/internal/identity"}
+{"Time":"2026-09-24T07:38:15.424694593Z","Action":"output","Package":"example.com/edgehybrid/internal/identity","Output":"?   \texample.com/edgehybrid/internal/identity\t[no test files]\n"}
+{"Time":"2026-09-24T07:38:15.424702164Z","Action":"skip","Package":"example.com/edgehybrid/internal/identity","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.426277733Z","Action":"run","Package":"example.com/edgehybrid/internal/handshake","Test":"TestUnimplementedHandshakeFailsClosed"}
+{"Time":"2026-09-24T07:38:15.426336701Z","Action":"output","Package":"example.com/edgehybrid/internal/handshake","Test":"TestUnimplementedHandshakeFailsClosed","Output":"=== RUN   TestUnimplementedHandshakeFailsClosed\n"}
+{"Time":"2026-09-24T07:38:15.426539374Z","Action":"output","Package":"example.com/edgehybrid/internal/handshake","Test":"TestUnimplementedHandshakeFailsClosed","Output":"--- PASS: TestUnimplementedHandshakeFailsClosed (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.426552714Z","Action":"pass","Package":"example.com/edgehybrid/internal/handshake","Test":"TestUnimplementedHandshakeFailsClosed","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.42655645Z","Action":"output","Package":"example.com/edgehybrid/internal/handshake","Output":"PASS\n"}
+{"Time":"2026-09-24T07:38:15.427025772Z","Action":"output","Package":"example.com/edgehybrid/internal/handshake","Output":"ok  \texample.com/edgehybrid/internal/handshake\t0.003s\n"}
+{"Time":"2026-09-24T07:38:15.427039022Z","Action":"pass","Package":"example.com/edgehybrid/internal/handshake","Elapsed":0.003}
+{"Time":"2026-09-24T07:38:15.427919049Z","Action":"run","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig"}
+{"Time":"2026-09-24T07:38:15.427934622Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig","Output":"=== RUN   TestConfig\n"}
+{"Time":"2026-09-24T07:38:15.427954342Z","Action":"run","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/valid"}
+{"Time":"2026-09-24T07:38:15.427956835Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/valid","Output":"=== RUN   TestConfig/valid\n"}
+{"Time":"2026-09-24T07:38:15.427963185Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/valid","Output":"--- PASS: TestConfig/valid (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.427990346Z","Action":"pass","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/valid","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.427994502Z","Action":"run","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/unknown"}
+{"Time":"2026-09-24T07:38:15.427996715Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/unknown","Output":"=== RUN   TestConfig/unknown\n"}
+{"Time":"2026-09-24T07:38:15.428144717Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/unknown","Output":"--- PASS: TestConfig/unknown (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.428154952Z","Action":"pass","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/unknown","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.428158407Z","Action":"run","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/duplicate"}
+{"Time":"2026-09-24T07:38:15.428160851Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/duplicate","Output":"=== RUN   TestConfig/duplicate\n"}
+{"Time":"2026-09-24T07:38:15.428475632Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/duplicate","Output":"--- PASS: TestConfig/duplicate (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.428485677Z","Action":"pass","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/duplicate","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.428525907Z","Action":"run","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/trailing"}
+{"Time":"2026-09-24T07:38:15.428528581Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/trailing","Output":"=== RUN   TestConfig/trailing\n"}
+{"Time":"2026-09-24T07:38:15.428836602Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/trailing","Output":"--- PASS: TestConfig/trailing (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.428851615Z","Action":"pass","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/trailing","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.42885515Z","Action":"run","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/plaintext"}
+{"Time":"2026-09-24T07:38:15.428857323Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/plaintext","Output":"=== RUN   TestConfig/plaintext\n"}
+{"Time":"2026-09-24T07:38:15.429161368Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/plaintext","Output":"--- PASS: TestConfig/plaintext (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.429211744Z","Action":"pass","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/plaintext","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.429215149Z","Action":"run","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/short_timeout"}
+{"Time":"2026-09-24T07:38:15.429217512Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/short_timeout","Output":"=== RUN   TestConfig/short_timeout\n"}
+{"Time":"2026-09-24T07:38:15.429535698Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/short_timeout","Output":"--- PASS: TestConfig/short_timeout (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.429664351Z","Action":"pass","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig/short_timeout","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.42967034Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig","Output":"--- PASS: TestConfig (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.429708307Z","Action":"pass","Package":"example.com/edgehybrid/internal/config","Test":"TestConfig","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.429717661Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Output":"PASS\n"}
+{"Time":"2026-09-24T07:38:15.429736359Z","Action":"output","Package":"example.com/edgehybrid/internal/config","Output":"ok  \texample.com/edgehybrid/internal/config\t0.005s\n"}
+{"Time":"2026-09-24T07:38:15.429879833Z","Action":"pass","Package":"example.com/edgehybrid/internal/config","Elapsed":0.006}
+{"Time":"2026-09-24T07:38:15.455072157Z","Action":"start","Package":"example.com/edgehybrid/internal/lab"}
+{"Time":"2026-09-24T07:38:15.458562491Z","Action":"run","Package":"example.com/edgehybrid/internal/lab","Test":"TestLoopbackTwentyDevices"}
+{"Time":"2026-09-24T07:38:15.458602431Z","Action":"output","Package":"example.com/edgehybrid/internal/lab","Test":"TestLoopbackTwentyDevices","Output":"=== RUN   TestLoopbackTwentyDevices\n"}
+{"Time":"2026-09-24T07:38:15.460395053Z","Action":"output","Package":"example.com/edgehybrid/internal/lab","Test":"TestLoopbackTwentyDevices","Output":"--- PASS: TestLoopbackTwentyDevices (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.46041254Z","Action":"pass","Package":"example.com/edgehybrid/internal/lab","Test":"TestLoopbackTwentyDevices","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.460567511Z","Action":"run","Package":"example.com/edgehybrid/internal/lab","Test":"TestInvalidInput"}
+{"Time":"2026-09-24T07:38:15.460577286Z","Action":"output","Package":"example.com/edgehybrid/internal/lab","Test":"TestInvalidInput","Output":"=== RUN   TestInvalidInput\n"}
+{"Time":"2026-09-24T07:38:15.460607091Z","Action":"output","Package":"example.com/edgehybrid/internal/lab","Test":"TestInvalidInput","Output":"--- PASS: TestInvalidInput (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.460712188Z","Action":"pass","Package":"example.com/edgehybrid/internal/lab","Test":"TestInvalidInput","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.460724516Z","Action":"output","Package":"example.com/edgehybrid/internal/lab","Output":"PASS\n"}
+{"Time":"2026-09-24T07:38:15.462181256Z","Action":"output","Package":"example.com/edgehybrid/internal/lab","Output":"ok  \texample.com/edgehybrid/internal/lab\t0.007s\n"}
+{"Time":"2026-09-24T07:38:15.462198602Z","Action":"pass","Package":"example.com/edgehybrid/internal/lab","Elapsed":0.007}
+{"Time":"2026-09-24T07:38:15.518940384Z","Action":"start","Package":"example.com/edgehybrid/internal/policy"}
+{"Time":"2026-09-24T07:38:15.521442719Z","Action":"run","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect"}
+{"Time":"2026-09-24T07:38:15.521455929Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect","Output":"=== RUN   TestSelect\n"}
+{"Time":"2026-09-24T07:38:15.521477762Z","Action":"run","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/prefer_hybrid"}
+{"Time":"2026-09-24T07:38:15.521479915Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/prefer_hybrid","Output":"=== RUN   TestSelect/prefer_hybrid\n"}
+{"Time":"2026-09-24T07:38:15.52149668Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/prefer_hybrid","Output":"--- PASS: TestSelect/prefer_hybrid (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.521500616Z","Action":"pass","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/prefer_hybrid","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.521504802Z","Action":"run","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/explicit_legacy"}
+{"Time":"2026-09-24T07:38:15.521506435Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/explicit_legacy","Output":"=== RUN   TestSelect/explicit_legacy\n"}
+{"Time":"2026-09-24T07:38:15.521508909Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/explicit_legacy","Output":"--- PASS: TestSelect/explicit_legacy (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.521510591Z","Action":"pass","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/explicit_legacy","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.521512254Z","Action":"run","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/legacy_denied"}
+{"Time":"2026-09-24T07:38:15.521513465Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/legacy_denied","Output":"=== RUN   TestSelect/legacy_denied\n"}
+{"Time":"2026-09-24T07:38:15.521515308Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/legacy_denied","Output":"--- PASS: TestSelect/legacy_denied (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.521516911Z","Action":"pass","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/legacy_denied","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.521518783Z","Action":"run","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/peer_floor"}
+{"Time":"2026-09-24T07:38:15.521520045Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/peer_floor","Output":"=== RUN   TestSelect/peer_floor\n"}
+{"Time":"2026-09-24T07:38:15.521521828Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/peer_floor","Output":"--- PASS: TestSelect/peer_floor (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.521523751Z","Action":"pass","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/peer_floor","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.521525103Z","Action":"run","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/local_floor"}
+{"Time":"2026-09-24T07:38:15.521526295Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/local_floor","Output":"=== RUN   TestSelect/local_floor\n"}
+{"Time":"2026-09-24T07:38:15.521528127Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/local_floor","Output":"--- PASS: TestSelect/local_floor (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.52152977Z","Action":"pass","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/local_floor","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.521531252Z","Action":"run","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/duplicate"}
+{"Time":"2026-09-24T07:38:15.521532334Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/duplicate","Output":"=== RUN   TestSelect/duplicate\n"}
+{"Time":"2026-09-24T07:38:15.521534196Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/duplicate","Output":"--- PASS: TestSelect/duplicate (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.52153682Z","Action":"pass","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/duplicate","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.521538232Z","Action":"run","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/unknown"}
+{"Time":"2026-09-24T07:38:15.521539304Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/unknown","Output":"=== RUN   TestSelect/unknown\n"}
+{"Time":"2026-09-24T07:38:15.521541067Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/unknown","Output":"--- PASS: TestSelect/unknown (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.521542579Z","Action":"pass","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/unknown","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.521543871Z","Action":"run","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/empty"}
+{"Time":"2026-09-24T07:38:15.521544963Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/empty","Output":"=== RUN   TestSelect/empty\n"}
+{"Time":"2026-09-24T07:38:15.521547897Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/empty","Output":"--- PASS: TestSelect/empty (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.521549289Z","Action":"pass","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect/empty","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.521551142Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect","Output":"--- PASS: TestSelect (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.521552754Z","Action":"pass","Package":"example.com/edgehybrid/internal/policy","Test":"TestSelect","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.521553916Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Output":"PASS\n"}
+{"Time":"2026-09-24T07:38:15.521574567Z","Action":"output","Package":"example.com/edgehybrid/internal/policy","Output":"ok  \texample.com/edgehybrid/internal/policy\t0.003s\n"}
+{"Time":"2026-09-24T07:38:15.521579244Z","Action":"pass","Package":"example.com/edgehybrid/internal/policy","Elapsed":0.003}
+{"Time":"2026-09-24T07:38:15.529418817Z","Action":"start","Package":"example.com/edgehybrid/internal/record"}
+{"Time":"2026-09-24T07:38:15.531263998Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestRoundTripAndReplay"}
+{"Time":"2026-09-24T07:38:15.531307954Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestRoundTripAndReplay","Output":"=== RUN   TestRoundTripAndReplay\n"}
+{"Time":"2026-09-24T07:38:15.53133875Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestRoundTripAndReplay","Output":"--- PASS: TestRoundTripAndReplay (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531350908Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestRoundTripAndReplay","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531360522Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence"}
+{"Time":"2026-09-24T07:38:15.531367072Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence","Output":"=== RUN   TestTamperDoesNotConsumeSequence\n"}
+{"Time":"2026-09-24T07:38:15.531374854Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/D"}
+{"Time":"2026-09-24T07:38:15.531414934Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/D","Output":"=== RUN   TestTamperDoesNotConsumeSequence/D\n"}
+{"Time":"2026-09-24T07:38:15.531424148Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/D","Output":"--- PASS: TestTamperDoesNotConsumeSequence/D (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531431469Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/D","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531437908Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/E"}
+{"Time":"2026-09-24T07:38:15.531443737Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/E","Output":"=== RUN   TestTamperDoesNotConsumeSequence/E\n"}
+{"Time":"2026-09-24T07:38:15.531450407Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/E","Output":"--- PASS: TestTamperDoesNotConsumeSequence/E (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531456146Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/E","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531461794Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/F"}
+{"Time":"2026-09-24T07:38:15.531467012Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/F","Output":"=== RUN   TestTamperDoesNotConsumeSequence/F\n"}
+{"Time":"2026-09-24T07:38:15.531472931Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/F","Output":"--- PASS: TestTamperDoesNotConsumeSequence/F (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531478589Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/F","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531484178Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/V"}
+{"Time":"2026-09-24T07:38:15.531489656Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/V","Output":"=== RUN   TestTamperDoesNotConsumeSequence/V\n"}
+{"Time":"2026-09-24T07:38:15.531495575Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/V","Output":"--- PASS: TestTamperDoesNotConsumeSequence/V (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531505229Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/V","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531510837Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/Z"}
+{"Time":"2026-09-24T07:38:15.531518639Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/Z","Output":"=== RUN   TestTamperDoesNotConsumeSequence/Z\n"}
+{"Time":"2026-09-24T07:38:15.531525159Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/Z","Output":"--- PASS: TestTamperDoesNotConsumeSequence/Z (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531531188Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/Z","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531536736Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/b"}
+{"Time":"2026-09-24T07:38:15.531542034Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/b","Output":"=== RUN   TestTamperDoesNotConsumeSequence/b\n"}
+{"Time":"2026-09-24T07:38:15.531549726Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/b","Output":"--- PASS: TestTamperDoesNotConsumeSequence/b (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531555604Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/b","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531561613Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/r"}
+{"Time":"2026-09-24T07:38:15.531566971Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/r","Output":"=== RUN   TestTamperDoesNotConsumeSequence/r\n"}
+{"Time":"2026-09-24T07:38:15.53157285Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/r","Output":"--- PASS: TestTamperDoesNotConsumeSequence/r (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.53157945Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence/r","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531585549Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence","Output":"--- PASS: TestTamperDoesNotConsumeSequence (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531591148Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestTamperDoesNotConsumeSequence","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531599831Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestOrderAndLimit"}
+{"Time":"2026-09-24T07:38:15.531605319Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestOrderAndLimit","Output":"=== RUN   TestOrderAndLimit\n"}
+{"Time":"2026-09-24T07:38:15.531613631Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestOrderAndLimit","Output":"--- PASS: TestOrderAndLimit (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531621273Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestOrderAndLimit","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531627172Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestHighForgedSequence"}
+{"Time":"2026-09-24T07:38:15.53163309Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestHighForgedSequence","Output":"=== RUN   TestHighForgedSequence\n"}
+{"Time":"2026-09-24T07:38:15.531639069Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestHighForgedSequence","Output":"--- PASS: TestHighForgedSequence (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531644658Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestHighForgedSequence","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531650206Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestSeparateSessionsAndDirections"}
+{"Time":"2026-09-24T07:38:15.531656505Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestSeparateSessionsAndDirections","Output":"=== RUN   TestSeparateSessionsAndDirections\n"}
+{"Time":"2026-09-24T07:38:15.531662715Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestSeparateSessionsAndDirections","Output":"--- PASS: TestSeparateSessionsAndDirections (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531668493Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestSeparateSessionsAndDirections","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531674092Z","Action":"run","Package":"example.com/edgehybrid/internal/record","Test":"TestInputBounds"}
+{"Time":"2026-09-24T07:38:15.53167949Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestInputBounds","Output":"=== RUN   TestInputBounds\n"}
+{"Time":"2026-09-24T07:38:15.531685319Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Test":"TestInputBounds","Output":"--- PASS: TestInputBounds (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.531690717Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Test":"TestInputBounds","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.531696275Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Output":"PASS\n"}
+{"Time":"2026-09-24T07:38:15.534214253Z","Action":"output","Package":"example.com/edgehybrid/internal/record","Output":"ok  \texample.com/edgehybrid/internal/record\t0.005s\n"}
+{"Time":"2026-09-24T07:38:15.534238189Z","Action":"pass","Package":"example.com/edgehybrid/internal/record","Elapsed":0.005}
+{"Time":"2026-09-24T07:38:15.539617951Z","Action":"start","Package":"example.com/edgehybrid/internal/wire"}
+{"Time":"2026-09-24T07:38:15.540790015Z","Action":"run","Package":"example.com/edgehybrid/internal/wire","Test":"TestRoundTrip"}
+{"Time":"2026-09-24T07:38:15.540802934Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Test":"TestRoundTrip","Output":"=== RUN   TestRoundTrip\n"}
+{"Time":"2026-09-24T07:38:15.540824236Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Test":"TestRoundTrip","Output":"--- PASS: TestRoundTrip (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.54082685Z","Action":"pass","Package":"example.com/edgehybrid/internal/wire","Test":"TestRoundTrip","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.540829674Z","Action":"run","Package":"example.com/edgehybrid/internal/wire","Test":"TestInvalidFrame"}
+{"Time":"2026-09-24T07:38:15.540831317Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Test":"TestInvalidFrame","Output":"=== RUN   TestInvalidFrame\n"}
+{"Time":"2026-09-24T07:38:15.540834241Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Test":"TestInvalidFrame","Output":"--- PASS: TestInvalidFrame (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.540836534Z","Action":"pass","Package":"example.com/edgehybrid/internal/wire","Test":"TestInvalidFrame","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.540838648Z","Action":"run","Package":"example.com/edgehybrid/internal/wire","Test":"TestShortWrite"}
+{"Time":"2026-09-24T07:38:15.540839909Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Test":"TestShortWrite","Output":"=== RUN   TestShortWrite\n"}
+{"Time":"2026-09-24T07:38:15.540841862Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Test":"TestShortWrite","Output":"--- PASS: TestShortWrite (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.540843495Z","Action":"pass","Package":"example.com/edgehybrid/internal/wire","Test":"TestShortWrite","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.540844937Z","Action":"run","Package":"example.com/edgehybrid/internal/wire","Test":"FuzzFrame"}
+{"Time":"2026-09-24T07:38:15.540846059Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Test":"FuzzFrame","Output":"=== RUN   FuzzFrame\n"}
+{"Time":"2026-09-24T07:38:15.540849013Z","Action":"run","Package":"example.com/edgehybrid/internal/wire","Test":"FuzzFrame/seed#0"}
+{"Time":"2026-09-24T07:38:15.540851477Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Test":"FuzzFrame/seed#0","Output":"=== RUN   FuzzFrame/seed#0\n"}
+{"Time":"2026-09-24T07:38:15.540854101Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Test":"FuzzFrame/seed#0","Output":"--- PASS: FuzzFrame/seed#0 (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.540855593Z","Action":"pass","Package":"example.com/edgehybrid/internal/wire","Test":"FuzzFrame/seed#0","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.540857526Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Test":"FuzzFrame","Output":"--- PASS: FuzzFrame (0.00s)\n"}
+{"Time":"2026-09-24T07:38:15.540859118Z","Action":"pass","Package":"example.com/edgehybrid/internal/wire","Test":"FuzzFrame","Elapsed":0}
+{"Time":"2026-09-24T07:38:15.54086057Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Output":"PASS\n"}
+{"Time":"2026-09-24T07:38:15.541710207Z","Action":"output","Package":"example.com/edgehybrid/internal/wire","Output":"ok  \texample.com/edgehybrid/internal/wire\t0.002s\n"}
+{"Time":"2026-09-24T07:38:15.541727693Z","Action":"pass","Package":"example.com/edgehybrid/internal/wire","Elapsed":0.002}

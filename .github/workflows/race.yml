@@ -1,0 +1,103 @@
+# DRAFT — race detector and full verification on a clean Linux host.
+#
+# STATUS: THIS WORKFLOW HAS NEVER BEEN UPLOADED OR RUN.
+# It is submitted as a plan so the open verification gap can be closed on a
+# platform where the race detector actually works. It must not be presented as
+# evidence of anything until it has run and its output has been recorded.
+#
+# Why it is needed: on the development machine the race detector cannot run.
+# The MinGW import library requests __iob_func, which the system msvcrt.dll does
+# not export, so every -race binary fails with STATUS_ENTRYPOINT_NOT_FOUND.
+# A three-line program with a fresh build cache fails identically, so this is an
+# environment defect, not a project defect. See docs/M1_ERRATA.md E1.
+#
+# Do not weaken any check to make this pass: no disabling race, no disabling cgo,
+# no skipping module verification, no deleting concurrency tests.
+
+name: verify
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux-race:
+    name: Linux amd64 — full test suite with the race detector
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'   # any maintained release providing crypto/mlkem
+          cache: true
+
+      - name: Show the toolchain actually in use
+        run: |
+          go version
+          go env GOOS GOARCH GOVERSION GOTOOLCHAIN CGO_ENABLED CC GOSUMDB GOFLAGS
+
+      - name: Verify module integrity (must NOT be disabled)
+        run: go mod verify
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Build
+        run: go build ./cmd/...
+
+      - name: Test WITHOUT the race detector
+        run: go test -count=1 ./...
+
+      - name: Test WITH the race detector
+        # This is the step that cannot run on the development machine.
+        run: go test -race -count=1 ./...
+
+      - name: End-to-end over real TCP
+        run: bash scripts/m2-e2e.sh
+
+      - name: Summarize the test results from the JSON stream
+        if: always()
+        run: |
+          go test -count=1 -json ./... > results/raw/ci_tests.jsonl || true
+          python3 scripts/summarize-go-test-json.py results/raw/ci_tests.jsonl \
+            --out results/raw/ci_summary.txt \
+            --negatives results/raw/ci_negative_cases.jsonl || true
+          cat results/raw/ci_summary.txt || true
+
+      - name: Upload the raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-evidence
+          path: results/raw/
+          if-no-files-found: warn
+
+  windows-race:
+    name: Windows amd64 — race detector (expected to depend on the C toolchain)
+    runs-on: windows-latest
+    continue-on-error: true   # informative: shows whether a proper MSVC/MinGW helps
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+
+      - name: Show the C toolchain
+        shell: bash
+        run: |
+          go version
+          go env CGO_ENABLED CC
+          gcc --version || true
+          cl 2>&1 | head -3 || true
+
+      - name: Race detector
+        shell: bash
+        run: go test -race -count=1 ./...

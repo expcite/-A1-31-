@@ -1,0 +1,22 @@
+{
+  "version": "interactive-v1.4-bplus1",
+  "frontend_version": "BPLUS-UI-v1.0",
+  "scope": "P0-P5 frontend only; authenticated real API/Channel; no Go/core/API/security change",
+  "baseline_source_files": 452,
+  "baseline_source_sha256": "2c6cc0531b1c6da32b6099d6b3e5cc116252f2f91153d5fa2c7144974f1a3cd5",
+  "validation": "Read actual reports/ui-bplus/test_results.json and raw command exits; no preclaimed PASS",
+  "unknown": [
+    "G3 invocation causality unavailable",
+    "per-operation SM2 S1/S2 stages unobserved",
+    "no new formal1000/1800 performance",
+    "human usability and screen-reader test not run"
+  ],
+  "historical": "Immutable prior M5/M6/Core_Frozen/SM2 data and versions; not current frontend measurement",
+  "current_ui_release": {
+    "version": "interactive-v1.5-minimalui1",
+    "frontend": "MINIMAL-UI-v1.0",
+    "primary_entries": 4,
+    "g3_causal_receipt": "implemented; see current actual receipts, not a certification",
+    "validation_source": "reports/ui-minimal/ACCEPTANCE.json in review package; historical entries below retain their original provenance"
+  }
+}

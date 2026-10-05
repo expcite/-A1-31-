@@ -1,0 +1,29 @@
+{
+  "milestone": "M5A-R2 review patch",
+  "assessment": "PATCHED_REVALIDATION_REQUIRED",
+  "formal_results_eligible": false,
+  "may_proceed_to_formal_sampling": false,
+  "fixed_categories": [
+    "evidence producer shutdown ordering",
+    "manifest/trial/summary/event persistence error propagation",
+    "strict single-object JSON validation and duplicate-key propagation",
+    "traditional/hybrid mode to suite binding",
+    "exact 32-hex session-id validation",
+    "orphan gateway confirmation rejection",
+    "stale M4.2 status documentation"
+  ],
+  "verified_in_review_environment": [
+    "gofmt on modified Go files",
+    "summarizer self-test 17/17",
+    "M4CASE extractor self-test 45/45",
+    "fleet verifier self-test 23/23",
+    "bash syntax for m2-e2e.sh and m4-fleet-e2e.sh"
+  ],
+  "not_verified_in_review_environment": [
+    "full Go build/test/vet of patched tree (Go 1.23.2 available; project requires >=1.25.0)",
+    "fresh Suite 1/Suite 2 E2E after patch",
+    "fresh traditional/hybrid smoke after patch",
+    "race detector",
+    "independent SM2 key-agreement implementation cross-check"
+  ]
+}

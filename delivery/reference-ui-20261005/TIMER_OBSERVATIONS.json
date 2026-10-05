@@ -1,0 +1,140 @@
+[
+  {
+    "source": "evidence/browser/delivery_timer_one.json",
+    "run_id": "interactive-ef20f0d188d632501b667f38d4b3c76d",
+    "source_manifest_sha256": "5330ac977d60422492215d3b5fed6d83162283b067ef33741d88a2edb68fde28",
+    "device_id": "D001",
+    "configured_seconds": 1,
+    "events": [
+      {
+        "schema_version": "interactive-event-v1",
+        "run_id": "interactive-ef20f0d188d632501b667f38d4b3c76d",
+        "event_id": 172,
+        "at": "2026-10-05T03:38:23.6506922Z",
+        "endpoint": "gateway",
+        "device_id": "D001",
+        "sid": "1717be7c77fe7c7cde27f9bbec7f4572",
+        "sample_id": 74,
+        "stage": "telemetry_accepted",
+        "detail": "AEAD通过，身份/温度/样本顺序验收；本机网关观测",
+        "temperature_c": 25
+      },
+      {
+        "schema_version": "interactive-event-v1",
+        "run_id": "interactive-ef20f0d188d632501b667f38d4b3c76d",
+        "event_id": 174,
+        "at": "2026-10-05T03:38:24.6510731Z",
+        "endpoint": "gateway",
+        "device_id": "D001",
+        "sid": "1717be7c77fe7c7cde27f9bbec7f4572",
+        "sample_id": 75,
+        "stage": "telemetry_accepted",
+        "detail": "AEAD通过，身份/温度/样本顺序验收；本机网关观测",
+        "temperature_c": 25
+      },
+      {
+        "schema_version": "interactive-event-v1",
+        "run_id": "interactive-ef20f0d188d632501b667f38d4b3c76d",
+        "event_id": 176,
+        "at": "2026-10-05T03:38:25.6514586Z",
+        "endpoint": "gateway",
+        "device_id": "D001",
+        "sid": "1717be7c77fe7c7cde27f9bbec7f4572",
+        "sample_id": 76,
+        "stage": "telemetry_accepted",
+        "detail": "AEAD通过，身份/温度/样本顺序验收；本机网关观测",
+        "temperature_c": 25
+      },
+      {
+        "schema_version": "interactive-event-v1",
+        "run_id": "interactive-ef20f0d188d632501b667f38d4b3c76d",
+        "event_id": 178,
+        "at": "2026-10-05T03:38:26.6518143Z",
+        "endpoint": "gateway",
+        "device_id": "D001",
+        "sid": "1717be7c77fe7c7cde27f9bbec7f4572",
+        "sample_id": 77,
+        "stage": "telemetry_accepted",
+        "detail": "AEAD通过，身份/温度/样本顺序验收；本机网关观测",
+        "temperature_c": 25
+      }
+    ],
+    "gateway_receive_gaps_seconds": [
+      1.000381,
+      1.000385,
+      1.000356
+    ],
+    "median_gap_seconds": 1.000381,
+    "status": "PASS",
+    "timing_scope": "Gateway observed receive spacing; not per-handshake latency. Original nanosecond timestamp strings retained; gap calculation uses Python microseconds."
+  },
+  {
+    "source": "evidence/browser/delivery_timer_five.json",
+    "run_id": "interactive-ef20f0d188d632501b667f38d4b3c76d",
+    "source_manifest_sha256": "5330ac977d60422492215d3b5fed6d83162283b067ef33741d88a2edb68fde28",
+    "device_id": "D001",
+    "configured_seconds": 5,
+    "events": [
+      {
+        "schema_version": "interactive-event-v1",
+        "run_id": "interactive-ef20f0d188d632501b667f38d4b3c76d",
+        "event_id": 188,
+        "at": "2026-10-05T03:38:32.6711573Z",
+        "endpoint": "gateway",
+        "device_id": "D001",
+        "sid": "1717be7c77fe7c7cde27f9bbec7f4572",
+        "sample_id": 79,
+        "stage": "telemetry_accepted",
+        "detail": "AEAD通过，身份/温度/样本顺序验收；本机网关观测",
+        "temperature_c": 25
+      },
+      {
+        "schema_version": "interactive-event-v1",
+        "run_id": "interactive-ef20f0d188d632501b667f38d4b3c76d",
+        "event_id": 190,
+        "at": "2026-10-05T03:38:37.6715198Z",
+        "endpoint": "gateway",
+        "device_id": "D001",
+        "sid": "1717be7c77fe7c7cde27f9bbec7f4572",
+        "sample_id": 80,
+        "stage": "telemetry_accepted",
+        "detail": "AEAD通过，身份/温度/样本顺序验收；本机网关观测",
+        "temperature_c": 25
+      },
+      {
+        "schema_version": "interactive-event-v1",
+        "run_id": "interactive-ef20f0d188d632501b667f38d4b3c76d",
+        "event_id": 192,
+        "at": "2026-10-05T03:38:42.6717053Z",
+        "endpoint": "gateway",
+        "device_id": "D001",
+        "sid": "1717be7c77fe7c7cde27f9bbec7f4572",
+        "sample_id": 81,
+        "stage": "telemetry_accepted",
+        "detail": "AEAD通过，身份/温度/样本顺序验收；本机网关观测",
+        "temperature_c": 25
+      },
+      {
+        "schema_version": "interactive-event-v1",
+        "run_id": "interactive-ef20f0d188d632501b667f38d4b3c76d",
+        "event_id": 194,
+        "at": "2026-10-05T03:38:47.6722583Z",
+        "endpoint": "gateway",
+        "device_id": "D001",
+        "sid": "1717be7c77fe7c7cde27f9bbec7f4572",
+        "sample_id": 82,
+        "stage": "telemetry_accepted",
+        "detail": "AEAD通过，身份/温度/样本顺序验收；本机网关观测",
+        "temperature_c": 25
+      }
+    ],
+    "gateway_receive_gaps_seconds": [
+      5.000362,
+      5.000186,
+      5.000553
+    ],
+    "median_gap_seconds": 5.000362,
+    "status": "PASS",
+    "timing_scope": "Gateway observed receive spacing; not per-handshake latency. Original nanosecond timestamp strings retained; gap calculation uses Python microseconds."
+  }
+]

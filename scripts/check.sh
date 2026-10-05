@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -eu
+cd "$(dirname "$0")/.."
+go version
+go test ./...
+go vet ./...
+go build ./cmd/...
+go run ./cmd/lab -devices 20 -messages 3
+printf '%s\n' 'Starter checks passed. Secure handshake and competition benchmarks remain unimplemented.'

@@ -1,0 +1,3 @@
+import{pendingControls}from'./state.js';
+import{node,card,button,table,detail,field,badge}from'./components.js';
+export function overview(state,api){const c=card('真实运行概览');c.append(node('p',state.run_id,'muted'),node('p',state.gateway_address+' · '+state.mode));const g=node('div',undefined,'grid');for(const [title,value]of [['在线设备',state.devices.filter(d=>d.status==='online').length],['网关验收遥测',state.devices.reduce((n,d)=>n+d.accepted_samples,0)],['待确认指令',pendingControls(state.operations)]]){const a=card(title);a.append(node('div',value,'metric'));g.append(a)}c.append(g,button('连接本次设备',()=>api('/run/start',{})),document.createTextNode(' '),button('断开本次设备',()=>api('/run/stop',{}),'secondary'));c.append(node('p','刷新仅读取同一运行；关闭页面不会停止。HTTP接受与安全通信确认分开。','muted'));return c}

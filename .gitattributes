@@ -1,0 +1,28 @@
+# Line endings are pinned to LF for every text file in this project.
+#
+# Reason: the M2 review found scripts/m2-e2e.sh shipped with CRLF, and on Linux
+# `bash -n` then failed with "syntax error near unexpected token `$'\r''".
+# A shell script with CR line endings is broken on every non-Windows platform,
+# and a Python shebang with a trailing CR fails with "bad interpreter".
+#
+# Normalising a file to LF changes nothing about its content; it only removes an
+# accident of the editing environment. Set your editor to LF, or let Git do it:
+#
+#   git config core.autocrlf false        # repository-wide, for this checkout
+#
+# This file does NOT change any user's global Git configuration.
+* text eol=lf
+
+# Binary formats must never be line-ending translated.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.zip binary
+*.exe binary
+*.dll binary
+*.so binary
+*.a binary
+*.key binary
+*.pem binary
+*.p12 binary

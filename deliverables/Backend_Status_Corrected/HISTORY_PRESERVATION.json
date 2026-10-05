@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "historical_raw_files_checked": 14816,
+  "changed": [],
+  "packages": [
+    {
+      "path": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_Backend_Completed_Review_Package.zip",
+      "sha256": "e213c49ca69cbe515cdf15ab92f8e9b15ecece4860516940465c52ba650cfe37",
+      "bytes": 20298708
+    },
+    {
+      "path": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_Backend_Reviewed_Fixed_Review_Package.zip",
+      "sha256": "d0757cae1f1a9f74ca92c455b24d62ccf648046e055ac6edc40edce191fbf69d",
+      "bytes": 9518219
+    },
+    {
+      "path": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_Backend_Reviewed_Fixed_Windows.zip",
+      "sha256": "9f1dfe57e5b5de202aed725014dc5bb2f38aae3a5cc522f44f99b8712e1c6183",
+      "bytes": 38104078
+    },
+    {
+      "path": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_Backend_Final_Receipts.zip",
+      "sha256": "38147602f5bdca96426fafa8ef181ceee6a4f800b93e53387ede61c2720f5a27",
+      "bytes": 1713487
+    }
+  ],
+  "new_formal1000": "NOT_EXECUTED",
+  "new_live1800": "NOT_EXECUTED",
+  "old_failed300_retained": true,
+  "old_completed1800_retained": true,
+  "checked_utc": "2026-10-02T16:17:25.857786+00:00"
+}

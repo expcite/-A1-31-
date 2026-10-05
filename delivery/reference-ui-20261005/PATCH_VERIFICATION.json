@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "diff_command": [
+    "C:/Program Files/Git/cmd/git.exe",
+    "-c",
+    "core.autocrlf=false",
+    "diff",
+    "--no-index",
+    "--binary",
+    "--src-prefix=",
+    "--dst-prefix=",
+    "a",
+    "b"
+  ],
+  "diff_exit_code": 1,
+  "exit1_meaning": "expected differences found",
+  "check_command": [
+    "C:/Program Files/Git/cmd/git.exe",
+    "-c",
+    "core.autocrlf=false",
+    "apply",
+    "--check",
+    "C:\\Users\\20477\\WorkBuddy\\EdgeHybrid_ReferenceUI_Work_20261005\\frontend.patch"
+  ],
+  "check_exit_code": 0,
+  "apply_exit_code": 0,
+  "all_source_bytes_equal": true,
+  "patch_sha256": "cfc53114db555ac3d90bcca70d5ab683e5eb0c1c121a55a18b4ae179fa466817"
+}

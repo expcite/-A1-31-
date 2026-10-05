@@ -1,0 +1,230 @@
+{
+  "schema_version": "m5b-corrected-readiness/1",
+  "milestone": "M5B",
+  "status": "READY_LOCAL_CORRECTED_SMOKE",
+  "source_root": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter",
+  "source_manifest": {
+    "root": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter",
+    "files": 204,
+    "manifest_sha256": "aa0ea21668d8f14902c80c39701bbfe8702918d02e3b78b5536dec58ca9518ca"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "run_kind": "smoke",
+  "formal_results_eligible": false,
+  "G1": {
+    "status": "CLOSED_LOCAL",
+    "prior_state": "尚存：终态CPU/确认计数与窗口/子进程Wait；轮次、逐条字节、阶段分离已修，保留并回归",
+    "functions": [
+      "RunDeviceResourceWorker",
+      "SampleCPU/Delta",
+      "filetimeToNS",
+      "runMeasurementWorkers",
+      "RunDeviceThroughputWorker",
+      "RunThroughputSmoke",
+      "ConfirmationObserver"
+    ]
+  },
+  "G2": {
+    "status": "CLOSED_LOCAL",
+    "prior_state": "尚存：身份/范围/ACK语义/EOF/预算/实际吞吐协商事实/薄入口",
+    "functions": [
+      "ValidateTelemetry",
+      "ServeOne",
+      "ServeConnection",
+      "readMessage",
+      "measureRound",
+      "runPRounds",
+      "RunHandshakeSmoke",
+      "RunThroughputSmoke",
+      "cmd/pbench.run"
+    ]
+  },
+  "G3": {
+    "status": "CLOSED_LOCAL",
+    "prior_state": "尚存：宽松验收、持久化和失败证据；原nil保护保留并验证",
+    "functions": [
+      "evidence.Decode/ReadLines/WriteBytes/Complete",
+      "ValidateResourceResults",
+      "ValidateThroughputResults",
+      "CheckThroughputRows",
+      "ValidatePResults",
+      "cmd/bench.verify",
+      "cmd/pbench.verifyP",
+      "JudgeResults"
+    ]
+  },
+  "required_commands": [
+    "mod_verify_r4",
+    "vet_r4",
+    "build_r4",
+    "final_go_tests_r4",
+    "go_json_summary_r4",
+    "python_r4_0",
+    "python_r4_1",
+    "python_r4_2",
+    "python_r4_3",
+    "smoke_r4",
+    "e2e_suite1_r4",
+    "e2e_suite2_r4",
+    "fleet_20x3_r4",
+    "fleet_19plus1_r4"
+  ],
+  "go_test_summary": {
+    "verdict": "PASS",
+    "exit_code": 0,
+    "run_failed": false,
+    "evidence_incomplete": false,
+    "reasons": [],
+    "input": "results\\raw\\m5b_corrected_20260930\\final_go_tests_r4\\stdout.txt",
+    "go_exit_code": 0,
+    "packages_total": 21,
+    "packages_ok": 16,
+    "packages_failed": [],
+    "packages_without_tests": [
+      "example.com/edgehybrid",
+      "example.com/edgehybrid/cmd/device",
+      "example.com/edgehybrid/cmd/fleet",
+      "example.com/edgehybrid/cmd/gateway",
+      "example.com/edgehybrid/cmd/lab"
+    ],
+    "expected_packages": [
+      "example.com/edgehybrid",
+      "example.com/edgehybrid/cmd/bench",
+      "example.com/edgehybrid/cmd/device",
+      "example.com/edgehybrid/cmd/fleet",
+      "example.com/edgehybrid/cmd/gateway",
+      "example.com/edgehybrid/cmd/lab",
+      "example.com/edgehybrid/cmd/pbench",
+      "example.com/edgehybrid/cmd/secctl",
+      "example.com/edgehybrid/internal/app",
+      "example.com/edgehybrid/internal/bench",
+      "example.com/edgehybrid/internal/config",
+      "example.com/edgehybrid/internal/cryptosuite",
+      "example.com/edgehybrid/internal/evidence",
+      "example.com/edgehybrid/internal/handshake",
+      "example.com/edgehybrid/internal/identity",
+      "example.com/edgehybrid/internal/lab",
+      "example.com/edgehybrid/internal/metrics",
+      "example.com/edgehybrid/internal/pbench",
+      "example.com/edgehybrid/internal/policy",
+      "example.com/edgehybrid/internal/record",
+      "example.com/edgehybrid/internal/wire"
+    ],
+    "top_level_tests": {
+      "pass": 336,
+      "fail": 0,
+      "skip": 1
+    },
+    "subtests": {
+      "pass": 268,
+      "fail": 0,
+      "skip": 0
+    },
+    "negative_cases": 37,
+    "m4_cases": 14
+  },
+  "smoke_results": [
+    {
+      "name": "resource_traditional",
+      "binary": "C:\\Users\\20477\\AppData\\Local\\Temp\\edgehybrid-corrected-bin-hqnnm30i\\bench.exe",
+      "dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5b_corrected_20260930\\smoke_r4_data\\resource_traditional\\m5b-resource-20260930T100127.986618400Z"
+    },
+    {
+      "name": "resource_hybrid",
+      "binary": "C:\\Users\\20477\\AppData\\Local\\Temp\\edgehybrid-corrected-bin-hqnnm30i\\bench.exe",
+      "dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5b_corrected_20260930\\smoke_r4_data\\resource_hybrid\\m5b-resource-20260930T100128.440747300Z"
+    },
+    {
+      "name": "throughput_traditional",
+      "binary": "C:\\Users\\20477\\AppData\\Local\\Temp\\edgehybrid-corrected-bin-hqnnm30i\\bench.exe",
+      "dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5b_corrected_20260930\\smoke_r4_data\\throughput_traditional\\m5b-throughput-20260930T100128.882951300Z"
+    },
+    {
+      "name": "throughput_hybrid",
+      "binary": "C:\\Users\\20477\\AppData\\Local\\Temp\\edgehybrid-corrected-bin-hqnnm30i\\bench.exe",
+      "dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5b_corrected_20260930\\smoke_r4_data\\throughput_hybrid\\m5b-throughput-20260930T100129.802627700Z"
+    },
+    {
+      "name": "p_handshake",
+      "binary": "C:\\Users\\20477\\AppData\\Local\\Temp\\edgehybrid-corrected-bin-hqnnm30i\\pbench.exe",
+      "dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5b_corrected_20260930\\smoke_r4_data\\p_handshake"
+    },
+    {
+      "name": "p_throughput",
+      "binary": "C:\\Users\\20477\\AppData\\Local\\Temp\\edgehybrid-corrected-bin-hqnnm30i\\pbench.exe",
+      "dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5b_corrected_20260930\\smoke_r4_data\\p_throughput"
+    }
+  ],
+  "cli_positive_controls": 6,
+  "cli_negative_rejections": 36,
+  "p_tls_rejections": 3,
+  "source_changed_files": 49,
+  "cryptographic_source_unchanged_files": 50,
+  "package": {
+    "status": "SAME_SOURCE_CORE_AND_CLI_VERIFIED",
+    "filename": "EdgeHybrid_M5B_Corrected_Review_Package.zip",
+    "source_root": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter",
+    "final_path": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5B_Corrected_Review_Package.zip",
+    "stage_archive": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5B_Corrected_Stage_20260930.zip",
+    "stage_sha256": "9fe90942d27da985e2c696216cb1eb2599478c07020cdbe748bb621e1b67b45c",
+    "verification_root": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5B_Corrected_Verification_20260930\\edgehybrid-agent-starter",
+    "extracted_source_sha256": "aa0ea21668d8f14902c80c39701bbfe8702918d02e3b78b5536dec58ca9518ca",
+    "core_summary": {
+      "verdict": "PASS",
+      "exit_code": 0,
+      "run_failed": false,
+      "evidence_incomplete": false,
+      "reasons": [],
+      "input": "results\\raw\\m5b_corrected_20260930\\extracted_core_tests\\stdout.txt",
+      "go_exit_code": 0,
+      "packages_total": 7,
+      "packages_ok": 7,
+      "packages_failed": [],
+      "packages_without_tests": [],
+      "expected_packages": [
+        "example.com/edgehybrid/cmd/bench",
+        "example.com/edgehybrid/cmd/pbench",
+        "example.com/edgehybrid/internal/app",
+        "example.com/edgehybrid/internal/bench",
+        "example.com/edgehybrid/internal/evidence",
+        "example.com/edgehybrid/internal/metrics",
+        "example.com/edgehybrid/internal/pbench"
+      ],
+      "top_level_tests": {
+        "pass": 127,
+        "fail": 0,
+        "skip": 0
+      },
+      "subtests": {
+        "pass": 88,
+        "fail": 0,
+        "skip": 0
+      },
+      "negative_cases": 0,
+      "m4_cases": 8
+    },
+    "cli_positive_controls": 6,
+    "cli_negative_rejections": 36,
+    "final_integrity_and_post_package_evidence": "Adjacent EdgeHybrid_M5B_Corrected_Review_Package.verification.json and .verification_logs; final ZIP SHA is external to avoid self-reference"
+  },
+  "historical_gaps": {
+    "race": "PENDING_NO_NEW_EXECUTION",
+    "SM2_key_exchange_independent_oracle": "PENDING",
+    "Linux_resource": "NOT_TESTED",
+    "P_CPU_RSS": "NULL_WITH_REASON"
+  },
+  "skipped_tests": [
+    {
+      "test": "TestSM2SignatureFromThisAdapterVerifiesInOpenSSL",
+      "status": "SKIP_OPENSSL_NOT_ON_PATH"
+    }
+  ],
+  "scope": {
+    "formal_1000_trials": "NOT_RUN",
+    "M6": "NOT_STARTED",
+    "remote_upload": "NOT_PERFORMED",
+    "global_environment_or_install": "NOT_CHANGED",
+    "git": "NOT_A_REPOSITORY_NOT_INITIALIZED"
+  },
+  "agents_file_preserved": true
+}

@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "scope": "presentation only",
+  "version": "interactive-v1.5-minimalui1",
+  "visual_revision": "reference-ui-20261005",
+  "files": 475,
+  "source_manifest_sha256": "5330ac977d60422492215d3b5fed6d83162283b067ef33741d88a2edb68fde28",
+  "baseline_manifest_sha256": "ad65a0b745bb64a4e8c06da4bd5cb353c7597fa29ad45c603c35672eb76bf6da",
+  "changed": [
+    "internal/console/assets/app.js",
+    "internal/console/assets/devices.js",
+    "internal/console/assets/drawer.js",
+    "internal/console/assets/help.js",
+    "internal/console/assets/index.html",
+    "internal/console/assets/keys.js",
+    "internal/console/assets/logs.js",
+    "internal/console/assets/style.css",
+    "internal/console/assets/workbench.js"
+  ],
+  "protected_frontend_unchanged": [
+    "api.js",
+    "store.js",
+    "guide.js",
+    "confirm.js",
+    "usability.js",
+    "data/m5_history.json"
+  ],
+  "all_non_frontend_files_byte_identical": true,
+  "historical_performance": "not resampled; source documents and historical embedded data unchanged"
+}

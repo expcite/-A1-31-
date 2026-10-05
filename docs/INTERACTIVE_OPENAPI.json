@@ -1,0 +1,1510 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EdgeHybrid 本机交互 API",
+    "version": "interactive-v1.2"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:{port}/api/v1",
+      "variables": {
+        "port": {
+          "default": "0",
+          "description": "启动窗口实际端口；0仅为CLI自动分配参数"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "localOwner": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "localOwner": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "edgehybrid_owner"
+      },
+      "csrf": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-CSRF-Token"
+      }
+    },
+    "schemas": {
+      "Control": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "request_id",
+          "device_id",
+          "interval_ms"
+        ],
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "device_id": {
+            "type": "string"
+          },
+          "interval_ms": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 60000
+          }
+        }
+      },
+      "Telemetry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "request_id",
+          "temperature_c"
+        ],
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "temperature_c": {
+            "type": "number",
+            "minimum": -50,
+            "maximum": 150
+          }
+        }
+      },
+      "Empty": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {},
+        "required": []
+      },
+      "Login": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
+      "Sampling": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "auto": {
+            "type": "boolean"
+          },
+          "temperature_c": {
+            "type": "number",
+            "minimum": -50,
+            "maximum": 150
+          }
+        },
+        "required": [
+          "auto",
+          "temperature_c"
+        ]
+      },
+      "Confirmation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "confirm": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "confirm"
+        ]
+      },
+      "Policy": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "confirm": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "traditional",
+              "hybrid"
+            ]
+          }
+        },
+        "required": [
+          "confirm",
+          "mode"
+        ]
+      },
+      "Job": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "m6_rules",
+              "bench_T",
+              "bench_H",
+              "pbench"
+            ]
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "Export": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "format": {
+            "type": "string",
+            "enum": [
+              "json",
+              "csv",
+              "html"
+            ]
+          },
+          "include_payload": {
+            "type": "boolean",
+            "default": false
+          },
+          "confirm": {
+            "type": "string",
+            "description": "仅include_payload=true时须为include_simulated_payload"
+          },
+          "selection": {
+            "$ref": "#/components/schemas/EventSelection"
+          }
+        },
+        "required": [
+          "format"
+        ]
+      },
+      "EventSelection": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "run_id",
+          "from_event_id",
+          "to_event_id"
+        ],
+        "properties": {
+          "run_id": {
+            "type": "string"
+          },
+          "from_event_id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "to_event_id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "device_id": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "endpoint": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "stage": {
+            "type": "string",
+            "maxLength": 128
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "一次本机口令建立owner Cookie；精确Origin，5次/分钟",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/state": {
+      "get": {
+        "summary": "当前run快照",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        }
+      }
+    },
+    "/devices/{id}/telemetry": {
+      "post": {
+        "summary": "真实设备遥测排队，网关验收后才确认",
+        "responses": {
+          "202": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Telemetry"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/gateway/commands": {
+      "post": {
+        "summary": "网关主动周期控制排队，真实ACK后确认",
+        "responses": {
+          "202": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Control"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "post": {
+        "summary": "固定隔离实验；live互斥，40秒预算",
+        "responses": {
+          "202": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Job"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "本run真实任务数组",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        }
+      }
+    },
+    "/exports": {
+      "post": {
+        "summary": "生成有界公共导出；包含模拟载荷须明确确认",
+        "responses": {
+          "201": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Export"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/session": {
+      "get": {
+        "summary": "当前owner会话及csrf_token，不产生业务副作用",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        }
+      }
+    },
+    "/devices": {
+      "get": {
+        "summary": "当前run快照，devices字段为设备集合",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "summary": "当前run快照，events字段为有界事件",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        }
+      }
+    },
+    "/build": {
+      "get": {
+        "summary": "编译版本与生产者源码清单哈希",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        }
+      }
+    },
+    "/history": {
+      "get": {
+        "summary": "原M5冻结数据及来源",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        }
+      }
+    },
+    "/jobs/{job_id}": {
+      "get": {
+        "summary": "内部ID实际任务",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/operations/{operation_id}": {
+      "get": {
+        "summary": "对应run/身份/SID操作状态",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        },
+        "parameters": [
+          {
+            "name": "operation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/devices/{id}/sessions": {
+      "get": {
+        "summary": "最近2000事件内当前run会话观测；不是全部历史",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/exports/{export_id}": {
+      "get": {
+        "summary": "授权内部ID下载；响应为JSON/CSV/HTML及SHA-256",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          }
+        },
+        "parameters": [
+          {
+            "name": "export_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/run/start": {
+      "post": {
+        "summary": "连接本次1或20设备；连接调度不等于握手完成",
+        "responses": {
+          "200": {
+            "description": "批次accepted/partial/rejected；含每个设备结果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "run_id",
+                    "status",
+                    "attempted",
+                    "accepted",
+                    "rejected",
+                    "results",
+                    "note"
+                  ],
+                  "properties": {
+                    "run_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "accepted",
+                        "partial",
+                        "rejected"
+                      ]
+                    },
+                    "attempted": {
+                      "type": "integer"
+                    },
+                    "accepted": {
+                      "type": "integer"
+                    },
+                    "rejected": {
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "device_id": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "enum": [
+                              "accepted",
+                              "rejected"
+                            ]
+                          },
+                          "error": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "description": "逐设备连接准入；首错继续；accepted不是真实握手成功，随后查询state。"
+      }
+    },
+    "/run/stop": {
+      "post": {
+        "summary": "断开本次设备；HTTP管理面保留",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/{id}/connect": {
+      "post": {
+        "summary": "连接该设备，新完整握手",
+        "responses": {
+          "202": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/devices/{id}/disconnect": {
+      "post": {
+        "summary": "断开该设备并等待工作者退出",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/devices/{id}/rekey": {
+      "post": {
+        "summary": "换钥排队；完整新握手、旧待办不自动重发",
+        "responses": {
+          "202": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/devices/{id}/sampling": {
+      "post": {
+        "summary": "设备actor实际本地timer采样开关完成",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sampling"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/operations/{operation_id}/cancel": {
+      "post": {
+        "summary": "只取消尚未写出的队列任务",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "operation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/identities/{id}/rotate": {
+      "post": {
+        "summary": "设备轮换服务CAS；confirm=rotate:id",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Confirmation"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/identities/{id}/revoke": {
+      "post": {
+        "summary": "设备吊销；confirm=revoke:id",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Confirmation"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/identities/{id}/retire": {
+      "post": {
+        "summary": "设备退役；confirm=retire:id",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Confirmation"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/identities/{id}/policy": {
+      "post": {
+        "summary": "可信迁移策略CAS；confirm=policy:id",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Policy"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/jobs/{job_id}/cancel": {
+      "post": {
+        "summary": "取消真实固定子进程，保留退出码与部分输出",
+        "responses": {
+          "200": {
+            "description": "实际响应；202只接受排队，确认须另观测"
+          },
+          "401": {
+            "description": "owner会话或CSRF无效"
+          },
+          "403": {
+            "description": "Host或Origin不匹配"
+          },
+          "429": {
+            "description": "本机请求速率超限"
+          },
+          "400": {
+            "description": "JSON字段、编码或8KiB上限拒绝"
+          },
+          "409": {
+            "description": "冲突、离线、范围、busy或动作拒绝"
+          }
+        },
+        "security": [
+          {
+            "localOwner": [],
+            "csrf": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Empty"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/identities/GW001/rotate": {
+      "post": {
+        "summary": "影响全部设备的受控网关维护 rotate",
+        "description": "confirm=rotate:GW001:ALL；单写者维护窗口，不自动重连或恢复吊销信任。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Confirmation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "本机维护结果；分别观测commit、旧会话关闭、加载、准入和清理，不代表设备重新认证"
+          },
+          "400": {
+            "description": "严格字段/JSON拒绝"
+          },
+          "401": {
+            "description": "owner/授权过期/CSRF拒绝"
+          },
+          "403": {
+            "description": "Host/Origin拒绝"
+          },
+          "409": {
+            "description": "确认、生命周期、CAS或资源边界拒绝"
+          }
+        }
+      }
+    },
+    "/identities/GW001/revoke": {
+      "post": {
+        "summary": "影响全部设备的受控网关维护 revoke",
+        "description": "confirm=revoke:GW001:ALL；单写者维护窗口，不自动重连或恢复吊销信任。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Confirmation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "本机维护结果；分别观测commit、旧会话关闭、加载、准入和清理，不代表设备重新认证"
+          },
+          "400": {
+            "description": "严格字段/JSON拒绝"
+          },
+          "401": {
+            "description": "owner/授权过期/CSRF拒绝"
+          },
+          "403": {
+            "description": "Host/Origin拒绝"
+          },
+          "409": {
+            "description": "确认、生命周期、CAS或资源边界拒绝"
+          }
+        }
+      }
+    },
+    "/identities/GW001/retire": {
+      "post": {
+        "summary": "影响全部设备的受控网关维护 retire",
+        "description": "confirm=retire:GW001:ALL；单写者维护窗口，不自动重连或恢复吊销信任。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Confirmation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "本机维护结果；分别观测commit、旧会话关闭、加载、准入和清理，不代表设备重新认证"
+          },
+          "400": {
+            "description": "严格字段/JSON拒绝"
+          },
+          "401": {
+            "description": "owner/授权过期/CSRF拒绝"
+          },
+          "403": {
+            "description": "Host/Origin拒绝"
+          },
+          "409": {
+            "description": "确认、生命周期、CAS或资源边界拒绝"
+          }
+        }
+      }
+    },
+    "/identities/GW001/cleanup": {
+      "post": {
+        "summary": "影响全部设备的受控网关维护 cleanup",
+        "description": "confirm=cleanup:GW001:ALL；单写者维护窗口，不自动重连或恢复吊销信任。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Confirmation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "本机维护结果；分别观测commit、旧会话关闭、加载、准入和清理，不代表设备重新认证"
+          },
+          "400": {
+            "description": "严格字段/JSON拒绝"
+          },
+          "401": {
+            "description": "owner/授权过期/CSRF拒绝"
+          },
+          "403": {
+            "description": "Host/Origin拒绝"
+          },
+          "409": {
+            "description": "确认、生命周期、CAS或资源边界拒绝"
+          }
+        }
+      }
+    },
+    "/run/exit": {
+      "post": {
+        "summary": "受控退出当前本机HTTP/TCP/全部设备",
+        "description": "confirm=exit:<当前run_id>，需owner+CSRF；返回stopping后进程退出。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Confirmation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "本机维护结果；分别观测commit、旧会话关闭、加载、准入和清理，不代表设备重新认证"
+          },
+          "400": {
+            "description": "严格字段/JSON拒绝"
+          },
+          "401": {
+            "description": "owner/授权过期/CSRF拒绝"
+          },
+          "403": {
+            "description": "Host/Origin拒绝"
+          },
+          "409": {
+            "description": "确认、生命周期、CAS或资源边界拒绝"
+          }
+        }
+      }
+    }
+  },
+  "x-write-security": "all POST except login require localOwner + csrf + exact Origin/Host + application/json, max 8192 bytes, recursive duplicate/unknown fields rejected",
+  "x-observation-contract": "未知对端处理状态为null。ACK超时可能已执行。GET不重发，HTTP202不等同业务成功。网关管理动作未支持。返回对象类型见internal/live/state.go及internal/console/jobs.go。"
+}

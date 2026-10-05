@@ -1,0 +1,106 @@
+{
+  "milestone": "M4.2",
+  "assessed_at_utc": "2026-09-27",
+  "assessment": "M4_2_HARDENING_VERIFIED_PENDING",
+  "run_id": "m4_2-20260927T040822Z",
+
+  "scope": "M4.2 hardening only: legacy keystore fallback, compare-and-replace rotation, monotonic registry revision, session replacement at capacity, lifecycle sweep scope, real registry-commit failure injection, wire-replay evidence field semantics, full-project test evidence, manifest and document cleanup. No benchmark, M5 not started.",
+
+  "single_writer_scope": "trusted admin control plane is single-writer across processes; there is no file lock, so concurrent cross-process registry updates are NOT claimed to be safe. The compare-and-replace guarantee holds within one Registry instance.",
+
+  "fixes": {
+    "legacy_keystore_fallback": {
+      "problem": "FileStore.load tested the error from building the candidate list instead of the error from os.ReadFile, so it accepted a path it had just failed to read and the pre-M4.1 kind-named layout could never be loaded at all",
+      "fix": "success is now decided by lastErr from this os.ReadFile; a non-ENOENT failure is reported instead of silently falling back to the legacy file; a missing key reports a clear 'no key file' error",
+      "tests": "TestLegacyKeyLayoutStillLoads, TestVersionedLayoutTakesPrecedence, TestNonNotExistReadErrorIsNotSilentlyFallback, TestMissingKeyFileReportsNotFound"
+    },
+    "stale_rotation": {
+      "problem": "ApplyRotation did read-modify-Replace with no atomic precondition, so a stale rotation could overwrite a newer generation or roll the device backwards onto retired key material",
+      "fix": "Registry.CompareAndReplace validates generation + old sign key id + old agreement key id INSIDE the write lock and writes nothing on mismatch; Rotation.Validate requires ToGeneration == FromGeneration+1",
+      "tests": "TestStaleRotationCannotRollbackGeneration, TestStaleRotationCannotOverwriteNewerKeyIDs, TestConcurrentRotationsOnlyOneCommit"
+    },
+    "reload_revision_rollback": {
+      "problem": "Reload read and parsed the file before taking the lock, then overwrote memory unconditionally, so it could write an older snapshot over a just-committed Replace",
+      "fix": "the snapshot is adopted only if its revision is >= the in-memory revision (compare at publish); a stale snapshot is discarded, not an error",
+      "invariant": "Registry.Revision() is monotonically non-decreasing",
+      "tests": "TestReloadCannotRollbackNewerReplace (deterministic), TestRevisionIsMonotonicUnderConcurrentReloadAndReplace"
+    },
+    "session_registry_capacity": {
+      "problem": "Register ran the MaxSessions check even when replacing the same device, so at full capacity a reconnect was refused while the defer had already closed the old session, leaving a closed session in the map",
+      "fix": "replacing the same device is a swap: it does not consume a slot and is not subject to MaxSessions; a new device is still an admission and is still bounded; the superseded session is closed outside the lock; the map ends up pointing at the new session",
+      "tests": "TestReconnectCanReplaceAtSessionCapacity, TestNewIdentityCannotEnterAtSessionCapacity, TestSupersededSessionCannotRemoveReplacement"
+    },
+    "lifecycle_sweep_scope": {
+      "problem": "SweepRevoked inspected a session and then called Terminate(id), so it could kill a newer session that superseded the inspected one in between",
+      "fix": "SessionRegistry.TerminateIfCurrent(deviceID, expectedSession) only removes the exact SessionState that was inspected; both sweep paths use it, as does the superseded serve() teardown via UnregisterIfCurrent",
+      "tests": "TestLifecycleSweepCannotKillSupersedingSession"
+    },
+    "registry_commit_failure_injection": {
+      "problem": "the M4.1 test never called a failing ApplyRotation, so it proved nothing about a failed commit",
+      "fix": "Replace persists by writing <trust>.tmp then renaming; occupying <trust>.tmp with a directory makes os.WriteFile fail for real. ApplyRotation is then actually called and must fail",
+      "note": "replacing the trust file itself with a regular file does NOT work -- the rename would overwrite it and the commit would appear to succeed",
+      "assertions": "ApplyRotation returns an error; memory and disk still name generation N; N's private keys still load; the N+1 files exist but are referenced by no registry entry",
+      "tests": "TestRegistryFailureLeavesOldGenerationUsable"
+    },
+    "wire_replay_evidence_fields": {
+      "problem": "channel fields were reported false although session B really did complete its handshake before the injection",
+      "fix": "device_channel_created=true, gateway_channel_created=true, plaintext_delivered=false, business_accepted=false, record_replay_accepted=false. Unobserved fields stay null, never guessed as false"
+    },
+    "manifest_and_docs": {
+      "stale_starter_manifest": "moved to docs/history/STARTER_MANIFEST.sha256 with a README stating it is historical and must not be used to verify; the project root no longer has a MANIFEST.sha256 that produces FAILED results",
+      "delivery_manifest": "the review package root MANIFEST.sha256 is the single valid delivery manifest",
+      "docs_synced": ["README.md (milestone M4.2, lifecycle implemented)", "IMPLEMENTATION_STATUS.json (0.6.2-m4.2, single_writer_scope)", "docs/PROTOCOL_DRAFT.md (v0.3: suite 2 implemented, default config runs)", "docs/LIFECYCLE.md (rotation replaces BOTH key kinds; CAS and single-writer stated)", "cmd/secctl status (milestone M4.2)"]
+    }
+  },
+
+  "evidence": {
+    "full_stream": {
+      "command": "go test -count=1 -json ./...",
+      "file": "results/raw/m4_2_tests.jsonl",
+      "exit_code_file": "results/raw/m4_2_go_test_exit_code",
+      "summary": "results/raw/m4_2_summary.txt",
+      "summary_json": "results/raw/m4_2_summary.json",
+      "expected_package_set": "all 15 packages from go list ./...",
+      "counts": "computed by the summarizer from the JSON stream, never pre-written"
+    },
+    "targeted_stream": {
+      "file": "results/raw/m4_2_targeted_tests.jsonl",
+      "packages": ["identity", "app", "handshake", "secctl"],
+      "purpose": "convenience regression only; it does NOT back the project-wide pass total"
+    },
+    "cases": {
+      "wire_replay": "results/raw/m4_2_wire_replay_cases.jsonl",
+      "rotation_failure": "results/raw/m4_2_rotation_failure_cases.jsonl",
+      "cli_lifecycle": "results/raw/m4_2_cli_lifecycle.jsonl",
+      "fleet": "results/raw/m4_2_fleet_summary.json"
+    },
+    "verification_log": "results/raw/m4_2_verification.txt",
+    "source_manifest": "results/raw/m4_2_source_manifest.sha256"
+  },
+
+  "verification_gaps": [
+    "the race detector still cannot run on this machine (MinGW requests __iob_func, absent from msvcrt.dll); the concurrency tests are functional, NOT race-detector results",
+    "SM2 key agreement still has no independent implementation cross-check (OpenSSL exposes no SM2MQV)",
+    "reuse of an ML-KEM encapsulation key across sessions is not detectable by the responder"
+  ],
+
+  "not_claimed": [
+    "a full verification pass",
+    "race-detector clean",
+    "cross-process concurrent registry update safety (single-writer by policy only)",
+    "a post-quantum secure system (SM2 identity authentication is not post-quantum)",
+    "a security audit or compliance certification",
+    "performance data"
+  ],
+
+  "may_proceed_to_M5": true,
+  "may_proceed_note": "M4.2 is complete. The two verification gaps are carried forward and must be closed before deployment or any claim of complete verification.",
+
+  "must_not_be_reported_as": [
+    "a full verification pass",
+    "race-detector clean",
+    "cross-process concurrent update safety",
+    "a post-quantum secure system",
+    "performance data"
+  ]
+}

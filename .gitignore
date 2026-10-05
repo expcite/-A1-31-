@@ -1,0 +1,10 @@
+/bin/
+/runtime/
+/secrets/
+/results/raw/*
+!/results/raw/.gitkeep
+*.test
+*.exe
+coverage.out
+*.pprof
+.env

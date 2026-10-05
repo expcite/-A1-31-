@@ -1,0 +1,62 @@
+{
+  "verdict": "PASS",
+  "exit_code": 0,
+  "run_failed": false,
+  "evidence_incomplete": false,
+  "reasons": [],
+  "input": "C:\\Users\\20477\\WorkBuddy\\EdgeHybrid_ReferenceUI_Work_20261005\\evidence\\delivery_go_json\\stdout.txt",
+  "go_exit_code": 0,
+  "packages_total": 29,
+  "packages_ok": 24,
+  "packages_failed": [],
+  "packages_without_tests": [
+    "example.com/edgehybrid",
+    "example.com/edgehybrid/cmd/console",
+    "example.com/edgehybrid/cmd/device",
+    "example.com/edgehybrid/cmd/fleet",
+    "example.com/edgehybrid/cmd/lab"
+  ],
+  "expected_packages": [
+    "example.com/edgehybrid",
+    "example.com/edgehybrid/cmd/bench",
+    "example.com/edgehybrid/cmd/console",
+    "example.com/edgehybrid/cmd/demo",
+    "example.com/edgehybrid/cmd/device",
+    "example.com/edgehybrid/cmd/fleet",
+    "example.com/edgehybrid/cmd/gateway",
+    "example.com/edgehybrid/cmd/lab",
+    "example.com/edgehybrid/cmd/pbench",
+    "example.com/edgehybrid/cmd/secctl",
+    "example.com/edgehybrid/internal/app",
+    "example.com/edgehybrid/internal/bench",
+    "example.com/edgehybrid/internal/config",
+    "example.com/edgehybrid/internal/console",
+    "example.com/edgehybrid/internal/cryptosuite",
+    "example.com/edgehybrid/internal/demo",
+    "example.com/edgehybrid/internal/evidence",
+    "example.com/edgehybrid/internal/exports",
+    "example.com/edgehybrid/internal/handshake",
+    "example.com/edgehybrid/internal/identity",
+    "example.com/edgehybrid/internal/lab",
+    "example.com/edgehybrid/internal/live",
+    "example.com/edgehybrid/internal/management",
+    "example.com/edgehybrid/internal/metrics",
+    "example.com/edgehybrid/internal/pbench",
+    "example.com/edgehybrid/internal/policy",
+    "example.com/edgehybrid/internal/record",
+    "example.com/edgehybrid/internal/scenarios",
+    "example.com/edgehybrid/internal/wire"
+  ],
+  "top_level_tests": {
+    "pass": 452,
+    "fail": 0,
+    "skip": 1
+  },
+  "subtests": {
+    "pass": 555,
+    "fail": 0,
+    "skip": 0
+  },
+  "negative_cases": 37,
+  "m4_cases": 14
+}

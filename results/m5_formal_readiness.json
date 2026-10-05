@@ -1,0 +1,114 @@
+{
+  "stage": "M5",
+  "status": "COMPLETE",
+  "formal_matrix_status": "COMPLETED",
+  "planned_runs": 16,
+  "executed_runs": 16,
+  "retries": 0,
+  "warmup": 0,
+  "handshake": [
+    {
+      "mode": "T",
+      "requested": 1000,
+      "executed": 1000,
+      "not_started": 0,
+      "handshake_successes": 1000,
+      "handshake_success_pct": 100.0,
+      "business_successes": 1000,
+      "business_success_pct": 100.0,
+      "status": "PASS",
+      "evidence_status": "VALID"
+    },
+    {
+      "mode": "H",
+      "requested": 1000,
+      "executed": 1000,
+      "not_started": 0,
+      "handshake_successes": 1000,
+      "handshake_success_pct": 100.0,
+      "business_successes": 1000,
+      "business_success_pct": 100.0,
+      "status": "PASS",
+      "evidence_status": "VALID"
+    },
+    {
+      "mode": "P",
+      "requested": 1000,
+      "executed": 1000,
+      "not_started": 0,
+      "handshake_successes": 1000,
+      "handshake_success_pct": 100.0,
+      "business_successes": 1000,
+      "business_success_pct": 100.0,
+      "status": "PASS",
+      "evidence_status": "VALID"
+    }
+  ],
+  "resource_batches": 10,
+  "resource_roles": 20,
+  "throughput": [
+    {
+      "mode": "T",
+      "requested_rounds": 5,
+      "requested_transactions": 1000,
+      "completed_transactions": 1000,
+      "status": "PASS",
+      "evidence_status": "VALID"
+    },
+    {
+      "mode": "H",
+      "requested_rounds": 5,
+      "requested_transactions": 1000,
+      "completed_transactions": 1000,
+      "status": "PASS",
+      "evidence_status": "VALID"
+    },
+    {
+      "mode": "P",
+      "requested_rounds": 5,
+      "requested_transactions": 1000,
+      "completed_transactions": 1000,
+      "status": "PASS",
+      "evidence_status": "VALID"
+    }
+  ],
+  "controls": {
+    "status": "PASS",
+    "positive": 8,
+    "negative": 80
+  },
+  "regression_summary": "results/raw/m5_formal_20261001/freeze/test_summary.json",
+  "freeze": "results/raw/m5_formal_20261001/freeze/freeze.json",
+  "measurement_source_manifest_sha256": "fad0abe7326003b0b1b1ce51f0699acdb3b7f5bcf6bbc9f636026ada2cf996fd",
+  "delivery_source_manifest_sha256": "11c49ff72ec758a5a2d6c2f1d2d46b0c88894ed00bbaa441785e5b1922b0227d",
+  "source_resolution": "results/raw/m5_formal_20261001/measurement_source_resolution.json",
+  "raw_report": "results/raw/m5_formal_20261001/report_verified/recomputed_report.json",
+  "report": "results/raw/m5_formal_20261001/report_verified/REPORT.md",
+  "observed_formal_failures": 0,
+  "observed_formal_timeouts": 0,
+  "observed_formal_interruptions": 0,
+  "development_failures_preserved": true,
+  "postprocessing_failures_preserved": [
+    "recompute_report",
+    "recompute_report_corrected"
+  ],
+  "historical_gaps": {
+    "race": "no new execution",
+    "independent_SM2_key_exchange": "pending",
+    "Linux_resources": "NOT_TESTED",
+    "OpenSSL_SM2_signature": "SKIP"
+  },
+  "M6_executed": false,
+  "demo_zip_sha256": "96bc6b44d21b2a44e25f13f7f181845934d2173373687bf4f56cf25d187226ac",
+  "package": "EdgeHybrid_M5_Formal_Review_Package.zip",
+  "package_verification": "results/raw/m5_formal_20261001/package_verification.json",
+  "package_stage_verification": {
+    "status": "PASS",
+    "measurement_source_files_matched": 241,
+    "delivery_source_files_matched": 241,
+    "results_revalidated_with_rebuilt_tools": 16,
+    "excluded_entries": 0,
+    "stage_archive_sha256": "5d228d79b9c2344ec08f01bd2e70ba9b9efd164589743c385599a63fec7c75ca"
+  },
+  "final_package_verification_sidecar": "../EdgeHybrid_M5_Formal_Review_Package.verification.json"
+}

@@ -1,0 +1,254 @@
+{
+  "schema_version": "interactive-readiness-v1",
+  "version": "interactive-v1",
+  "source_manifest_sha256": "b66ee65c21d1eef89c626ccab941b0d31f5690c1e09c31aa01660ab251161c27",
+  "status": "DELIVERED_WITH_EXPLICIT_ENVIRONMENT_GAP",
+  "criteria": [
+    {
+      "id": "C01",
+      "status": "PASS",
+      "finding": "真实26.3/28.7、网关样本关联；64取消待办经实际发送路径不写出",
+      "evidence": "r3_browser1; queue_acceptance; final_delivery/one"
+    },
+    {
+      "id": "C02",
+      "status": "PASS",
+      "finding": "暂停后无新遥测仍真实控制5000并验证ACK",
+      "evidence": "final_delivery/one/idle_control.json"
+    },
+    {
+      "id": "C03",
+      "status": "PASS",
+      "finding": "可控时钟及真实多个1s/5s间隔；±25%预先冻结",
+      "evidence": "release_checks/all_go/stdout.txt:TestActualSamplingIntervals"
+    },
+    {
+      "id": "C04",
+      "status": "PASS",
+      "finding": "616.11秒连续验收、512记录期间新握手、静置16秒主动控制",
+      "evidence": "r2_long_hybrid; build_delivery/association.json"
+    },
+    {
+      "id": "C05",
+      "status": "PASS",
+      "finding": "自动/12手动/12控制重叠；唯一Receive，实际Channel发送",
+      "evidence": "release_checks/all_go/stdout.txt:TestConcurrentDispatch"
+    },
+    {
+      "id": "C06",
+      "status": "PASS",
+      "finding": "20台Suite2，每台至少3遥测/1主动控制；D001不改D002",
+      "evidence": "final_delivery/twenty/controls_each.json"
+    },
+    {
+      "id": "C07",
+      "status": "PASS",
+      "finding": "离线控制409无假ACK；关闭页面不停止的规则真实保持",
+      "evidence": "final_delivery/one; r2_refresh.dom.txt"
+    },
+    {
+      "id": "C08",
+      "status": "PASS",
+      "finding": "同ID相同参数无重复接收，冲突409；实际双击仅一个新ID",
+      "evidence": "final_delivery/one; r3_browser1"
+    },
+    {
+      "id": "C09",
+      "status": "PASS",
+      "finding": "截留真实加密ACK，超时unknown、错误SID/周期拒绝、迟到确认",
+      "evidence": "release_checks/all_go/stdout.txt:TestDroppedAndLateEncryptedACK"
+    },
+    {
+      "id": "C10",
+      "status": "PASS",
+      "finding": "时间/计数完整新握手、旧SID不完成新任务；旧密文安全回归",
+      "evidence": "release_checks/all_go; final_delivery/one/rekey.json"
+    },
+    {
+      "id": "C11",
+      "status": "PASS",
+      "finding": "吊销D020本地预检拒绝，正常19仍可主动控制；来源如实标注",
+      "evidence": "release_checks/all_go/stdout.txt:TestTwentyDevicesIsolationLifecycle"
+    },
+    {
+      "id": "C12",
+      "status": "PASS",
+      "finding": "原有限Demo源码/ZIP不变，交互/新smoke独立run",
+      "evidence": "historical_check/final_preservation.json"
+    },
+    {
+      "id": "L01",
+      "status": "PASS",
+      "finding": "页面真实轮换及新世代握手；原CAS失败保留旧有效世代回归",
+      "evidence": "r2_browser; release_checks/all_go:identity rotation_failure tests"
+    },
+    {
+      "id": "L02",
+      "status": "PASS",
+      "finding": "真实吊销/退役、拒绝重连、其他身份不受影响",
+      "evidence": "r3_browser20; release_checks/all_go"
+    },
+    {
+      "id": "L03",
+      "status": "PASS",
+      "finding": "真实GW/device公开元数据，GW管理明确未支持",
+      "evidence": "screenshots/r3_keys_1366.jpg"
+    },
+    {
+      "id": "L04",
+      "status": "PASS",
+      "finding": "可信策略T/H实际新握手，篡改/降级拒绝，不自动回退",
+      "evidence": "r2_session_T.dom.txt; release_checks/all_go"
+    },
+    {
+      "id": "L05",
+      "status": "PASS",
+      "finding": "CAS提交、gateway_adopted_revision、session_closed分别实际记录；策略重检",
+      "evidence": "r2_policy_T.dom.txt; r3_revoke.dom.txt; release_checks/all_go"
+    },
+    {
+      "id": "UI01",
+      "status": "PASS",
+      "finding": "八个模块页面真实可达，空任务/加载/错误/状态保留",
+      "evidence": "screenshots/; r3_browser20"
+    },
+    {
+      "id": "UI02",
+      "status": "PASS",
+      "finding": "已交付表单使用真实API/受控管理/实际任务；202只排队",
+      "evidence": "r3_browser1; r3_browser20; final_delivery"
+    },
+    {
+      "id": "UI03",
+      "status": "PASS",
+      "finding": "刷新和多标签同run/20在线；不额外启动/重发",
+      "evidence": "screenshots/r2_refresh.dom.txt; r2_second_tab.dom.txt; r3_browser1"
+    },
+    {
+      "id": "UI04",
+      "status": "PASS",
+      "finding": "浏览器CSS viewport 1366x768、1920x1080和125%页面缩放；非Windows DPI实机声明",
+      "evidence": "screenshots/r3_layout.json; r3_1366_125.jpg; r3_single_confirmed.jpg"
+    },
+    {
+      "id": "UI05",
+      "status": "PASS",
+      "finding": "原M5明确版本/run/平台/0ns；实时仅新run",
+      "evidence": "screenshots/r3_history.dom.txt; historical_check/m5_recomputed"
+    },
+    {
+      "id": "S01",
+      "status": "PASS",
+      "finding": "无/错/过期owner拒绝；口令/Cookie/CSRF不写公开记录",
+      "evidence": "release_checks/all_go:console authorization tests; final_delivery/one/api.json"
+    },
+    {
+      "id": "S02",
+      "status": "PASS",
+      "finding": "Host/Origin/CSRF/method及无副作用GET负面",
+      "evidence": "release_checks/all_go:console server tests"
+    },
+    {
+      "id": "S03",
+      "status": "PASS",
+      "finding": "未知/重复/超大/非法范围/伪造状态/无效身份拒绝",
+      "evidence": "release_checks/all_go:console schema/export tests"
+    },
+    {
+      "id": "S04",
+      "status": "PASS",
+      "finding": "真实HTML输入作为文本，无alert，无浏览器error；CSP保持",
+      "evidence": "screenshots/r3_injection.dom.txt; r3_injection.jpg"
+    },
+    {
+      "id": "S05",
+      "status": "PASS",
+      "finding": "内部导出ID授权、穿越拒绝、默认payload清除、显式确认、hash实际核对",
+      "evidence": "release_checks/all_go; final_delivery/one/export.json"
+    },
+    {
+      "id": "S06",
+      "status": "PASS",
+      "finding": "固定allowlist，独立正常M6 test binary，live互斥，无生产后门",
+      "evidence": "final_delivery/twenty; r3_browser20/jobs"
+    },
+    {
+      "id": "S07",
+      "status": "PASS",
+      "finding": "队列32、账本256、事件2000、任务8、导出16、文件上限；满队列/账本/限流拒绝，写错停worker",
+      "evidence": "queue_acceptance; final_delivery/one/bounded_state.json; extracted/one/api.json; release_checks/all_go"
+    },
+    {
+      "id": "D01",
+      "status": "PASS",
+      "finding": "事件数/stage_counts/SHA可重算，缺字段/篡改统计被拒绝",
+      "evidence": "release_checks/all_go:exports; final_delivery/one/export.json"
+    },
+    {
+      "id": "D02",
+      "status": "PARTIAL",
+      "finding": "中文独立目录，应用PATH无Go/Python/Node；原生cmd启动与真实通信通过。物理外网断开未执行",
+      "evidence": "final_delivery/launcher; final_delivery/one"
+    },
+    {
+      "id": "D03",
+      "status": "PASS",
+      "finding": "中文空格路径、单实例拒绝2、端口占用2、stop及重启0",
+      "evidence": "final_delivery/one/duplicate.command.json; occupied.command.json; restart.command.json"
+    },
+    {
+      "id": "D04",
+      "status": "PASS",
+      "finding": "真实Browser截图及逐步DOM，1/20设备操作；没有设计图冒充",
+      "evidence": "screenshots/; UI_STEPS.md"
+    },
+    {
+      "id": "D05",
+      "status": "PASS",
+      "finding": "5页PDF全部渲染检查；可编辑MD/后端API/故障/边界",
+      "evidence": "deliverables/Interactive/EdgeHybrid_Interactive_Manual.pdf; docs/INTERACTIVE_OPENAPI.json"
+    },
+    {
+      "id": "D06",
+      "status": "PASS",
+      "finding": "最终319+新增前端模块/测试的生产者清单、binary SHA、发布manifest与解压校验",
+      "evidence": "build_delivery; final_delivery/manifest_verification.json; top MANIFEST.sha256"
+    },
+    {
+      "id": "D07",
+      "status": "PASS",
+      "finding": "全量Go原始JSON与exit0；frontend JSON0；race/独立SM2仍pending",
+      "evidence": "release_checks; REGRESSION_SUMMARY.json"
+    },
+    {
+      "id": "D08",
+      "status": "PASS",
+      "finding": "2954旧raw hash逐一未变，旧Demo保留；M5原16批只核验重算",
+      "evidence": "historical_check"
+    }
+  ],
+  "counts": {
+    "PASS": 36,
+    "PARTIAL": 1,
+    "NOT_EXECUTED": 0
+  },
+  "environment_gaps": {
+    "physical_network_adapter_disconnection": "NOT_EXECUTED",
+    "Windows_system_125_percent_DPI": "NOT_EXECUTED; browser page scale=1.25 tested",
+    "native_Edge_interactive_click_validation": "NOT_EXECUTED; default browser launch requested by actual cmd; interactive clicks/screens in Codex in-app browser",
+    "cross_machine_hardware": "NOT_TESTED"
+  },
+  "historical_gaps": {
+    "race": "pending",
+    "independent_SM2_exchange": "pending",
+    "OpenSSL_signature": "SKIP",
+    "Linux_resources": "NOT_TESTED"
+  },
+  "failures_retained": [
+    "phase_a idle_profile invalid test SID fixture failures before correction",
+    "phase_b compile duplicate rekey case before correction",
+    "extracted/one overrate HTTP429; app exit0, harness exit1; retained",
+    "real cancelled jobs exit1 retained; not relabelled all successful"
+  ],
+  "scope_stop": "No M7 or extra features; stop after this delivery."
+}

@@ -1,0 +1,26 @@
+import {confirmAction} from './confirm.js';
+import {node,card,button,readButton,badge,updateBadge,setText,detail,guardButton} from './components.js';
+export function keys(initial,api){
+ const store=api.store,all=node('div',undefined,'identity-page'),deviceCard=card('设备长期身份与迁移策略'),rows=node('div'),deviceResult=node('div');deviceResult.dataset.result='device';
+ deviceCard.append(node('p','长期身份轮换不同于完整会话换钥。传统模式必须由可信配置允许；Hybrid失败不自动回退。','muted'),rows,deviceResult);
+ const records=new Map(),selectorLabel=node('label','选择维护设备'),selector=node('select'),tabs=node('div',undefined,'action-tabs'),objectList=node('div',undefined,'object-list'),objectButtons=new Map(),identityLayout=node('div',undefined,'identity-layout'),identityContent=node('div',undefined,'identity-content');selectorLabel.className='identity-selector';selectorLabel.append(selector);identityContent.append(selectorLabel,rows,deviceResult);identityLayout.append(objectList,identityContent);deviceCard.append(identityLayout);let active=api.managementTarget||'device';
+ function deviceRow(id){
+  const row=node('section',undefined,'identity-row'),text=node('p'),menu=node('details');menu.append(node('summary','维护 '+id));const buttons=[];
+  for(const[action,label,mode]of [['rotate','轮换长期身份'],['revoke','吊销身份'],['retire','退役身份'],['policy','允许传统模式','traditional'],['policy','要求混合模式','hybrid']]){
+   const b=button(label+' '+id,async()=>{const context=store.context(id),yes=await confirmAction(id,label,action+':'+id);if(!yes)return;const r=await api('/identities/'+id+'/'+action,{confirm:yes,...(mode?{mode}:{})},{context,guard:()=>store.canWrite(undefined,{maintenance:true})});deviceResult.replaceChildren(node('p',id+' 管理接口已返回；提交、采用、会话关闭依原回执分别核对。'),detail(r));await api.refreshState()},['revoke','retire'].includes(action)?'danger':'secondary');buttons.push(b);menu.append(b)
+  }row.append(text,menu);return {row,text,buttons};
+ }
+ const gateway=card('网关长期身份维护 · 影响全部相关设备'),meta=node('p'),phase=node('p'),result=node('div');result.dataset.result='gateway';gateway.append(node('p','维护窗口会停止全部准入、关闭旧会话与队列。轮换提交后不会自动重连；吊销、退役跨重启有效。清理是删除目标文件，不是物理擦除。','warning'),meta,phase);
+ const gatewayButtons=[],gatewayMenu=node('details',undefined,'overflow');gatewayMenu.append(node('summary','维护操作 ⌄'));
+ for(const[action,label]of [['rotate','轮换网关'],['revoke','吊销网关'],['retire','退役网关'],['cleanup','重试网关清理']]){
+  const b=button(label,async()=>{const run=store.snapshot?.run_id,epoch=store.epoch,yes=await confirmAction('GW001',label,action+':GW001:ALL');if(!yes)return;if(run!==store.snapshot?.run_id||epoch!==store.epoch)throw Error('运行或授权已改变，未发送维护');const r=await api('/identities/GW001/'+action,{confirm:yes},{guard:()=>store.canWrite(undefined,{maintenance:true})});result.replaceChildren();
+   const observations=[['注册表已提交',r.commit?.registry_committed],['全部旧会话已关闭',r.all_sessions_closed],['准入已开放',r.admission_reopened],['加载错误',r.load_error],['清理待处理',r.cleanup_pending]];
+   for(const[label,value]of observations)result.append(node('p',label+'：'+(value===undefined||value===null?'未观测':String(value))));
+   result.append(node('p','设备是否重连须查看真实连接状态；本界面不会自动恢复。','muted'),detail(r));await api.refreshState();
+  },['revoke','retire'].includes(action)?'danger':'secondary');gatewayButtons.push(b);gatewayMenu.append(b)
+ }
+ function choose(target){active=target;deviceCard.hidden=target!=='device';gateway.hidden=target!=='gateway';for(const b of tabs.children)b.setAttribute('aria-pressed',String(b.dataset.target===target))}
+ for(const [target,label]of [['device','设备身份与迁移'],['gateway','网关维护']]){const b=readButton(label,()=>choose(target));b.dataset.target=target;tabs.append(b)}
+ gateway.append(gatewayMenu,result);all.append(tabs,deviceCard,gateway);all.choose=choose;selector.onchange=()=>all.refresh();choose(active);
+ all.refresh=()=>{const s=store.snapshot;if(!s)return;const ids=new Set(s.devices.map(d=>d.id));if([...selector.options].map(o=>o.value).join('|')!==[...ids].join('|')){const old=selector.value;selector.replaceChildren(...[...ids].map(id=>{const o=node('option',id);o.value=id;return o}));selector.value=ids.has(old)?old:[...ids][0]||''}for(const[id,r]of records)if(!ids.has(id)){r.row.remove();records.delete(id);objectButtons.get(id)?.remove();objectButtons.delete(id)}for(const d of s.devices){let r=records.get(d.id);if(!r){r=deviceRow(d.id);records.set(d.id,r);rows.append(r.row);const b=readButton(d.id+' · 设备',()=>{selector.value=d.id;all.refresh()});objectList.append(b);objectButtons.set(d.id,b)}objectButtons.get(d.id).classList.toggle('selected',d.id===selector.value);objectButtons.get(d.id).setAttribute('aria-pressed',String(d.id===selector.value));r.row.hidden=d.id!==selector.value;setText(r.text,d.id+' · 世代 '+d.generation+' · '+d.lifecycle+' · 最低策略 '+d.minimum_mode);for(const b of r.buttons)guardButton(b,()=>store.canWrite(undefined,{maintenance:true}))}setText(meta,(s.gateway?.id||'网关')+' · 世代 '+(s.gateway?.generation??'未观测')+' · '+(s.gateway?.lifecycle||'未观测'));setText(phase,'维护阶段 '+(s.maintenance?.phase||'空闲')+' · 准入 '+(s.maintenance?.admission_blocked?'关闭':'开放')+(s.maintenance?.error?' · '+s.maintenance.error:''));for(const b of gatewayButtons)guardButton(b,()=>store.canWrite(undefined,{maintenance:true}))};all.refresh();return all;
+}

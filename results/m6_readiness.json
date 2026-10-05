@@ -1,0 +1,127 @@
+{
+  "stage": "M6",
+  "status": "COMPLETE",
+  "run_id": "m6-20261001T021616Z",
+  "measurement_source_manifest_sha256": "9d0576f5ea7210752bd32ff6ed549a58fa99356f1ba5bd70a87cfed4c7fe9f8c",
+  "delivery_source_manifest_sha256": "cacc09b653a2a95e9e27ea838aa2ab181cab792373b3a1765588b672fa970778",
+  "normal_comparison": "PASS",
+  "common_rule_coverage": {
+    "A": "16/16",
+    "B": "16/16"
+  },
+  "known_defects": {
+    "A_detected": 3,
+    "B_detected": 3,
+    "missed": 0,
+    "unreachable": 0,
+    "scope": "3 isolated test-only variants; finite detection, not proof"
+  },
+  "reproduction": "3/3 same semantics",
+  "regression": {
+    "verdict": "PASS",
+    "exit_code": 0,
+    "run_failed": false,
+    "evidence_incomplete": false,
+    "reasons": [],
+    "input": "results\\raw\\m6_20261001\\regression\\final_go_test_json\\stdout.txt",
+    "go_exit_code": 0,
+    "packages_total": 23,
+    "packages_ok": 17,
+    "packages_failed": [],
+    "packages_without_tests": [
+      "example.com/edgehybrid",
+      "example.com/edgehybrid/cmd/demo",
+      "example.com/edgehybrid/cmd/device",
+      "example.com/edgehybrid/cmd/fleet",
+      "example.com/edgehybrid/cmd/gateway",
+      "example.com/edgehybrid/cmd/lab"
+    ],
+    "expected_packages": [
+      "example.com/edgehybrid",
+      "example.com/edgehybrid/cmd/bench",
+      "example.com/edgehybrid/cmd/demo",
+      "example.com/edgehybrid/cmd/device",
+      "example.com/edgehybrid/cmd/fleet",
+      "example.com/edgehybrid/cmd/gateway",
+      "example.com/edgehybrid/cmd/lab",
+      "example.com/edgehybrid/cmd/pbench",
+      "example.com/edgehybrid/cmd/secctl",
+      "example.com/edgehybrid/internal/app",
+      "example.com/edgehybrid/internal/bench",
+      "example.com/edgehybrid/internal/config",
+      "example.com/edgehybrid/internal/cryptosuite",
+      "example.com/edgehybrid/internal/demo",
+      "example.com/edgehybrid/internal/evidence",
+      "example.com/edgehybrid/internal/handshake",
+      "example.com/edgehybrid/internal/identity",
+      "example.com/edgehybrid/internal/lab",
+      "example.com/edgehybrid/internal/metrics",
+      "example.com/edgehybrid/internal/pbench",
+      "example.com/edgehybrid/internal/policy",
+      "example.com/edgehybrid/internal/record",
+      "example.com/edgehybrid/internal/wire"
+    ],
+    "top_level_tests": {
+      "pass": 353,
+      "fail": 0,
+      "skip": 1
+    },
+    "subtests": {
+      "pass": 340,
+      "fail": 0,
+      "skip": 0
+    },
+    "negative_cases": 37,
+    "m4_cases": 14
+  },
+  "original_production_go_unchanged": true,
+  "m5_original_files_unchanged": true,
+  "m5_revalidated_batches": 16,
+  "demo_zip_unchanged": true,
+  "artifacts": [
+    {
+      "path": "deliverables/M6/EdgeHybrid_Defense_v2.pptx",
+      "bytes": 57033,
+      "sha256": "100155e81612e4afd81d894777838583fe647dfdca2a6f500cca16e2d10068bd"
+    },
+    {
+      "path": "deliverables/M6/EdgeHybrid_Final_Design.pdf",
+      "bytes": 156681,
+      "sha256": "8ecd4fb136fbc5b97e0018626a1db003f3b8e0ae3d3725a2b16a52aa8af17a2f"
+    }
+  ],
+  "visual_review": {
+    "pptx": {
+      "path": "deliverables/M6/EdgeHybrid_Defense_v2.pptx",
+      "slides": 12,
+      "charts": 4,
+      "tables": 3,
+      "all_slides_rendered_and_visually_inspected": true,
+      "native_office_execution": false
+    },
+    "pdf": {
+      "path": "deliverables/M6/EdgeHybrid_Final_Design.pdf",
+      "pages": 4,
+      "all_pages_rendered_and_visually_inspected": true
+    },
+    "word": {
+      "generated": true,
+      "render_verified": false,
+      "reason": "LibreOffice unavailable; Word.Application absent; unverified draft excluded from delivery",
+      "draft_sha256": "30085b7b414c36aa478343183990acaf3de999c4904056386b03d1b5bf1f1a2f"
+    }
+  },
+  "historical_gaps": {
+    "race": "pending",
+    "independent_SM2_exchange": "pending",
+    "OpenSSL_signature": "SKIP",
+    "Linux_resources": "NOT_TESTED"
+  },
+  "current_M5_sampling_repeated": false,
+  "Demo_republished": false,
+  "external_delivery_verification": "../EdgeHybrid_M6_Review_Package.verification.json",
+  "stop_after_M6": true,
+  "regression_run_id": "m6-20261001T021616Z/final-go",
+  "regression_source_manifest_sha256": "cacc09b653a2a95e9e27ea838aa2ab181cab792373b3a1765588b672fa970778",
+  "final_go_command": "results/raw/m6_20261001/regression/final_go_test_json/command.json"
+}

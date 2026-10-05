@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>EdgeHybrid · 安全通信工作台</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<a class="skip-link" href="#main">跳转到主操作</a>
+<button id="nav-backdrop" type="button" aria-label="关闭导航"></button>
+<aside id="sidebar" aria-label="应用导航"><div class="brand"><span class="brand-mark" aria-hidden="true">E<span>H</span></span><div><b>EdgeHybrid</b><p>安全通信工作台</p></div></div><div class="workspace-name"><span class="workspace-icon" aria-hidden="true">本</span><div>本机演示环境<small>真实安全 TCP 通信</small></div></div><nav id="nav" aria-label="主导航"></nav><div class="sidebar-bottom"><nav id="aux-nav" aria-label="辅助导航"></nav><div class="sidebar-footer"><span id="frontend-version"></span><p id="footer-version"></p><small>本机模拟 · 非合规认证</small></div></div></aside>
+<div class="app-shell">
+<header class="topbar"><div class="breadcrumbs"><button id="sidebar-toggle" type="button" class="secondary icon-button" aria-label="展开或折叠导航" aria-controls="sidebar" aria-expanded="true"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2"/></svg></button><span class="workspace-crumb">本机工作区</span><span class="crumb-separator">/</span><b id="breadcrumb">工作台</b></div><div class="header-actions"><span id="connection" class="badge warning">正在核对本机授权</span><div id="run-actions"></div><div id="utility-controls" hidden><button id="refresh-state" type="button" class="secondary" disabled>刷新状态</button><button id="guide-toggle" type="button" class="secondary" disabled>开启演示引导</button></div></div></header>
+<main id="main" tabindex="-1">
+<div class="title-line"><div><h1 id="title" tabindex="-1">工作台</h1><p id="page-description" class="subheading">选择一个设备，完成发送、控制和确认。</p></div><span class="scene-marker">本机安全通信</span></div>
+<p id="stale-note" class="warning" role="status" hidden></p>
+<section id="login" class="card login-card"><p class="eyebrow">本机管理授权</p><h3>先授权，再操作真实设备</h3><p>输入启动窗口显示的一次口令。口令只发给本机接口，不放入网址、存储、日志或导出。</p><form id="login-form"><label for="code">本机一次口令<input id="code" type="password" autocomplete="off" required></label><button id="login-submit" type="submit">授权进入</button></form><p class="muted">用户运行不依赖 Go、Python、Node、Java 或外网 CDN。</p></section>
+<section id="welcome" class="welcome" hidden><div><strong>从一次真实双向收发开始</strong><p>选择设备 → 明确连接 → 发送温度 → 设置间隔 → 查看对端确认。需要讲解时开启四步引导。</p></div><button id="dismiss-welcome" type="button" class="secondary">知道了</button></section>
+<div id="notice-shell"><p id="notice" role="status" aria-live="polite"></p><button id="notice-dismiss" type="button" class="icon-button" aria-label="关闭提示">×</button></div><div id="content" hidden></div>
+</main><footer class="statusbar"><span id="expiry"></span><span>真实接口与回执 · 未确认不等于未执行</span></footer></div><script type="module" src="/app.js"></script></body></html>
