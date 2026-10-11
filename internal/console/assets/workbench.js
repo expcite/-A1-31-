@@ -22,7 +22,14 @@ export function communication(initial,api){
   if(kind==='telemetry'){input.step='0.1';input.min='-50';input.max='150'}else input.inputMode='decimal';
   const validation=fieldFeedback(input),fieldWrap=node('div',undefined,'field-wrap');fieldWrap.append(input,node('span',kind==='telemetry'?'℃':'秒'));l.append(fieldWrap,validation.message);
   const submitted=node('p',undefined,'submitted'),out=node('div',undefined,'operation-result'),msg=node('p'),status=badge('unknown'),when=node('p',undefined,'muted'),opid=node('p',undefined,'break-id muted');
-  const receiptTop=node('div',undefined,'receipt-top');receiptTop.append(node('span','本次操作回执','eyebrow'),status);out.dataset.result=kind;out.dataset.managed='1';out.setAttribute('aria-live','polite');out.append(receiptTop,msg,submitted,when,opid);opid.hidden=true;
+  const receiptTop=node('div',undefined,'receipt-top');receiptTop.append(node('span','本次操作回执','eyebrow'),status);out.dataset.result=kind;out.dataset.managed='1';out.setAttribute('aria-live','polite');
+  const tracker=node('div',undefined,'causal-tracker');
+  const s1=node('span','1. 待提交','tracker-step pending'),a1=node('span','→','tracker-arrow');
+  const s2=node('span',kind==='telemetry'?'2. 设备写出':'2. 网关下发','tracker-step pending'),a2=node('span','→','tracker-arrow');
+  const s3=node('span',kind==='telemetry'?'3. 网关接收':'3. 设备处理','tracker-step pending'),a3=node('span','→','tracker-arrow');
+  const s4=node('span','4. 双端确认','tracker-step pending');
+  tracker.append(s1,a1,s2,a2,s3,a3,s4);
+  out.append(receiptTop,msg,submitted,when,tracker,opid);opid.hidden=true;
   const evidence=readButton('查看详情与关联记录 →',()=>{const r=store.receipt(store.selected,kind);if(r?.operation_id)api.drawer.open('operation',r.operation_id,store.selected)},'link-button');evidence.hidden=true;out.append(evidence);
   const send=button(kind==='telemetry'?'发送温度':'设置上报间隔',async()=>{
    const id=store.selected,context=store.context(id),guideToken=api.guide.token();
@@ -42,8 +49,8 @@ export function communication(initial,api){
   const submitRow=node('div',undefined,'submit-row');submitRow.append(send,node('small',kind==='telemetry'?'通过设备安全通道发送':'由网关主动下发，等待实际设备确认'));
   c.append(target,l,node('p',kind==='telemetry'?'手动输入不会改变自动采样使用的模拟温度。':'0.1～60秒；严格换算为整数毫秒。申请值与当前生效值分别记录。','field-hint'),submitRow,out);
   let presets;
-  if(kind==='control'){const presetLabel=node('label','申请上报间隔');presets=node('select');presets.id='interval-preset';presets.className='control-select';for(const n of [1,5,10,'自定义']){const o=node('option',n==='自定义'?'自定义间隔…':'每 '+n+' 秒上报一次');o.value=String(n);presets.append(o)}presets.value='5';l.hidden=true;presets.onchange=()=>{l.hidden=presets.value!=='自定义';if(presets.value!=='自定义'){input.value=presets.value;store.setDraft(store.selected,kind,input.value);validation.clear()}else input.focus()};presetLabel.append(presets);c.insertBefore(presetLabel,l)}
-  cards[kind]={target,submitted,msg,status,when,opid,evidence,send,out,validation,presets,custom:l};inputs[kind]=input;panels[kind]=c;grid.append(c);
+  if(kind==='control'){const presetLabel=node('label','申请下发上报间隔（待下发）');presets=node('select');presets.id='interval-preset';presets.className='control-select';for(const n of [1,5,10,'自定义']){const o=node('option',n==='自定义'?'自定义间隔…':'申请每 '+n+' 秒上报一次');o.value=String(n);presets.append(o)}presets.value='5';l.hidden=true;presets.onchange=()=>{l.hidden=presets.value!=='自定义';if(presets.value!=='自定义'){input.value=presets.value;store.setDraft(store.selected,kind,input.value);validation.clear()}else input.focus()};presetLabel.append(presets);c.insertBefore(presetLabel,l)}
+  cards[kind]={target,submitted,msg,status,when,opid,evidence,send,out,validation,presets,custom:l,steps:[s1,s2,s3,s4]};inputs[kind]=input;panels[kind]=c;grid.append(c);
  }
  selectAction(activeAction);
  const sampling=card('自动采样与会话'),auto=node('p'),[sl,source]=field('自动采样源 ℃（本机模拟传感器）','number','25');source.id='auto-source';source.step='.1';source.addEventListener('input',()=>store.setDraft(store.selected,'sampling',source.value));
@@ -73,19 +80,87 @@ export function communication(initial,api){
   setText(latest,'设备当前间隔 '+(d?.interval_ms!=null?d.interval_ms/1000+'秒':'未观测')+' · 网关最近接收 '+(d?.last_received_temperature_c!=null?d.last_received_temperature_c+'℃':'未观测'));
   setText(tech,'run '+s.run_id+' · SID '+(d?.sid||'未观测')+' · 授权剩余 '+Math.max(0,Math.ceil((store.expiry-store.wall())/60000))+'分钟');
   setText(auto,'自动采样 '+(d?.auto?'开启':'暂停／未观测')+' · 自动源 '+(d?.temperature_c??'未观测')+'℃');
-  setText(currentDevice,id||'未选择');setText(contextValues.interval,d?.interval_ms!=null?d.interval_ms/1000+' 秒':'未观测');setText(contextValues.auto,d?.auto===true?'进行中':d?.auto===false?'已暂停':'未观测');setText(contextValues.source,d?.temperature_c!=null?d.temperature_c+' ℃':'未观测');setText(contextValues.received,d?.last_received_temperature_c!=null?d.last_received_temperature_c+' ℃':'未观测');contextColumn.dataset.stale=store.fresh()?'0':'1';connect.hidden=['online','connecting'].includes(d?.status);samplingOpen.disabled=!id||!store.authValid();
+  setText(currentDevice,id||'未选择');setText(contextValues.interval,d?.interval_ms!=null?d.interval_ms/1000+' 秒':'未观测');setText(contextValues.auto,d?.auto===true?'进行中':d?.auto===false?'已暂停':'未观测');setText(contextValues.source,d?.temperature_c!=null?d.temperature_c+' ℃':'未观测');setText(contextValues.received,d?.last_received_temperature_c!=null?d.last_received_temperature_c+' ℃':'未观测');
+   const curTemp=String(d?.last_received_temperature_c??'');
+   if(curTemp&&contextValues.received.dataset.lastVal!==curTemp){
+    contextValues.received.dataset.lastVal=curTemp;
+    contextValues.received.classList.remove('metric-flash');
+    void contextValues.received.offsetWidth;
+    contextValues.received.classList.add('metric-flash');
+   }contextColumn.dataset.stale=store.fresh()?'0':'1';connect.hidden=['online','connecting'].includes(d?.status);samplingOpen.disabled=!id||!store.authValid();
   for(const kind of ['telemetry','control']){
    const v=cards[kind],r=store.receipt(id,kind),o=r?.operation_id?store.operation(r.operation_id):null,evicted=r?.operation_id&&!o;
    delete v.out.dataset.error;setText(v.target,(kind==='telemetry'?(id||'未选择')+' → '+(s.gateway?.id||'网关未观测'):(s.gateway?.id||'网关未观测')+' → '+(id||'未选择'))+' · '+(kind==='telemetry'?'设备安全上报':'网关主动控制'));setText(v.submitted,r?'本次已提交：'+(kind==='telemetry'?r.submitted.temperature_c+'℃':r.submitted.interval_ms/1000+'秒'):'申请值、已提交值和实际接收值分别展示。');
    setText(v.msg,o?operationMessage(o):evicted?'本次操作ID尚未出现在当前快照，结果未知；等待新快照或查看历史回执，不重新发送':r?.local_status==='unknown'?'提交结果未知，可能已执行；未自动重发；尚无operation_id可关联查询':r?.error||(r?'正在提交本机请求，尚无通信确认':'尚未发送'));
    v.status.hidden=false;updateBadge(v.status,o?.status||(r?.local_status==='unknown'?'提交结果未知':r?.local_status==='rejected'?'failed':r?'等待关联观测':'尚未提交'));setText(v.when,'确认时间：'+(o?.confirmed_at?new Date(o.confirmed_at).toLocaleTimeString():'未观测'));setText(v.opid,'操作ID：'+(r?.operation_id||'未观测'));v.evidence.hidden=!r?.operation_id;guardButton(v.send,()=>store.selected?store.canWrite(store.selected,{online:true}):'请选择设备');
+   const [st1,st2,st3,st4]=v.steps;
+   if(!r&&!o){
+    st1.className='tracker-step pending';st1.textContent='1. 待提交';
+    st2.className='tracker-step pending';st2.textContent=kind==='telemetry'?'2. 设备写出':'2. 网关下发';
+    st3.className='tracker-step pending';st3.textContent=kind==='telemetry'?'3. 网关接收':'3. 设备处理';
+    st4.className='tracker-step pending';st4.textContent='4. 双端确认';
+   }else{
+    if(r?.local_status==='submitting'){st1.className='tracker-step active';st1.textContent='1. 提交中…'}
+    else if(r?.local_status==='rejected'){st1.className='tracker-step failed';st1.textContent='1. 提交被拒 ✗'}
+    else if(r?.local_status==='unknown'){st1.className='tracker-step unknown';st1.textContent='1. 提交结果未知 ?'}
+    else{st1.className='tracker-step done';st1.textContent='1. 已受理 ✓'}
+    if(r?.local_status==='rejected'){st2.className='tracker-step pending';st2.textContent=kind==='telemetry'?'2. 设备写出':'2. 网关下发'}
+    else if(r?.local_status==='unknown'){st2.className='tracker-step unknown';st2.textContent='2. 状态未知 ?'}
+    else if(o?.status==='writing'){st2.className='tracker-step active';st2.textContent=kind==='telemetry'?'2. 设备写出中…':'2. 网关下发中…'}
+    else if(o?.written_at){st2.className='tracker-step done';st2.textContent=kind==='telemetry'?'2. 设备已写出 ✓':'2. 网关已下发 ✓'}
+    else if(o?.status==='failed'){st2.className='tracker-step unknown';st2.textContent='2. 写出未确认，见失败证据'}
+    else if(['written','peer_processed','confirmed','late_confirmed'].includes(o?.status)||['written','telemetry_written','control_write_result','telemetry_accepted'].includes(o?.stage)){st2.className='tracker-step done';st2.textContent=kind==='telemetry'?'2. 设备已写出 ✓':'2. 网关已下发 ✓'}
+    else{st2.className='tracker-step active';st2.textContent='2. 等待网关受理…'}
+    if(['rejected','unknown'].includes(r?.local_status)||(o?.status==='failed'&&!o?.peer_processed_at)){st3.className='tracker-step pending';st3.textContent=kind==='telemetry'?'3. 网关接收':'3. 设备处理'}
+    else if(['confirmed','late_confirmed'].includes(o?.status)||o?.status==='peer_processed'||o?.peer_processed_at||['peer_processed','telemetry_accepted'].includes(o?.stage)){st3.className='tracker-step done';st3.textContent=kind==='telemetry'?'3. 网关已接收 ✓':'3. 设备已处理 ✓'}
+    else if(st2.className.includes('done')){st3.className='tracker-step active';st3.textContent=kind==='telemetry'?'3. 等待网关接收…':'3. 设备处理中…'}
+    else{st3.className='tracker-step pending';st3.textContent=kind==='telemetry'?'3. 网关接收':'3. 设备处理'}
+    if(o?.status==='confirmed'||o?.status==='late_confirmed'){
+     st4.className='tracker-step done';
+     st4.textContent=o?.status==='confirmed'?'4. 双端已确认 ✓':'4. 迟到确认 ✓';
+     if(v.out.dataset.lastStatus!==o.status){
+      v.out.dataset.lastStatus=o.status;
+      v.out.classList.remove('card-confirmed');
+      void v.out.offsetWidth;
+      v.out.classList.add('card-confirmed');
+     }
+    }
+    else if(o?.status==='unconfirmed'){st4.className='tracker-step unknown';st4.textContent='4. 未确认，可能已执行 ?'}
+    else if(o?.status==='failed'){st4.className='tracker-step failed';st4.textContent='4. 确认失败 ✗'}
+    else if(st3.className.includes('done')||st2.className.includes('done')){st4.className='tracker-step active';st4.textContent='4. 等待双端确认…'}
+    else{st4.className='tracker-step pending';st4.textContent='4. 双端确认'}
+   }
   }
   guardButton(connect,()=>store.canWrite(store.selected)||(!store.selected?'请选择设备':['online','connecting'].includes(store.device()?.status)?'已有连接／连接中':''));
   for(const b of samplingButtons)guardButton(b,()=>store.selected?store.canWrite(store.selected,{online:b!==disconnect}):'请选择设备');
   const recent=s.events.filter(e=>e.device_id===id).slice(-3),ek=recent.map(e=>e.event_id).join('|');eventEmpty.hidden=recent.length>0;
   // Preserve event controls too; keyed rows are retained as the rolling window changes.
   for(const child of [...events.children])if(!recent.some(e=>String(e.event_id)===child.dataset.event)){if(child.contains(document.activeElement))more.focus();child.remove()}
-  if(ek!==eventsKey){eventsKey=ek;const eventLabels={authenticated:'安全握手已认证',telemetry_accepted:'网关验收温度',confirmed:'收到确认',queued:'操作已排队',local_sampling:'设备本地采样调整',peer_processed:'设备已处理',telemetry_written:'温度写出结果',control_write_result:'控制写出结果',offline:'连接已结束',unconfirmed:'操作尚未确认'};for(const e of recent){if([...events.children].some(n=>n.dataset.event===String(e.event_id)))continue;const p=node('div',undefined,'event-row');p.dataset.event=String(e.event_id);p.append(node('span',new Date(e.at).toLocaleTimeString()),node('span',eventLabels[e.stage]||e.stage),readButton('事件详情 '+e.event_id,()=>api.drawer.open('event',e.event_id,id)));events.prepend(p)}}
+  if(ek!==eventsKey){
+   eventsKey=ek;
+   const eventLabels={
+    authenticated:{zh:'安全握手已认证',en:'authenticated'},
+    telemetry_accepted:{zh:'网关验收温度',en:'telemetry_accepted'},
+    confirmed:{zh:'收到对端确认',en:'confirmed'},
+    queued:{zh:'操作已排队',en:'queued'},
+    local_sampling:{zh:'本地采样调整',en:'local_sampling'},
+    peer_processed:{zh:'设备已处理',en:'peer_processed'},
+    telemetry_written:{zh:'温度写出结果',en:'telemetry_written'},
+    control_write_result:{zh:'控制写出结果',en:'control_write_result'},
+    offline:{zh:'连接已结束',en:'offline'},
+    unconfirmed:{zh:'操作尚未确认',en:'unconfirmed'}
+   };
+   for(const e of recent){
+    if([...events.children].some(n=>n.dataset.event===String(e.event_id)))continue;
+    const p=node('div',undefined,'event-row');
+    p.dataset.event=String(e.event_id);
+    const info=eventLabels[e.stage]||{zh:e.stage,en:e.stage};
+    const titleBox=node('div',undefined,'event-title-bilingual');
+    titleBox.append(node('span',info.zh,'event-title-zh'),node('span',info.en,'event-title-en muted'));
+    p.append(node('span',new Date(e.at).toLocaleTimeString()),titleBox,readButton('事件详情 '+e.event_id,()=>api.drawer.open('event',e.event_id,id)));
+    events.prepend(p);
+   }
+  }
   guide.refresh();setText(guideOpen,api.guide.enabled?'收起指引':'打开指引 →');
  }
  all.refresh=refresh;refresh();return all;

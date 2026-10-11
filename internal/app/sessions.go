@@ -8,6 +8,7 @@ import (
 
 	"example.com/edgehybrid/internal/handshake"
 	"example.com/edgehybrid/internal/identity"
+	"example.com/edgehybrid/internal/policy"
 )
 
 // Session registry for the gateway.
@@ -290,8 +291,11 @@ func (r *SessionRegistry) SweepRevoked(reg identity.TrustStore) []string {
 		if st == nil {
 			continue
 		}
-		// A rotation retires the key generation this session authenticated with.
-		if err := p.UsableForNewSessions(st.SignKeyID, st.AgreementKeyID); err != nil {
+		// A rotation retires the authenticated key generation. A policy upgrade
+		// can also invalidate the negotiated suite without changing either key.
+		// Apply the same minimum-mode gate used at initial business admission.
+		if err := p.UsableForNewSessions(st.SignKeyID, st.AgreementKeyID); err != nil ||
+			st.Channel == nil || !policy.Satisfies(policy.Suite(st.Channel.Suite()), p.MinimumMode) {
 			// Terminate ONLY the session that was inspected. A newer session may
 			// have superseded it while the sweep was deciding, and that one must
 			// survive: the decision above was about the older session's keys.

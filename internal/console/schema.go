@@ -97,6 +97,8 @@ func decode(w http.ResponseWriter, r *http.Request, out any) error {
 func validateRequest(path string, q request) error {
 	allowed, required := "", ""
 	switch {
+	case path == "/api/v1/devices":
+		allowed = "device_id"
 	case path == "/api/v1/gateway/commands":
 		allowed, required = "device_id request_id interval_ms", "device_id request_id interval_ms"
 	case path == "/api/v1/exports":

@@ -1,22 +1,40 @@
 {
-  "version": "interactive-v1.4-bplus1",
-  "frontend_version": "BPLUS-UI-v1.0",
-  "scope": "P0-P5 frontend only; authenticated real API/Channel; no Go/core/API/security change",
-  "baseline_source_files": 452,
-  "baseline_source_sha256": "2c6cc0531b1c6da32b6099d6b3e5cc116252f2f91153d5fa2c7144974f1a3cd5",
-  "validation": "Read actual reports/ui-bplus/test_results.json and raw command exits; no preclaimed PASS",
-  "unknown": [
-    "G3 invocation causality unavailable",
-    "per-operation SM2 S1/S2 stages unobserved",
-    "no new formal1000/1800 performance",
-    "human usability and screen-reader test not run"
-  ],
-  "historical": "Immutable prior M5/M6/Core_Frozen/SM2 data and versions; not current frontend measurement",
+  "version": "interactive-v1.6.2-e08fix1",
+  "frontend_version": "MINIMAL-UI-v1.0",
+  "submission_version": "Final_v13",
+  "documentation_revision": "DocSync1",
+  "status": "FROZEN_COMPLETE_FOR_AGREED_SUBMISSION_SCOPE",
+  "scope": "Windows软件原型、既定性能/安全证据、G01—G07及配对报告/提交包",
+  "required_remaining_actions": [],
+  "build_identity": {
+    "go": "go version go1.27.2 windows/amd64",
+    "source_files": 481,
+    "source_manifest_sha256": "02863dd2efb03dd8885fb45133fdac44128eb462f581d03301417068f39b29ad",
+    "source_manifest_scope": "original_build_snapshot",
+    "build_info": "../runtime/build_info.json"
+  },
+  "current_documentation_identity": {
+    "source_manifest_path": "../verification/document_sync_v13_1/CURRENT_DOCUMENTED_SOURCE_MANIFEST.sha256",
+    "receipt": "../verification/document_sync_v13_1/DOCUMENTATION_SYNC_RECEIPT.json",
+    "no_current_manifest_hash_embedded_here": "This file belongs to the current source manifest; avoid self-reference."
+  },
   "current_ui_release": {
-    "version": "interactive-v1.5-minimalui1",
+    "version": "interactive-v1.6.2-e08fix1",
     "frontend": "MINIMAL-UI-v1.0",
     "primary_entries": 4,
-    "g3_causal_receipt": "implemented; see current actual receipts, not a certification",
-    "validation_source": "reports/ui-minimal/ACCEPTANCE.json in review package; historical entries below retain their original provenance"
-  }
+    "g3_causal_receipt": "implemented and checked in bounded real API/TCP scope; not certification",
+    "release_business_smoke": "../02_evidence/HC01_release_business_smoke/RELEASE_SMOKE_RECEIPT.json"
+  },
+  "validation": {
+    "e08_regressions": "25 selected top-level PASS, 0 FAIL/SKIP; historical actual commands retained",
+    "fleet_cli": "7 boundary checks PASS; deliberate missing-config cases do not claim networking or real rekey",
+    "focused_retest": "G01–G07,3 repeats; see ../verification/focused_v11_review/REVIEW_v12.md",
+    "new_tests_run_in_document_sync": false
+  },
+  "scope_boundaries": [
+    "C01/C02A/C02B/C03 excluded from this delivery scope; exclusion is not PASS",
+    "No claim of physical industrial/PLC validation, ARM64/MCU measurements, side-channel certification or complete formal proof"
+  ],
+  "historical_status_snapshot": "../history/v13_before_document_sync/source/IMPLEMENTATION_STATUS.json",
+  "historical": "Prior versions, unknowns and raw PASS/SKIP/FAIL records preserved; not overwritten by current scope decisions"
 }

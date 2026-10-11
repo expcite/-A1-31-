@@ -13,6 +13,7 @@ import (
 	"net"
 	"os"
 	"runtime"
+	"sort"
 	"sync"
 	"time"
 
@@ -206,8 +207,16 @@ func (m *Manager) Snapshot() Snapshot {
 			s.Gateway.Status = "maintenance"
 		}
 	}
-	for i := 1; i <= len(m.devices); i++ {
-		d := m.devices[fmt.Sprintf("D%03d", i)]
+	deviceIDs := make([]string, 0, len(m.devices))
+	for id := range m.devices {
+		deviceIDs = append(deviceIDs, id)
+	}
+	sort.Strings(deviceIDs)
+	for _, id := range deviceIDs {
+		d := m.devices[id]
+		if d == nil {
+			continue
+		}
 		v := d.view
 		if v.Status == "online" {
 			s := m.sessions[v.ID]

@@ -1,0 +1,127 @@
+{
+  "revision": "Final_v16",
+  "pdf_sha256": "4f26d1f174d4521b8730e4c03c9ca64215fe067a25bb95e17fc51d549e322321",
+  "html_sha256": "69d74d911c3b1d18f9c87d4526337cfe813cf9087d8df5e5bc8bd11d33a19d9d",
+  "pdf_pages": 47,
+  "toc_entries": 78,
+  "toc_matches": 78,
+  "visual_review_status": "PASS",
+  "visual_review_scope": {
+    "overview_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47
+    ],
+    "enlarged_pages": [
+      1,
+      2,
+      3,
+      7,
+      10,
+      11,
+      14,
+      29,
+      36,
+      39,
+      45,
+      47
+    ],
+    "method": "Final PDF rendered with bundled Poppler; all 47 pages reviewed in contact sheets, plus cover, new HKDF definition, terminology table, architecture figure, statistics, evidence navigation and references enlarged.",
+    "findings": "No observed clipping, overlaps, missing figures or unreadable glyphs. Architecture HKDF-SM3 label fits original frame."
+  },
+  "protected_visuals": {
+    "images": {
+      "count": 7,
+      "byte_identical": true
+    },
+    "svg": {
+      "count": 5,
+      "changes": [
+        {
+          "index": 1,
+          "changed": false,
+          "only_permitted_change": null
+        },
+        {
+          "index": 2,
+          "changed": false,
+          "only_permitted_change": null
+        },
+        {
+          "index": 3,
+          "changed": true,
+          "only_permitted_change": "SM3-KDF -> HKDF-SM3"
+        },
+        {
+          "index": 4,
+          "changed": false,
+          "only_permitted_change": null
+        },
+        {
+          "index": 5,
+          "changed": false,
+          "only_permitted_change": null
+        }
+      ],
+      "only_one_label_changed": true
+    },
+    "math": {
+      "count": 0,
+      "byte_identical": true
+    }
+  },
+  "all_bitmap_images_decoded": true,
+  "terminology_checks": {
+    "visible_trial_markers": 0,
+    "SM3_KDF": 0,
+    "SM2MQV": 0,
+    "HKDF_SM3_defined_at_first_mention": true
+  },
+  "metric_display_checks": "Original values and archived v15 recomputation retained; no new measurement.",
+  "new_experiments": false,
+  "code_changes": false
+}

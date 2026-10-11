@@ -1,0 +1,8 @@
+{"Time":"2026-10-11T13:32:54.0606559+08:00","Action":"start","Package":"example.invalid/evxraceprobe"}
+{"Time":"2026-10-11T13:32:54.1097071+08:00","Action":"run","Package":"example.invalid/evxraceprobe","Test":"TestRaceProbe"}
+{"Time":"2026-10-11T13:32:54.1102343+08:00","Action":"output","Package":"example.invalid/evxraceprobe","Test":"TestRaceProbe","Output":"=== RUN   TestRaceProbe\n","OutputType":"frame"}
+{"Time":"2026-10-11T13:32:54.1102343+08:00","Action":"output","Package":"example.invalid/evxraceprobe","Test":"TestRaceProbe","Output":"--- PASS: TestRaceProbe (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-11T13:32:54.1102343+08:00","Action":"pass","Package":"example.invalid/evxraceprobe","Test":"TestRaceProbe","Elapsed":0}
+{"Time":"2026-10-11T13:32:54.1102343+08:00","Action":"output","Package":"example.invalid/evxraceprobe","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-11T13:32:55.1247098+08:00","Action":"output","Package":"example.invalid/evxraceprobe","Output":"ok  \texample.invalid/evxraceprobe\t1.064s\n"}
+{"Time":"2026-10-11T13:32:55.1247098+08:00","Action":"pass","Package":"example.invalid/evxraceprobe","Elapsed":1.064}

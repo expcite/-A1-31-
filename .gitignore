@@ -8,3 +8,4 @@
 coverage.out
 *.pprof
 .env
+__pycache__/

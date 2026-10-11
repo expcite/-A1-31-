@@ -1,0 +1,31 @@
+{
+  "task": "EH-EVIDENCE-TEST-UPGRADE-v1",
+  "status": "PREPARED_NOT_TESTED",
+  "created_utc": "2026-10-11T04:09:08.794006+00:00",
+  "workspace": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1",
+  "input_source": "bundled pinned source snapshot",
+  "current_report": "User v16 PDF only; not supplied here, must not overwrite with v14",
+  "before_source": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\before\\source",
+  "after_source": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\after\\source",
+  "release_source_manifest_sha256": "02863dd2efb03dd8885fb45133fdac44128eb462f581d03301417068f39b29ad",
+  "before_tree_sha256": "02863dd2efb03dd8885fb45133fdac44128eb462f581d03301417068f39b29ad",
+  "after_test_tree_sha256": "fc771244200a641cd3554d9af5881f1cb2d207d8b7bddec39d062cd43d436cc0",
+  "original_files": 481,
+  "added_test_files": {
+    "internal/evidence/evx_business_test.go": "3a89a11f8752767127b62cf83c4b73eb40bad3eb4548eb1867dd7d6a146b03bd",
+    "internal/evidence/evx_contract_test.go": "9a6dbdf0a70cfcb442a7958e70f56bee0d2ce654d887cbf74f54d93ee0dab204",
+    "internal/evidence/evx_fuzz_test.go": "88bcb4759a6ef7e3c4a1c286c90cfe029c59b3439d84a17095adb86fc4b3d447",
+    "internal/evidence/evx_throughput_test.go": "0015e9b9a2ee4b93fbdd26868ae9c79aeea28a68c94cdc81ea3bb416cd4cf11c",
+    "internal/exports/evx_export_test.go": "58847d03c45837d3e79a469017477ee5dc720a4fc7d5f188cd814d9534d56a0d"
+  },
+  "overlay_change": {
+    "missing": [],
+    "extra": [],
+    "changed": [
+      "internal/evidence/evx_throughput_test.go"
+    ]
+  },
+  "production_modified": false,
+  "release_binaries_rebuilt": false,
+  "phase_results": {}
+}

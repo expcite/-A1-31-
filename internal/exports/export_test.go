@@ -34,4 +34,36 @@ func TestExportRecomputeAndPrivacy(t *testing.T) {
 	if e != nil || strings.Contains(string(b), "<script>") {
 		t.Fatal("HTML导出注入")
 	}
+	if !strings.Contains(string(b), d.LedgerRoot) {
+		t.Fatal("HTML导出未包含因果哈希链根存根")
+	}
+}
+
+func TestLedgerRootHashChain(t *testing.T) {
+	events1 := []live.Event{
+		{ID: 1, Endpoint: "device", Device: "D001", Stage: "authenticated"},
+		{ID: 2, Endpoint: "device", Device: "D001", Stage: "telemetry_written"},
+	}
+	events2 := []live.Event{
+		{ID: 1, Endpoint: "device", Device: "D001", Stage: "authenticated"},
+		{ID: 2, Endpoint: "device", Device: "D001", Stage: "telemetry_accepted"}, // altered stage
+	}
+	eventsReordered := []live.Event{
+		{ID: 2, Endpoint: "device", Device: "D001", Stage: "telemetry_written"},
+		{ID: 1, Endpoint: "device", Device: "D001", Stage: "authenticated"},
+	}
+
+	root1 := ComputeLedgerRoot("run-1", events1)
+	root2 := ComputeLedgerRoot("run-1", events2)
+	rootReordered := ComputeLedgerRoot("run-1", eventsReordered)
+
+	if len(root1) != 64 || len(root2) != 64 {
+		t.Fatalf("expected 64-char hex, got %d / %d", len(root1), len(root2))
+	}
+	if root1 == root2 {
+		t.Fatal("altered stage must produce distinct ledger root")
+	}
+	if root1 == rootReordered {
+		t.Fatal("reordered events must produce distinct ledger root")
+	}
 }

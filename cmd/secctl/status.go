@@ -11,7 +11,7 @@ import (
 
 // Release builds set these with -ldflags. A direct go build has no source hash;
 // neither the linker metadata nor this command independently verifies a build.
-var StatusVersion = "interactive-v1.5-minimalui1"
+var StatusVersion = "interactive-v1.6.1-reviewfix1"
 var StatusSourceHash string
 
 type historicalCheck struct {

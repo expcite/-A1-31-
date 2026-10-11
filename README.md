@@ -1,9 +1,15 @@
-# EdgeHybrid 简约交互平台
+# EdgeHybrid 交互通信平台
 
-当前版本 interactive-v1.5-minimalui1，前端 MINIMAL-UI-v1.0。四主入口：工作台、设备、记录、实验；管理、帮助、当前运行/停止是辅助入口。保留已有授权、CSRF、Host/Origin、配额、会话隔离及真实 Channel 通信。
+当前程序发布版本 `interactive-v1.6.2-e08fix1`，提交 Final_v13（说明同步 1），前端 `MINIMAL-UI-v1.0`。既定软件原型与补测范围已完成；当前状态见 `CURRENT_COMPLETION.md`、`CURRENT_HANDOFF.md` 与 `IMPLEMENTATION_STATUS.json`。本次仅同步说明，不更换协议或增加功能。
 
-[快速入门与完整说明](docs/user/MINIMALUI_MANUAL.md) · [功能入口与修改范围](docs/ui/MINIMALUI_IMPLEMENTATION.md) · [API](docs/INTERACTIVE_API.md) · [原题要求](docs/REQUIREMENTS.md)。双击启动1设备.cmd或启动20设备.cmd，使用启动窗口的一次口令授权，再明确连接。用户运行无需 Go/Python/Node/Java/CDN；关闭网页不退出软件。
+8 个现有程序由 Go 1.27.2 构建，原构建源码清单为 `02863dd2efb03dd8885fb45133fdac44128eb462f581d03301417068f39b29ad`。当前说明更新后的清单另列在 `../verification/document_sync_v13_1/`；原构建清单、EXE 和原始实验不改写为新构建或重测。
 
-本轮前端布局与展示重组不改变密码协议。用户另行授权补齐G3换钥因果回执：明确操作ID绑定run、设备、旧SID和消费请求的工作者实际建立的新SID；真实双端握手准入完成与新会话业务验证分别核验。HTTP受理或任意SID变化不能完成G3。自动换钥、失败、旧会话请求、淘汰记录、未知提交仍诚实显示；不会自动重试。
+[快速入门与完整手册](docs/user/MINIMALUI_MANUAL.md) · [API](docs/INTERACTIVE_API.md) · [原题要求](docs/REQUIREMENTS.md) · [本轮修复边界](docs/REFERENCEUI_REVIEW_FIXES.md)。
 
-当前构建、截图、测试及退出码以同版本build_info、源码清单和本轮回执为准。旧M5/M6/SM2/backend性能与长测保持旧字节和原来源，不代表新版正式测量；本轮不重新采样1000次或1800秒。M6历史改进是审计信息更完整，覆盖和检出相同。标准SM2独立验证按对应历史回执范围说明，不代表全面安全认证。
+Windows运行包：双击`启动1台设备.cmd`或`启动20台设备.cmd`；授权后明确连接，输入26.3/28.7发送并核对真实回执。停止用`停止交互平台.cmd`。关闭网页不退出软件，刷新/切页不重发。运行不依赖Go/Python/Node/Java/CDN。
+
+批量：HTTP接受只代表受理，只有本次run/身份/SID/ID关联的真实操作确认才计为确认。连接/断开的本机状态观测、未知、未确认、拒绝分别列出；超时可能已执行，不自动重发。换钥双端新握手与之后的业务验证分开。
+
+构建统一使用`scripts/interactive_build.py`（委托`scripts/backend_build.py`），从同一源码清单构建全部8个程序及内嵌页面，新输出目录不覆盖已有包。`build_info.json`、`CURRENT_SOURCE_MANIFEST.sha256`和实际命令绑定版本；软件GET /api/v1/build可核对源码哈希。开发默认值不冒称发布版。
+
+旧M5/M6/SM2/OpenSSL/race记录保持原字节与原版本来源，不能作为本次全面安全认证或当前实时性能。历史阶段的正式1000次/1800秒结果保留原来源；后续已列明的补测独立记录，本次说明同步没有新增采样。M6历史A/B覆盖和检出相同，改进是审计信息更完整；当前任务原始输出和进程退出、回执持久化分别记录。

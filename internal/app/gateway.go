@@ -152,7 +152,7 @@ func (g *Gateway) watchLifecycle(ctx context.Context, reg identity.TrustStore, i
 			terminated := g.sessions().SweepRevoked(reg)
 			for _, id := range terminated {
 				g.Log.Emit(Event{Role: "gateway", Stage: "lifecycle", Outcome: "session-terminated",
-					PeerID: id, Detail: "device is revoked, retired or rotated; the session was ended"})
+					PeerID: id, Detail: "device is revoked, retired, rotated or its suite no longer satisfies trusted policy; the session was ended"})
 			}
 		}
 	}

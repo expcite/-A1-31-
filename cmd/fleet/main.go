@@ -58,6 +58,11 @@ func run() int {
 		return 2
 	}
 
+	if *rekeyRecords < 0 {
+		fmt.Fprintln(os.Stderr, "rekey-records must be >= 0")
+		return 2
+	}
+
 	base, err := config.Load(*path)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "configuration:", err)

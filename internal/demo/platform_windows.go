@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"syscall"
 	"unsafe"
@@ -123,4 +124,31 @@ func OpenBrowser(url string) error {
 		return fmt.Errorf("浏览器打开失败 (%d): %w；请复制页面地址手动打开", r, callErr)
 	}
 	return nil
+}
+
+func OpenAppWindow(url string) error {
+	var candidates []string
+	if p, err := exec.LookPath("msedge.exe"); err == nil && p != "" {
+		candidates = append(candidates, p)
+	}
+	if p, err := exec.LookPath("chrome.exe"); err == nil && p != "" {
+		candidates = append(candidates, p)
+	}
+	candidates = append(candidates,
+		filepath.Join(os.Getenv("ProgramFiles(x86)"), "Microsoft", "Edge", "Application", "msedge.exe"),
+		filepath.Join(os.Getenv("ProgramFiles"), "Microsoft", "Edge", "Application", "msedge.exe"),
+		filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft", "Edge", "Application", "msedge.exe"),
+		filepath.Join(os.Getenv("ProgramFiles"), "Google", "Chrome", "Application", "chrome.exe"),
+		filepath.Join(os.Getenv("ProgramFiles(x86)"), "Google", "Chrome", "Application", "chrome.exe"),
+		filepath.Join(os.Getenv("LOCALAPPDATA"), "Google", "Chrome", "Application", "chrome.exe"),
+	)
+	for _, p := range candidates {
+		if p != "" {
+			if st, err := os.Stat(p); err == nil && !st.IsDir() {
+				cmd := exec.Command(p, fmt.Sprintf("--app=%s#communication", url), "--window-size=1360,880")
+				return cmd.Start()
+			}
+		}
+	}
+	return OpenBrowser(url)
 }

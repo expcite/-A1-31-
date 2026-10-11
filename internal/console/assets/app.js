@@ -49,6 +49,45 @@ function navigation(){
  const exit=button('退出软件',async()=>{const current=store.snapshot?.run_id;if(!current)throw Error('缺少当前run，请用原停止脚本／启动窗口退出');const yes=await confirmAction('本次全部设备','退出软件','exit:'+current);if(yes){if(current!==store.snapshot?.run_id)throw Error('运行已经改变');await api('/run/exit',{confirm:yes});api.notify('软件开始受控退出，等待启动窗口结束；尚未冒称已关闭。')}},'danger');exit.id='exit-software';stop.guard=exit.guard=()=>store.authValid()?'':'本机授权不可用';runItems.append(safeReadButton('运行与容量详情',()=>{if(store.snapshot)api.drawer.open('run',store.snapshot.run_id)}),document.querySelector('#refresh-state'),stop,exit);runMenu.append(runItems);document.querySelector('#run-actions').append(runMenu);
 }
 navigation();
+// Default theme: light unconditionally unless explicitly saved
+let currentTheme='light';
+try{
+ const storedTheme=localStorage.getItem('edgehybrid_theme');
+ if(storedTheme==='dark'||storedTheme==='light'){
+  currentTheme=storedTheme;
+ }else{
+  currentTheme='light';
+  try{localStorage.setItem('edgehybrid_theme','light')}catch{}
+ }
+}catch{}
+document.documentElement.dataset.theme=currentTheme;
+const themeToggle=safeReadButton(currentTheme==='dark'?'☀️ 浅色':'🌙 深色',()=>{
+ const next=document.documentElement.dataset.theme==='dark'?'light':'dark';
+ document.documentElement.dataset.theme=next;try{localStorage.setItem('edgehybrid_theme',next)}catch{}
+ themeToggle.textContent=next==='dark'?'☀️ 浅色':'🌙 深色';
+ themeToggle.setAttribute('aria-label',next==='dark'?'切换浅色模式':'切换深色模式');
+});
+themeToggle.id='theme-toggle';themeToggle.className='secondary theme-toggle';themeToggle.setAttribute('aria-label',currentTheme==='dark'?'切换浅色模式':'切换深色模式');
+
+// Motion Toggle (default ON: 60fps micro-animations, with localStorage memory)
+let motionEnabled=true;
+try{
+ const storedMotion=localStorage.getItem('edgehybrid_motion');
+ if(storedMotion!==null){motionEnabled=storedMotion==='1'}
+}catch{}
+document.body.classList.toggle('motion-disabled',!motionEnabled);
+const motionToggle=safeReadButton(motionEnabled?'⚡ 动效: 开':'💤 动效: 关',()=>{
+ motionEnabled=!motionEnabled;
+ document.body.classList.toggle('motion-disabled',!motionEnabled);
+ try{localStorage.setItem('edgehybrid_motion',motionEnabled?'1':'0')}catch{}
+ motionToggle.textContent=motionEnabled?'⚡ 动效: 开':'💤 动效: 关';
+ motionToggle.setAttribute('aria-label',motionEnabled?'关闭动效':'开启动效');
+});
+motionToggle.id='motion-toggle';motionToggle.className='secondary motion-toggle';motionToggle.setAttribute('aria-label',motionEnabled?'关闭动效':'开启动效');
+const headerActions=document.querySelector('.header-actions');
+if(headerActions){
+ headerActions.prepend(themeToggle,motionToggle);
+}
 // Menus are presentation only; dismissing them never submits an action.
 document.addEventListener('click',e=>{for(const menu of document.querySelectorAll('.overflow[open]'))if(!menu.contains(e.target)||e.target.closest('button'))menu.open=false});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')for(const menu of document.querySelectorAll('.overflow[open]'))menu.open=false});

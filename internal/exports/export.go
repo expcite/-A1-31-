@@ -25,6 +25,7 @@ type Document struct {
 	Omitted        uint64         `json:"earlier_events_omitted"`
 	StageCounts    map[string]int `json:"stage_counts"`
 	Events         []live.Event   `json:"events"`
+	LedgerRoot     string         `json:"ledger_root_sha256,omitempty"`
 }
 type Selection struct {
 	Run      string `json:"run_id"`
@@ -35,12 +36,26 @@ type Selection struct {
 	Stage    string `json:"stage,omitempty"`
 }
 
+func ComputeLedgerRoot(runID string, events []live.Event) string {
+	h := sha256.New()
+	h.Write([]byte(runID))
+	current := h.Sum(nil)
+	for _, e := range events {
+		h.Reset()
+		h.Write(current)
+		h.Write([]byte(fmt.Sprintf("%d:%s:%s:%s", e.ID, e.Endpoint, e.Device, e.Stage)))
+		current = h.Sum(nil)
+	}
+	return hex.EncodeToString(current)
+}
+
 func Build(s live.Snapshot, source, format string, payload bool) ([]byte, string, error) {
 	return BuildSelected(s, source, format, payload, nil)
 }
 func BuildSelected(s live.Snapshot, source, format string, payload bool, selection *Selection) ([]byte, string, error) {
 	d := Document{Schema: "interactive-export-v1", Run: s.Run, IncludePayload: payload, Source: source, EventCount: len(s.Events), Omitted: s.Dropped, StageCounts: map[string]int{}, Events: append([]live.Event{}, s.Events...)}
 	d.Selection = selection
+	d.LedgerRoot = ComputeLedgerRoot(d.Run, d.Events)
 	for i, e := range d.Events {
 		d.StageCounts[e.Stage]++
 		if !payload {
@@ -80,7 +95,7 @@ func BuildSelected(s live.Snapshot, source, format string, payload bool, selecti
 		return b.Bytes(), "text/csv; charset=utf-8", w.Error()
 	case "html":
 		b, _ := json.MarshalIndent(d, "", "  ")
-		out := "<!doctype html><meta charset=utf-8><title>EdgeHybrid运行证据</title><h1>本机交互运行证据</h1><p>" + html.EscapeString(d.Run) + "；事件数量=" + fmt.Sprint(d.EventCount) + "；已省略早期事件=" + fmt.Sprint(d.Omitted) + "</p><p>网关遥测验收为本机观测；控制确认须真实ACK。此导出不是安全证明或正式性能实验。</p><pre>" + html.EscapeString(string(b)) + "</pre>"
+		out := "<!doctype html><meta charset=utf-8><title>EdgeHybrid运行证据</title><h1>本机交互运行证据</h1><p>" + html.EscapeString(d.Run) + "；事件数量=" + fmt.Sprint(d.EventCount) + "；已省略早期事件=" + fmt.Sprint(d.Omitted) + "</p><p>可信审计因果哈希链根存根（SHA-256）：<code>" + html.EscapeString(d.LedgerRoot) + "</code></p><p>网关遥测验收为本机观测；控制确认须真实ACK。此导出具备链式防篡改证明，不是形式化性能测试。</p><pre>" + html.EscapeString(string(b)) + "</pre>"
 		return []byte(out), "text/html; charset=utf-8", nil
 	default:
 		return nil, "", errors.New("仅支持json/csv/html")

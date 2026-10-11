@@ -1,0 +1,10 @@
+EdgeHybrid 正式提交版 v16
+报告：report/EdgeHybrid_Report_Final_v16.pdf
+可编辑稿：report/EdgeHybrid_Report_Final_v16.html
+变更说明：report/CHANGES_v16.md
+当前身份：FINAL_IDENTITY.json
+完整性清单：FILE_MANIFEST.sha256
+核对入口：tools/verify_final_v16.py
+运行入口：runtime/启动交互平台.cmd
+程序版本：interactive-v1.6.2-e08fix1
+本轮仅终稿校对与归档核对，未改生产代码、原始实验或 EXE。

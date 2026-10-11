@@ -1,0 +1,9 @@
+{
+  "accepted": false,
+  "note": "Only this command; never a protocol proof",
+  "expected_tests": [
+    "example.invalid/evxraceprobe::TestRaceProbe"
+  ],
+  "expected_packages": null,
+  "raw_receipt": "COMMAND_RECEIPT.json"
+}

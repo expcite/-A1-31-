@@ -1,0 +1,30 @@
+{
+  "status": "COMPLETE_FOR_TEST_ONLY_SCOPE",
+  "phases": {
+    "preflight": "PASS",
+    "baseline": "PASS",
+    "smoke": "PASS",
+    "measure": "PASS",
+    "regression": "PASS_WITH_SKIPS",
+    "race": "PASS",
+    "fuzz": "PASS"
+  },
+  "raw_command_pairs_checked": 16,
+  "integrity_errors": [],
+  "source_and_test_diff": {
+    "before": {
+      "missing": [],
+      "extra": [],
+      "changed": []
+    },
+    "after": {
+      "missing": [],
+      "extra": [],
+      "changed": []
+    }
+  },
+  "new_coverage_available": true,
+  "production_source_modified": false,
+  "release_binaries_rebuilt": false,
+  "note": "Synthetic fixtures are unit-test inputs, not measured performance. New coverage is not a security proof. No report or EXE overwritten."
+}

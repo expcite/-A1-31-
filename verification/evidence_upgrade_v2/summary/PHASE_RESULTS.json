@@ -1,0 +1,99 @@
+{
+  "preflight": {
+    "phase": "preflight",
+    "attempt": "01",
+    "started_utc": "2026-10-11T04:09:24.863025+00:00",
+    "status": "PASS",
+    "reason_for_repeat": "",
+    "go_binary_sha256": "b8cd508a0a7aac883cd750e9e75eb306d219e726bdf1cde29009490729437fbf",
+    "go_version": "go version go1.27.2 windows/amd64",
+    "source_and_test_tree_unchanged": true,
+    "finished_utc": "2026-10-11T04:09:26.559804+00:00",
+    "output": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\evidence\\preflight_01"
+  },
+  "baseline": {
+    "phase": "baseline",
+    "attempt": "01",
+    "started_utc": "2026-10-11T04:09:40.807877+00:00",
+    "status": "PASS",
+    "reason_for_repeat": "",
+    "go_binary_sha256": "b8cd508a0a7aac883cd750e9e75eb306d219e726bdf1cde29009490729437fbf",
+    "excluded_by_scope": [
+      "TestSM2StandardConfirmationIndependentBouncyCastle",
+      "TestSM2IndependentBouncyCastle",
+      "TestSM2DynamicOpenSSLMatrix",
+      "TestSM2SignatureFromThisAdapterVerifiesInOpenSSL"
+    ],
+    "source_and_test_tree_unchanged": true,
+    "finished_utc": "2026-10-11T04:10:12.725179+00:00",
+    "output": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\evidence\\baseline_01"
+  },
+  "smoke": {
+    "phase": "smoke",
+    "attempt": "01",
+    "started_utc": "2026-10-11T04:10:30.480849+00:00",
+    "status": "PASS",
+    "reason_for_repeat": "",
+    "go_binary_sha256": "b8cd508a0a7aac883cd750e9e75eb306d219e726bdf1cde29009490729437fbf",
+    "source_and_test_tree_unchanged": true,
+    "finished_utc": "2026-10-11T04:10:34.973890+00:00",
+    "output": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\evidence\\smoke_01"
+  },
+  "measure": {
+    "phase": "measure",
+    "attempt": "01",
+    "started_utc": "2026-10-11T04:10:50.121360+00:00",
+    "status": "PASS",
+    "reason_for_repeat": "",
+    "go_binary_sha256": "b8cd508a0a7aac883cd750e9e75eb306d219e726bdf1cde29009490729437fbf",
+    "excluded_by_scope": [
+      "TestSM2StandardConfirmationIndependentBouncyCastle",
+      "TestSM2IndependentBouncyCastle",
+      "TestSM2DynamicOpenSSLMatrix",
+      "TestSM2SignatureFromThisAdapterVerifiesInOpenSSL"
+    ],
+    "source_and_test_tree_unchanged": true,
+    "finished_utc": "2026-10-11T04:11:04.310218+00:00",
+    "output": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\evidence\\measure_01"
+  },
+  "regression": {
+    "phase": "regression",
+    "attempt": "01",
+    "started_utc": "2026-10-11T04:12:37.054461+00:00",
+    "status": "PASS_WITH_SKIPS",
+    "reason_for_repeat": "",
+    "go_binary_sha256": "b8cd508a0a7aac883cd750e9e75eb306d219e726bdf1cde29009490729437fbf",
+    "skipped_tests": [
+      "example.com/edgehybrid/internal/cryptosuite::TestSM2DynamicOpenSSLMatrix",
+      "example.com/edgehybrid/internal/cryptosuite::TestSM2IndependentBouncyCastle",
+      "example.com/edgehybrid/internal/cryptosuite::TestSM2SignatureFromThisAdapterVerifiesInOpenSSL",
+      "example.com/edgehybrid/internal/cryptosuite::TestSM2StandardConfirmationIndependentBouncyCastle",
+      "example.com/edgehybrid/internal/live::TestContinuousTenMinutes"
+    ],
+    "source_and_test_tree_unchanged": true,
+    "finished_utc": "2026-10-11T04:14:38.282725+00:00",
+    "output": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\evidence\\regression_01"
+  },
+  "race": {
+    "phase": "race",
+    "attempt": "02",
+    "started_utc": "2026-10-11T05:32:47.371557+00:00",
+    "status": "PASS",
+    "reason_for_repeat": "已核实并配置历史便携CC及库路径；原01未进入测试",
+    "go_binary_sha256": "b8cd508a0a7aac883cd750e9e75eb306d219e726bdf1cde29009490729437fbf",
+    "source_and_test_tree_unchanged": true,
+    "finished_utc": "2026-10-11T05:33:20.995254+00:00",
+    "output": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\evidence\\race_02"
+  },
+  "fuzz": {
+    "phase": "fuzz",
+    "attempt": "01",
+    "started_utc": "2026-10-11T04:16:33.283385+00:00",
+    "status": "PASS",
+    "reason_for_repeat": "",
+    "go_binary_sha256": "b8cd508a0a7aac883cd750e9e75eb306d219e726bdf1cde29009490729437fbf",
+    "source_and_test_tree_unchanged": true,
+    "finished_utc": "2026-10-11T04:17:31.104455+00:00",
+    "output": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\evidence\\fuzz_01"
+  }
+}

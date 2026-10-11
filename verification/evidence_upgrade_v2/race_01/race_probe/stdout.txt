@@ -1,0 +1,4 @@
+{"Time":"2026-10-11T12:15:43.4023142+08:00","Action":"start","Package":"example.invalid/evxraceprobe"}
+{"Time":"2026-10-11T12:15:44.3075255+08:00","Action":"output","Package":"example.invalid/evxraceprobe","Output":"exit status 0xc0000139\n"}
+{"Time":"2026-10-11T12:15:44.3080289+08:00","Action":"output","Package":"example.invalid/evxraceprobe","Output":"FAIL\texample.invalid/evxraceprobe\t0.905s\n","OutputType":"frame"}
+{"Time":"2026-10-11T12:15:44.3080289+08:00","Action":"fail","Package":"example.invalid/evxraceprobe","Elapsed":0.906}

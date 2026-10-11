@@ -1,0 +1,17 @@
+{
+  "started": [],
+  "passed": [],
+  "failed": [
+    "example.invalid/evxraceprobe"
+  ],
+  "skipped": [],
+  "package_pass": [],
+  "package_skip_or_no_tests": [],
+  "top_pass_records": 0,
+  "sub_pass_records": 0,
+  "distinct_top_pass": 0,
+  "invalid_json_lines": [],
+  "cached": false,
+  "fuzz_active": false,
+  "fuzz_last_executions": 0
+}

@@ -15,6 +15,9 @@ func (s *Server) action(w http.ResponseWriter, r *http.Request, q request) {
 	var data any = map[string]any{"api_status": "completed", "note": "本机动作；不代表通信确认"}
 	p := r.URL.Path
 	switch p {
+	case "/api/v1/devices":
+		data, e = s.Manager.AddDevice(q.Device)
+		status = 201
 	case "/api/v1/exports":
 		data, e = s.createExport(q)
 		status = 201

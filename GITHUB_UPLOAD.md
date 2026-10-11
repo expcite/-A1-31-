@@ -1,14 +1,25 @@
-# GitHub 当前源码上传说明
+# GitHub 当前源码与交付物上传说明
 
-本次上传是当前工作区的源码快照，软件版本 interactive-v1.5-minimalui1，外观修订 reference-ui-20261005。
-475 项源码清单 SHA-256：`5330ac977d60422492215d3b5fed6d83162283b067ef33741d88a2edb68fde28`。CURRENT_SOURCE_MANIFEST.sha256 是本次源码清单，不是此前遗留清单。
+本次上传是 EdgeHybrid 最新整合代码与交付物快照，包含 Final v16 文稿基线与已验证的 Evidence 测试增强升级。
 
-包含完整 cmd、internal（含内嵌前端）、configs 无秘密模板、scripts、docs、测试、Go 依赖文件，以及历史 results 非 raw 报告和 deliverables 来源记录。GitHub 上传附加文件不属于上述 475 项冻结源码。
+- **软件版本**：`interactive-v1.6.2-e08fix1`
+- **构建基线**：481 项生产源码清单精准匹配 `02863dd2efb03dd8885fb45133fdac44128eb462f581d03301417068f39b29ad`
+- **增强测试树**：包含 5 个新增测试文件（10 组顶层 EVX 测试、137 个子测试），清单精准匹配 `fc771244200a641cd3554d9af5881f1cb2d207d8b7bddec39d062cd43d436cc0`
+- **覆盖率指标**：
+  - 六包联合语句覆盖率：`1549 / 1832`（**84.55%**）
+  - `internal/evidence` 覆盖率：`457 / 471`（**97.03%**）
+  - `internal/exports` 覆盖率：`85 / 88`（**96.59%**）
+- **Race 状态**：`PASS`（10 组 EVX 竞态测试全部通过，0 数据竞争告警）
+- **Fuzz 状态**：`PASS`（FuzzEVXEvidenceDecode 累计 617,175 次执行，0 崩溃）
 
-当前前端说明和验证摘要见 [delivery/reference-ui-20261005/IMPLEMENTATION_AND_VERIFICATION.md](delivery/reference-ui-20261005/IMPLEMENTATION_AND_VERIFICATION.md)。该目录明确本轮实际执行范围；原历史文档保留原字节、版本与局限。
+### 包含内容
+- 完整 `cmd/`、`internal/`（包含 5 个新增强测试用例与内嵌前端组件）；
+- 核心配置 `configs/`、运维脚本 `scripts/` 与开发文档 `docs/`；
+- 正式报告文档 `report/EdgeHybrid_Report_Final_v16.pdf` 与 HTML 版本；
+- 验证回执 `verification/` 与整合凭证 `INTEGRATION_RECEIPT_EVIDENCE_UPGRADE.json`。
 
-不上传 runtime、真实私钥、会话秘密、访问令牌、缓存、EXE、历史 ZIP 或数万份实验 raw。历史报告中的本地绝对路径只是执行来源，不代表 GitHub 随附了这些原始数据。完整当前审查包和软件包仍保留于本地交付目录；此仓库不是独立的全部历史实验资料归档。
+### 排除内容
+根据安全与轻量化规则：
+不上传 runtime 二进制可执行文件（8 个 EXE 随本地发布 ZIP 分发）、真实私钥、会话秘密、临时缓存及大体积历史 raw 数据。
 
-构建/运行说明见项目 README、docs/user/MINIMALUI_MANUAL.md 和 scripts/backend_build.py。用户运行包无需 Go/Python/Node，源码构建需要开发工具。现有 .github/workflows/race.yml 保留历史草案；本次提交使用 [skip ci]，未安排远端执行，不能将上传本身当作新的 CI/race 通过证据。
-
-上传仅复制文件，不改原工作区代码，也不初始化或重置原工作区 Git。
+本次提交使用 `[skip ci]`，未安排远端执行。

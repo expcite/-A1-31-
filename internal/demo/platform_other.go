@@ -17,3 +17,4 @@ func SignalStop(string) error                        { return fmt.Errorf("演示
 func (*Instance) WaitStop(ctx context.Context) error { <-ctx.Done(); return ctx.Err() }
 func (*Instance) Close() error                       { return nil }
 func OpenBrowser(string) error                       { return fmt.Errorf("自动打开浏览器仅支持 Windows") }
+func OpenAppWindow(string) error                      { return fmt.Errorf("自动打开应用窗口仅支持 Windows") }

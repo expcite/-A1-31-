@@ -1,0 +1,37 @@
+{
+  "argv": [
+    "C:\\AgentWorkspace\\EH_Supplement_Integrated_v2\\toolchain\\go_1.27.2\\bin\\go.exe",
+    "test",
+    "-mod=readonly",
+    "-race",
+    "-json",
+    "-count=1",
+    "-timeout=60s",
+    "."
+  ],
+  "cwd": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\evidence\\race_02\\probe_source",
+  "started_utc": "2026-10-11T05:32:48.405939+00:00",
+  "timeout_seconds": 180,
+  "exit_code": 0,
+  "timed_out": false,
+  "launch_error": null,
+  "termination_commands": [],
+  "environment": {
+    "CC": "C:\\Users\\20477\\WorkBuddy\\EdgeHybrid_Backend_WinLibs_Alias\\mingw64\\bin\\gcc.exe",
+    "CGO_ENABLED": "1",
+    "COMPILER_PATH": "C:/Users/20477/WorkBuddy/EdgeHybrid_Backend_WinLibs_Alias/mingw64/bin;C:/Users/20477/WorkBuddy/EdgeHybrid_Backend_WinLibs_Alias/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0",
+    "GCC_EXEC_PREFIX": "C:/Users/20477/WorkBuddy/EdgeHybrid_Backend_WinLibs_Alias/mingw64/lib/gcc/",
+    "GOCACHE": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\cache\\go-build",
+    "GOFLAGS": "",
+    "GOMAXPROCS": "2",
+    "GOPROXY": "off",
+    "GOTOOLCHAIN": "local",
+    "GOWORK": "off",
+    "LIBRARY_PATH": "C:/Users/20477/WorkBuddy/EdgeHybrid_Backend_WinLibs_Alias/mingw64/x86_64-w64-mingw32/lib;C:/Users/20477/WorkBuddy/EdgeHybrid_Backend_WinLibs_Alias/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0"
+  },
+  "owned_pid": 11604,
+  "finished_utc": "2026-10-11T05:32:55.173503+00:00",
+  "elapsed_seconds": 6.76500000001397,
+  "stdout_sha256": "b197b044b03ebea775cef297490c34791ecc523a66d208b03b8030b461064910",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,2092 @@
+{
+  "revision": "Trial_v15_20261011",
+  "status": "PASS_OFFLINE_RECOMPUTATION",
+  "new_performance_experiments": false,
+  "execution_scope": "Python standard-library offline analysis of existing archived evidence; no Go, EXE, benchmark, attack, race or field experiment executed.",
+  "original_samples_modified": false,
+  "zero_durations_removed": false,
+  "rounding": "Display values use decimal round-half-up to the listed precision. Historical integer mean/median retain original floor-to-ns convention.",
+  "script_path": "tools/recompute_trial_v15_metrics.py",
+  "script_sha256": "3ebc61a4fb63e7cfe964b8a705cff05396919b8e7786980de4d3c12d8b3522f1",
+  "reproduce": "python tools/recompute_trial_v15_metrics.py --check",
+  "metric_count": 12,
+  "metrics": [
+    {
+      "id": "M01",
+      "name": "混合 H 历史握手均值",
+      "value": 1.112905,
+      "display_value": "1.1129",
+      "unit": "ms",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/m5_raw_trials/handshake_H_1/m5a-hybrid-20261001T003903.900873600Z/trials.jsonl",
+          "fields": [
+            "handshake_success",
+            "handshake_total_ns",
+            "trial_id",
+            "run_id"
+          ]
+        },
+        {
+          "path": "experiments/m5_raw_trials/handshake_H_1/m5a-hybrid-20261001T003903.900873600Z/manifest.json",
+          "fields": [
+            "requested_trials",
+            "run_id",
+            "go_version",
+            "source_manifest_sha256"
+          ]
+        }
+      ],
+      "formula": "floor(sum(handshake_total_ns for handshake_success) / handshake_success_count) / 1e6; zeros included",
+      "denominator": 1000,
+      "batch_and_version": {
+        "label": "historical M5",
+        "run_id": "m5-formal-20261001T003851.926621Z-handshake_H_1",
+        "plan_id": "m5-formal-20261001-v1",
+        "recorded_go_version": "go1.27.1",
+        "source_manifest_sha256": "fad0abe7326003b0b1b1ce51f0699acdb3b7f5bcf6bbc9f636026ada2cf996fd",
+        "environment": "Windows/amd64, local TCP loopback; historical batch, not current rebuilt EXE performance"
+      },
+      "measurement_scope": "Device-side handshake.Client interval; TCP connect measured separately; through verified H4/Finished.",
+      "limitations": [
+        "Zero durations and minimum positive values near 0.503 ms indicate a limit in these archived timing observations. Stored-value GCD/steps are not a calibration of the physical timer resolution; the exact cause is not independently established. Preserve zeros; do not interpret zero as a physically instantaneous handshake or small mean differences as an isolated algorithm effect.",
+        "One consecutive batch per mode; no independent-repeat confidence interval, synchronized-load result, target MCU measurement or field-network conclusion.",
+        "TLS P and SM2/SM4 T/H differ in protocol, authentication, records, business load and process organization; differences cannot be attributed solely to ML-KEM."
+      ],
+      "recomputed_details": {
+        "mode": "H",
+        "run_id": "m5-formal-20261001T003851.926621Z-handshake_H_1",
+        "requested": 1000,
+        "executed": 1000,
+        "handshake_successes": 1000,
+        "overall_successes": 1000,
+        "success_rate_observed_percent": 100.0,
+        "samples": 1000,
+        "mean_ns": 1112905,
+        "median_ns": 1004200,
+        "p95_ns": 2000500,
+        "zero_duration_count": 47,
+        "zero_duration_proportion": 0.047,
+        "zero_duration_percent": 4.7,
+        "minimum_positive_duration_ns": 503300,
+        "distinct_stored_durations": 581,
+        "minimum_distinct_stored_step_ns": 100,
+        "gcd_of_stored_positive_values_ns": 100,
+        "raw_source": "experiments/m5_raw_trials/handshake_H_1/m5a-hybrid-20261001T003903.900873600Z/trials.jsonl",
+        "manifest_source": "experiments/m5_raw_trials/handshake_H_1/m5a-hybrid-20261001T003903.900873600Z/manifest.json",
+        "recorded_go_version": "go1.27.1",
+        "source_manifest_sha256": "fad0abe7326003b0b1b1ce51f0699acdb3b7f5bcf6bbc9f636026ada2cf996fd",
+        "timing_limit": "Zero durations and minimum positive values near 0.503 ms indicate a limit in these archived timing observations. Stored-value GCD/steps are not a calibration of the physical timer resolution; the exact cause is not independently established. Preserve zeros; do not interpret zero as a physically instantaneous handshake or small mean differences as an isolated algorithm effect."
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M02",
+      "name": "Suite 2 控制 RTT P95",
+      "value": 0.2644599999999999,
+      "display_value": "0.2645",
+      "unit": "ms",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/supplement_20261008/rtt_C_01/rtt_trials.jsonl",
+          "fields": [
+            "type",
+            "warmup",
+            "elapsed_ns",
+            "t0_qpc_ticks",
+            "t1_qpc_ticks",
+            "qpc_frequency_hz",
+            "status",
+            "ack_identity_matched",
+            "ack_operation_matched",
+            "applied_value_matched"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/rtt_C_02/rtt_trials.jsonl",
+          "fields": [
+            "type",
+            "warmup",
+            "elapsed_ns",
+            "t0_qpc_ticks",
+            "t1_qpc_ticks",
+            "qpc_frequency_hz",
+            "status",
+            "ack_identity_matched",
+            "ack_operation_matched",
+            "applied_value_matched"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/rtt_C_03/rtt_trials.jsonl",
+          "fields": [
+            "type",
+            "warmup",
+            "elapsed_ns",
+            "t0_qpc_ticks",
+            "t1_qpc_ticks",
+            "qpc_frequency_hz",
+            "status",
+            "ack_identity_matched",
+            "ack_operation_matched",
+            "applied_value_matched"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/rtt_C_04/rtt_trials.jsonl",
+          "fields": [
+            "type",
+            "warmup",
+            "elapsed_ns",
+            "t0_qpc_ticks",
+            "t1_qpc_ticks",
+            "qpc_frequency_hz",
+            "status",
+            "ack_identity_matched",
+            "ack_operation_matched",
+            "applied_value_matched"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/rtt_C_05/rtt_trials.jsonl",
+          "fields": [
+            "type",
+            "warmup",
+            "elapsed_ns",
+            "t0_qpc_ticks",
+            "t1_qpc_ticks",
+            "qpc_frequency_hz",
+            "status",
+            "ack_identity_matched",
+            "ack_operation_matched",
+            "applied_value_matched"
+          ]
+        }
+      ],
+      "formula": "linear quantile: position=.95*(n-1), interpolate adjacent sorted elapsed_ns; /1e6",
+      "denominator": {
+        "requested": 1000,
+        "observed": 1000,
+        "confirmed": 1000,
+        "warmup_excluded": 50
+      },
+      "batch_and_version": {
+        "label": "archived E01 Suite 2",
+        "run_ids": [
+          "ag-rtt-C-01",
+          "ag-rtt-C-02",
+          "ag-rtt-C-03",
+          "ag-rtt-C-04",
+          "ag-rtt-C-05"
+        ],
+        "go_version": "go1.27.1",
+        "source_manifest_sha256": "70ccdb05eb9d68e4cbf03c9e2b667145310ab6a3b41e6ec08c8c3ce7ed62cdec",
+        "measurement_clock": "same-process Windows QPC, frequency 10000000 Hz; timestamp conversion checked"
+      },
+      "measurement_scope": "Production Control entry to ACK identity/SID/operation/value verification and state publication.",
+      "limitations": [
+        "Established-session control RTT, not handshake, ICMP, UI refresh, Modbus, remote-cloud or physical-actuator latency.",
+        "Observer map/mutex/channel notification and existing logging remain in measured cost; clock-read calibration is not total-hook calibration and no cost is subtracted.",
+        "Distribution is conditional on on-time confirmed; failures, timeouts and late outcomes must stay in the fixed planned denominator. Archived rows contain zero such failures."
+      ],
+      "recomputed_details": {
+        "observed_rows": 1000,
+        "confirmed": 1000,
+        "zero_ns": 0,
+        "mean_ns": 147391.7,
+        "median_ns": 130000.0,
+        "p95_ns": 264459.99999999994,
+        "run_summaries": [
+          {
+            "run_id": "ag-rtt-C-01",
+            "count": 200,
+            "mean_ns": 144833,
+            "median_ns": 128350.0,
+            "p95_ns": 255064.9999999998,
+            "calibration": {
+              "auto_telemetry": false,
+              "clock": "Windows QPC same-process monotonic counter; UTC anchor informational only",
+              "clock_read_max_ns": 200,
+              "clock_read_median_ns": 100,
+              "clock_read_min_ns": 0,
+              "hook_cost": "bounded map+mutex+channel notification; not isolated by clock calibration; no subtraction",
+              "manager_run_id": "interactive-9ed2e2e939f8df81bd4f12f169a16892",
+              "qpc_frequency_hz": 10000000,
+              "qpc_origin_ticks": 5814875362451,
+              "requested_formal": 200,
+              "run_id": "ag-rtt-C-01",
+              "suite": 2,
+              "type": "calibration",
+              "utc_anchor": "2026-10-09T02:17:45.3067098Z",
+              "variant": "C",
+              "warmup": 10
+            }
+          },
+          {
+            "run_id": "ag-rtt-C-02",
+            "count": 200,
+            "mean_ns": 144169.5,
+            "median_ns": 121500.0,
+            "p95_ns": 278359.99999999977,
+            "calibration": {
+              "auto_telemetry": false,
+              "clock": "Windows QPC same-process monotonic counter; UTC anchor informational only",
+              "clock_read_max_ns": 1000,
+              "clock_read_median_ns": 100,
+              "clock_read_min_ns": 0,
+              "hook_cost": "bounded map+mutex+channel notification; not isolated by clock calibration; no subtraction",
+              "manager_run_id": "interactive-c7962dd374c3fa03d3f4b5da34081fa9",
+              "qpc_frequency_hz": 10000000,
+              "qpc_origin_ticks": 5815020830815,
+              "requested_formal": 200,
+              "run_id": "ag-rtt-C-02",
+              "suite": 2,
+              "type": "calibration",
+              "utc_anchor": "2026-10-09T02:17:59.8533151Z",
+              "variant": "C",
+              "warmup": 10
+            }
+          },
+          {
+            "run_id": "ag-rtt-C-03",
+            "count": 200,
+            "mean_ns": 144874.5,
+            "median_ns": 125700.0,
+            "p95_ns": 252184.99999999988,
+            "calibration": {
+              "auto_telemetry": false,
+              "clock": "Windows QPC same-process monotonic counter; UTC anchor informational only",
+              "clock_read_max_ns": 3200,
+              "clock_read_median_ns": 100,
+              "clock_read_min_ns": 0,
+              "hook_cost": "bounded map+mutex+channel notification; not isolated by clock calibration; no subtraction",
+              "manager_run_id": "interactive-44fe09305fc020bbabd4d86b2b3edba0",
+              "qpc_frequency_hz": 10000000,
+              "qpc_origin_ticks": 5815161428634,
+              "requested_formal": 200,
+              "run_id": "ag-rtt-C-03",
+              "suite": 2,
+              "type": "calibration",
+              "utc_anchor": "2026-10-09T02:18:13.9135032Z",
+              "variant": "C",
+              "warmup": 10
+            }
+          },
+          {
+            "run_id": "ag-rtt-C-04",
+            "count": 200,
+            "mean_ns": 151375.5,
+            "median_ns": 135250.0,
+            "p95_ns": 264460.0,
+            "calibration": {
+              "auto_telemetry": false,
+              "clock": "Windows QPC same-process monotonic counter; UTC anchor informational only",
+              "clock_read_max_ns": 1500,
+              "clock_read_median_ns": 100,
+              "clock_read_min_ns": 0,
+              "hook_cost": "bounded map+mutex+channel notification; not isolated by clock calibration; no subtraction",
+              "manager_run_id": "interactive-47c95e8a06546d6c09b4f9ed13316b4c",
+              "qpc_frequency_hz": 10000000,
+              "qpc_origin_ticks": 5815318027901,
+              "requested_formal": 200,
+              "run_id": "ag-rtt-C-04",
+              "suite": 2,
+              "type": "calibration",
+              "utc_anchor": "2026-10-09T02:18:29.5739208Z",
+              "variant": "C",
+              "warmup": 10
+            }
+          },
+          {
+            "run_id": "ag-rtt-C-05",
+            "count": 200,
+            "mean_ns": 151706,
+            "median_ns": 136450.0,
+            "p95_ns": 253304.99999999985,
+            "calibration": {
+              "auto_telemetry": false,
+              "clock": "Windows QPC same-process monotonic counter; UTC anchor informational only",
+              "clock_read_max_ns": 300,
+              "clock_read_median_ns": 100,
+              "clock_read_min_ns": 0,
+              "hook_cost": "bounded map+mutex+channel notification; not isolated by clock calibration; no subtraction",
+              "manager_run_id": "interactive-c7243d21f85946df7f4e815723e2202d",
+              "qpc_frequency_hz": 10000000,
+              "qpc_origin_ticks": 5815582379302,
+              "requested_formal": 200,
+              "run_id": "ag-rtt-C-05",
+              "suite": 2,
+              "type": "calibration",
+              "utc_anchor": "2026-10-09T02:18:56.0089694Z",
+              "variant": "C",
+              "warmup": 10
+            }
+          }
+        ],
+        "between_run_mean_ns": {
+          "count": 5,
+          "values": [
+            144833,
+            144169.5,
+            144874.5,
+            151375.5,
+            151706
+          ],
+          "mean": 147391.7,
+          "median": 144874.5,
+          "minimum": 144169.5,
+          "maximum": 151706,
+          "sample_standard_deviation": 3799.6598959643743,
+          "coefficient_of_variation_percent": 2.577933422278442,
+          "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval."
+        },
+        "between_run_p95_ns": {
+          "count": 5,
+          "values": [
+            255064.9999999998,
+            278359.99999999977,
+            252184.99999999988,
+            264460.0,
+            253304.99999999985
+          ],
+          "mean": 260674.99999999985,
+          "median": 255064.9999999998,
+          "minimum": 252184.99999999988,
+          "maximum": 278359.99999999977,
+          "sample_standard_deviation": 11010.841816137381,
+          "coefficient_of_variation_percent": 4.223973076105261,
+          "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval."
+        }
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M03",
+      "name": "SM4-GCM 4096 B Seal 吞吐",
+      "value": 605.9171597633136,
+      "display_value": "605.92",
+      "unit": "MB/s",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+          "line": 8,
+          "benchmark": "BenchmarkSubmissionSM4GCM/Seal/payload_bytes=4096",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+          "line": 8,
+          "benchmark": "BenchmarkSubmissionSM4GCM/Seal/payload_bytes=4096",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+          "line": 8,
+          "benchmark": "BenchmarkSubmissionSM4GCM/Seal/payload_bytes=4096",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+          "line": 8,
+          "benchmark": "BenchmarkSubmissionSM4GCM/Seal/payload_bytes=4096",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+          "line": 8,
+          "benchmark": "BenchmarkSubmissionSM4GCM/Seal/payload_bytes=4096",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/supp_primitives_test.go",
+          "role": "archived benchmark scope"
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/submission_sm4_bench_test.go",
+          "role": "archived preallocated SM4-GCM scope"
+        }
+      ],
+      "formula": "4096*1000 / median(five archived benchmark ns/op)",
+      "denominator": {
+        "independent_benchmark_processes": 5,
+        "iteration_counts": [
+          476385,
+          485571,
+          362766,
+          321745,
+          408852
+        ]
+      },
+      "batch_and_version": {
+        "label": "archived E02-E05",
+        "run_id": "ag-primitives-formal-01",
+        "go_version": "go version go1.27.1 windows/amd64",
+        "source_manifest_sha256": [
+          "70ccdb05eb9d68e4cbf03c9e2b667145310ab6a3b41e6ec08c8c3ce7ed62cdec"
+        ],
+        "host": {
+          "platform": "Windows-11-10.0.26200-SP0",
+          "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+          "logical_cpu_count": 16
+        },
+        "configuration": "5 distinct benchmark processes; -test.cpu=1; target -test.benchtime=2s; no new invocation"
+      },
+      "measurement_scope": "Raw Go benchmark output of actual cryptosuite adapter.",
+      "limitations": [
+        "Per-process Go benchmark ns/op is a batch mean. Median of five batch means is not individual-operation P50; no fabricated per-call samples or latency confidence interval.",
+        "Five repeats show host/process variation; all original repeat means are retained with sample SD and CV. Descriptive CV is not a security or robustness measure.",
+        "Preallocated primitive adapter: 33 B AAD, 12 B nonce, 16 B tag, B/op=0; excludes network, business ACK and UI. MB=10^6 bytes. Earlier antigravity-sm4-formal run remains separate."
+      ],
+      "recomputed_details": {
+        "count": 5,
+        "values": [
+          5016.0,
+          5010.0,
+          7895.0,
+          7025.0,
+          6760.0
+        ],
+        "mean": 6341.2,
+        "median": 6760.0,
+        "minimum": 5010.0,
+        "maximum": 7895.0,
+        "sample_standard_deviation": 1283.1132841647304,
+        "coefficient_of_variation_percent": 20.23454999313585,
+        "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval.",
+        "unit": "ns/op",
+        "raw_rows": [
+          {
+            "repeat": 1,
+            "ns_per_op": 5016.0,
+            "iterations": 476385,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+            "line": 8
+          },
+          {
+            "repeat": 2,
+            "ns_per_op": 5010.0,
+            "iterations": 485571,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+            "line": 8
+          },
+          {
+            "repeat": 3,
+            "ns_per_op": 7895.0,
+            "iterations": 362766,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+            "line": 8
+          },
+          {
+            "repeat": 4,
+            "ns_per_op": 7025.0,
+            "iterations": 321745,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+            "line": 8
+          },
+          {
+            "repeat": 5,
+            "ns_per_op": 6760.0,
+            "iterations": 408852,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+            "line": 8
+          }
+        ]
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M04",
+      "name": "SM4-GCM 4096 B Open 吞吐",
+      "value": 650.7785192246585,
+      "display_value": "650.78",
+      "unit": "MB/s",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+          "line": 12,
+          "benchmark": "BenchmarkSubmissionSM4GCM/Open/payload_bytes=4096",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+          "line": 12,
+          "benchmark": "BenchmarkSubmissionSM4GCM/Open/payload_bytes=4096",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+          "line": 12,
+          "benchmark": "BenchmarkSubmissionSM4GCM/Open/payload_bytes=4096",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+          "line": 12,
+          "benchmark": "BenchmarkSubmissionSM4GCM/Open/payload_bytes=4096",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+          "line": 12,
+          "benchmark": "BenchmarkSubmissionSM4GCM/Open/payload_bytes=4096",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/supp_primitives_test.go",
+          "role": "archived benchmark scope"
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/submission_sm4_bench_test.go",
+          "role": "archived preallocated SM4-GCM scope"
+        }
+      ],
+      "formula": "4096*1000 / median(five archived benchmark ns/op)",
+      "denominator": {
+        "independent_benchmark_processes": 5,
+        "iteration_counts": [
+          508752,
+          510945,
+          503247,
+          440301,
+          341719
+        ]
+      },
+      "batch_and_version": {
+        "label": "archived E02-E05",
+        "run_id": "ag-primitives-formal-01",
+        "go_version": "go version go1.27.1 windows/amd64",
+        "source_manifest_sha256": [
+          "70ccdb05eb9d68e4cbf03c9e2b667145310ab6a3b41e6ec08c8c3ce7ed62cdec"
+        ],
+        "host": {
+          "platform": "Windows-11-10.0.26200-SP0",
+          "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+          "logical_cpu_count": 16
+        },
+        "configuration": "5 distinct benchmark processes; -test.cpu=1; target -test.benchtime=2s; no new invocation"
+      },
+      "measurement_scope": "Raw Go benchmark output of actual cryptosuite adapter.",
+      "limitations": [
+        "Per-process Go benchmark ns/op is a batch mean. Median of five batch means is not individual-operation P50; no fabricated per-call samples or latency confidence interval.",
+        "Five repeats show host/process variation; all original repeat means are retained with sample SD and CV. Descriptive CV is not a security or robustness measure.",
+        "Preallocated primitive adapter: 33 B AAD, 12 B nonce, 16 B tag, B/op=0; excludes network, business ACK and UI. MB=10^6 bytes. Earlier antigravity-sm4-formal run remains separate."
+      ],
+      "recomputed_details": {
+        "count": 5,
+        "values": [
+          4691.0,
+          4709.0,
+          6667.0,
+          6294.0,
+          7246.0
+        ],
+        "mean": 5921.4,
+        "median": 6294.0,
+        "minimum": 4691.0,
+        "maximum": 7246.0,
+        "sample_standard_deviation": 1165.45197241242,
+        "coefficient_of_variation_percent": 19.682034188070727,
+        "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval.",
+        "unit": "ns/op",
+        "raw_rows": [
+          {
+            "repeat": 1,
+            "ns_per_op": 4691.0,
+            "iterations": 508752,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+            "line": 12
+          },
+          {
+            "repeat": 2,
+            "ns_per_op": 4709.0,
+            "iterations": 510945,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+            "line": 12
+          },
+          {
+            "repeat": 3,
+            "ns_per_op": 6667.0,
+            "iterations": 503247,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+            "line": 12
+          },
+          {
+            "repeat": 4,
+            "ns_per_op": 6294.0,
+            "iterations": 440301,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+            "line": 12
+          },
+          {
+            "repeat": 5,
+            "ns_per_op": 7246.0,
+            "iterations": 341719,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+            "line": 12
+          }
+        ]
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M05",
+      "name": "Suite 2 控制 RTT 均值",
+      "value": 0.14739170000000001,
+      "display_value": "0.1474",
+      "unit": "ms",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/supplement_20261008/rtt_C_01/rtt_trials.jsonl",
+          "fields": [
+            "type",
+            "warmup",
+            "elapsed_ns",
+            "t0_qpc_ticks",
+            "t1_qpc_ticks",
+            "qpc_frequency_hz",
+            "status",
+            "ack_identity_matched",
+            "ack_operation_matched",
+            "applied_value_matched"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/rtt_C_02/rtt_trials.jsonl",
+          "fields": [
+            "type",
+            "warmup",
+            "elapsed_ns",
+            "t0_qpc_ticks",
+            "t1_qpc_ticks",
+            "qpc_frequency_hz",
+            "status",
+            "ack_identity_matched",
+            "ack_operation_matched",
+            "applied_value_matched"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/rtt_C_03/rtt_trials.jsonl",
+          "fields": [
+            "type",
+            "warmup",
+            "elapsed_ns",
+            "t0_qpc_ticks",
+            "t1_qpc_ticks",
+            "qpc_frequency_hz",
+            "status",
+            "ack_identity_matched",
+            "ack_operation_matched",
+            "applied_value_matched"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/rtt_C_04/rtt_trials.jsonl",
+          "fields": [
+            "type",
+            "warmup",
+            "elapsed_ns",
+            "t0_qpc_ticks",
+            "t1_qpc_ticks",
+            "qpc_frequency_hz",
+            "status",
+            "ack_identity_matched",
+            "ack_operation_matched",
+            "applied_value_matched"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/rtt_C_05/rtt_trials.jsonl",
+          "fields": [
+            "type",
+            "warmup",
+            "elapsed_ns",
+            "t0_qpc_ticks",
+            "t1_qpc_ticks",
+            "qpc_frequency_hz",
+            "status",
+            "ack_identity_matched",
+            "ack_operation_matched",
+            "applied_value_matched"
+          ]
+        }
+      ],
+      "formula": "sum(elapsed_ns for formal on-time confirmed) / 1000 / 1e6",
+      "denominator": {
+        "requested": 1000,
+        "observed": 1000,
+        "confirmed": 1000,
+        "warmup_excluded": 50
+      },
+      "batch_and_version": {
+        "label": "archived E01 Suite 2",
+        "run_ids": [
+          "ag-rtt-C-01",
+          "ag-rtt-C-02",
+          "ag-rtt-C-03",
+          "ag-rtt-C-04",
+          "ag-rtt-C-05"
+        ],
+        "go_version": "go1.27.1",
+        "source_manifest_sha256": "70ccdb05eb9d68e4cbf03c9e2b667145310ab6a3b41e6ec08c8c3ce7ed62cdec",
+        "measurement_clock": "same-process Windows QPC, frequency 10000000 Hz; timestamp conversion checked"
+      },
+      "measurement_scope": "Production Control entry to ACK identity/SID/operation/value verification and state publication.",
+      "limitations": [
+        "Established-session control RTT, not handshake, ICMP, UI refresh, Modbus, remote-cloud or physical-actuator latency.",
+        "Observer map/mutex/channel notification and existing logging remain in measured cost; clock-read calibration is not total-hook calibration and no cost is subtracted.",
+        "Distribution is conditional on on-time confirmed; failures, timeouts and late outcomes must stay in the fixed planned denominator. Archived rows contain zero such failures."
+      ],
+      "recomputed_details": {
+        "observed_rows": 1000,
+        "confirmed": 1000,
+        "zero_ns": 0,
+        "mean_ns": 147391.7,
+        "median_ns": 130000.0,
+        "p95_ns": 264459.99999999994,
+        "run_summaries": [
+          {
+            "run_id": "ag-rtt-C-01",
+            "count": 200,
+            "mean_ns": 144833,
+            "median_ns": 128350.0,
+            "p95_ns": 255064.9999999998,
+            "calibration": {
+              "auto_telemetry": false,
+              "clock": "Windows QPC same-process monotonic counter; UTC anchor informational only",
+              "clock_read_max_ns": 200,
+              "clock_read_median_ns": 100,
+              "clock_read_min_ns": 0,
+              "hook_cost": "bounded map+mutex+channel notification; not isolated by clock calibration; no subtraction",
+              "manager_run_id": "interactive-9ed2e2e939f8df81bd4f12f169a16892",
+              "qpc_frequency_hz": 10000000,
+              "qpc_origin_ticks": 5814875362451,
+              "requested_formal": 200,
+              "run_id": "ag-rtt-C-01",
+              "suite": 2,
+              "type": "calibration",
+              "utc_anchor": "2026-10-09T02:17:45.3067098Z",
+              "variant": "C",
+              "warmup": 10
+            }
+          },
+          {
+            "run_id": "ag-rtt-C-02",
+            "count": 200,
+            "mean_ns": 144169.5,
+            "median_ns": 121500.0,
+            "p95_ns": 278359.99999999977,
+            "calibration": {
+              "auto_telemetry": false,
+              "clock": "Windows QPC same-process monotonic counter; UTC anchor informational only",
+              "clock_read_max_ns": 1000,
+              "clock_read_median_ns": 100,
+              "clock_read_min_ns": 0,
+              "hook_cost": "bounded map+mutex+channel notification; not isolated by clock calibration; no subtraction",
+              "manager_run_id": "interactive-c7962dd374c3fa03d3f4b5da34081fa9",
+              "qpc_frequency_hz": 10000000,
+              "qpc_origin_ticks": 5815020830815,
+              "requested_formal": 200,
+              "run_id": "ag-rtt-C-02",
+              "suite": 2,
+              "type": "calibration",
+              "utc_anchor": "2026-10-09T02:17:59.8533151Z",
+              "variant": "C",
+              "warmup": 10
+            }
+          },
+          {
+            "run_id": "ag-rtt-C-03",
+            "count": 200,
+            "mean_ns": 144874.5,
+            "median_ns": 125700.0,
+            "p95_ns": 252184.99999999988,
+            "calibration": {
+              "auto_telemetry": false,
+              "clock": "Windows QPC same-process monotonic counter; UTC anchor informational only",
+              "clock_read_max_ns": 3200,
+              "clock_read_median_ns": 100,
+              "clock_read_min_ns": 0,
+              "hook_cost": "bounded map+mutex+channel notification; not isolated by clock calibration; no subtraction",
+              "manager_run_id": "interactive-44fe09305fc020bbabd4d86b2b3edba0",
+              "qpc_frequency_hz": 10000000,
+              "qpc_origin_ticks": 5815161428634,
+              "requested_formal": 200,
+              "run_id": "ag-rtt-C-03",
+              "suite": 2,
+              "type": "calibration",
+              "utc_anchor": "2026-10-09T02:18:13.9135032Z",
+              "variant": "C",
+              "warmup": 10
+            }
+          },
+          {
+            "run_id": "ag-rtt-C-04",
+            "count": 200,
+            "mean_ns": 151375.5,
+            "median_ns": 135250.0,
+            "p95_ns": 264460.0,
+            "calibration": {
+              "auto_telemetry": false,
+              "clock": "Windows QPC same-process monotonic counter; UTC anchor informational only",
+              "clock_read_max_ns": 1500,
+              "clock_read_median_ns": 100,
+              "clock_read_min_ns": 0,
+              "hook_cost": "bounded map+mutex+channel notification; not isolated by clock calibration; no subtraction",
+              "manager_run_id": "interactive-47c95e8a06546d6c09b4f9ed13316b4c",
+              "qpc_frequency_hz": 10000000,
+              "qpc_origin_ticks": 5815318027901,
+              "requested_formal": 200,
+              "run_id": "ag-rtt-C-04",
+              "suite": 2,
+              "type": "calibration",
+              "utc_anchor": "2026-10-09T02:18:29.5739208Z",
+              "variant": "C",
+              "warmup": 10
+            }
+          },
+          {
+            "run_id": "ag-rtt-C-05",
+            "count": 200,
+            "mean_ns": 151706,
+            "median_ns": 136450.0,
+            "p95_ns": 253304.99999999985,
+            "calibration": {
+              "auto_telemetry": false,
+              "clock": "Windows QPC same-process monotonic counter; UTC anchor informational only",
+              "clock_read_max_ns": 300,
+              "clock_read_median_ns": 100,
+              "clock_read_min_ns": 0,
+              "hook_cost": "bounded map+mutex+channel notification; not isolated by clock calibration; no subtraction",
+              "manager_run_id": "interactive-c7243d21f85946df7f4e815723e2202d",
+              "qpc_frequency_hz": 10000000,
+              "qpc_origin_ticks": 5815582379302,
+              "requested_formal": 200,
+              "run_id": "ag-rtt-C-05",
+              "suite": 2,
+              "type": "calibration",
+              "utc_anchor": "2026-10-09T02:18:56.0089694Z",
+              "variant": "C",
+              "warmup": 10
+            }
+          }
+        ],
+        "between_run_mean_ns": {
+          "count": 5,
+          "values": [
+            144833,
+            144169.5,
+            144874.5,
+            151375.5,
+            151706
+          ],
+          "mean": 147391.7,
+          "median": 144874.5,
+          "minimum": 144169.5,
+          "maximum": 151706,
+          "sample_standard_deviation": 3799.6598959643743,
+          "coefficient_of_variation_percent": 2.577933422278442,
+          "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval."
+        },
+        "between_run_p95_ns": {
+          "count": 5,
+          "values": [
+            255064.9999999998,
+            278359.99999999977,
+            252184.99999999988,
+            264460.0,
+            253304.99999999985
+          ],
+          "mean": 260674.99999999985,
+          "median": 255064.9999999998,
+          "minimum": 252184.99999999988,
+          "maximum": 278359.99999999977,
+          "sample_standard_deviation": 11010.841816137381,
+          "coefficient_of_variation_percent": 4.223973076105261,
+          "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval."
+        }
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M06",
+      "name": "ML-KEM KeyGen",
+      "value": 53.774,
+      "display_value": "53.77",
+      "unit": "μs/op",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+          "line": 13,
+          "benchmark": "BenchmarkSupplementMLKEM768/KeyGenAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+          "line": 13,
+          "benchmark": "BenchmarkSupplementMLKEM768/KeyGenAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+          "line": 13,
+          "benchmark": "BenchmarkSupplementMLKEM768/KeyGenAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+          "line": 13,
+          "benchmark": "BenchmarkSupplementMLKEM768/KeyGenAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+          "line": 13,
+          "benchmark": "BenchmarkSupplementMLKEM768/KeyGenAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/supp_primitives_test.go",
+          "role": "archived benchmark scope"
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/submission_sm4_bench_test.go",
+          "role": "archived preallocated SM4-GCM scope"
+        }
+      ],
+      "formula": "median(five archived benchmark ns/op) / 1000",
+      "denominator": {
+        "independent_benchmark_processes": 5,
+        "iteration_counts": [
+          45502,
+          45559,
+          44581,
+          39564,
+          28768
+        ]
+      },
+      "batch_and_version": {
+        "label": "archived E02-E05",
+        "run_id": "ag-primitives-formal-01",
+        "go_version": "go version go1.27.1 windows/amd64",
+        "source_manifest_sha256": [
+          "70ccdb05eb9d68e4cbf03c9e2b667145310ab6a3b41e6ec08c8c3ce7ed62cdec"
+        ],
+        "host": {
+          "platform": "Windows-11-10.0.26200-SP0",
+          "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+          "logical_cpu_count": 16
+        },
+        "configuration": "5 distinct benchmark processes; -test.cpu=1; target -test.benchtime=2s; no new invocation"
+      },
+      "measurement_scope": "Raw Go benchmark output of actual cryptosuite adapter.",
+      "limitations": [
+        "Per-process Go benchmark ns/op is a batch mean. Median of five batch means is not individual-operation P50; no fabricated per-call samples or latency confidence interval.",
+        "Five repeats show host/process variation; all original repeat means are retained with sample SD and CV. Descriptive CV is not a security or robustness measure.",
+        "Adapter includes actual interface costs. Encaps includes public-key parsing/validation and randomness. Decaps is valid-ciphertext timing; implicit rejection/structure-error cases are not the timed population."
+      ],
+      "recomputed_details": {
+        "count": 5,
+        "values": [
+          53774.0,
+          53051.0,
+          53378.0,
+          57861.0,
+          85963.0
+        ],
+        "mean": 60805.4,
+        "median": 53774.0,
+        "minimum": 53051.0,
+        "maximum": 85963.0,
+        "sample_standard_deviation": 14197.815898933188,
+        "coefficient_of_variation_percent": 23.349597073505294,
+        "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval.",
+        "unit": "ns/op",
+        "raw_rows": [
+          {
+            "repeat": 1,
+            "ns_per_op": 53774.0,
+            "iterations": 45502,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+            "line": 13
+          },
+          {
+            "repeat": 2,
+            "ns_per_op": 53051.0,
+            "iterations": 45559,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+            "line": 13
+          },
+          {
+            "repeat": 3,
+            "ns_per_op": 53378.0,
+            "iterations": 44581,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+            "line": 13
+          },
+          {
+            "repeat": 4,
+            "ns_per_op": 57861.0,
+            "iterations": 39564,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+            "line": 13
+          },
+          {
+            "repeat": 5,
+            "ns_per_op": 85963.0,
+            "iterations": 28768,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+            "line": 13
+          }
+        ]
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M07",
+      "name": "ML-KEM Encaps",
+      "value": 56.31,
+      "display_value": "56.31",
+      "unit": "μs/op",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+          "line": 14,
+          "benchmark": "BenchmarkSupplementMLKEM768/EncapsAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+          "line": 14,
+          "benchmark": "BenchmarkSupplementMLKEM768/EncapsAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+          "line": 14,
+          "benchmark": "BenchmarkSupplementMLKEM768/EncapsAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+          "line": 14,
+          "benchmark": "BenchmarkSupplementMLKEM768/EncapsAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+          "line": 14,
+          "benchmark": "BenchmarkSupplementMLKEM768/EncapsAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/supp_primitives_test.go",
+          "role": "archived benchmark scope"
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/submission_sm4_bench_test.go",
+          "role": "archived preallocated SM4-GCM scope"
+        }
+      ],
+      "formula": "median(five archived benchmark ns/op) / 1000",
+      "denominator": {
+        "independent_benchmark_processes": 5,
+        "iteration_counts": [
+          41859,
+          41722,
+          42768,
+          41672,
+          24104
+        ]
+      },
+      "batch_and_version": {
+        "label": "archived E02-E05",
+        "run_id": "ag-primitives-formal-01",
+        "go_version": "go version go1.27.1 windows/amd64",
+        "source_manifest_sha256": [
+          "70ccdb05eb9d68e4cbf03c9e2b667145310ab6a3b41e6ec08c8c3ce7ed62cdec"
+        ],
+        "host": {
+          "platform": "Windows-11-10.0.26200-SP0",
+          "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+          "logical_cpu_count": 16
+        },
+        "configuration": "5 distinct benchmark processes; -test.cpu=1; target -test.benchtime=2s; no new invocation"
+      },
+      "measurement_scope": "Raw Go benchmark output of actual cryptosuite adapter.",
+      "limitations": [
+        "Per-process Go benchmark ns/op is a batch mean. Median of five batch means is not individual-operation P50; no fabricated per-call samples or latency confidence interval.",
+        "Five repeats show host/process variation; all original repeat means are retained with sample SD and CV. Descriptive CV is not a security or robustness measure.",
+        "Adapter includes actual interface costs. Encaps includes public-key parsing/validation and randomness. Decaps is valid-ciphertext timing; implicit rejection/structure-error cases are not the timed population."
+      ],
+      "recomputed_details": {
+        "count": 5,
+        "values": [
+          56310.0,
+          55985.0,
+          56104.0,
+          59558.0,
+          84790.0
+        ],
+        "mean": 62549.4,
+        "median": 56310.0,
+        "minimum": 55985.0,
+        "maximum": 84790.0,
+        "sample_standard_deviation": 12521.555446509032,
+        "coefficient_of_variation_percent": 20.018665960839,
+        "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval.",
+        "unit": "ns/op",
+        "raw_rows": [
+          {
+            "repeat": 1,
+            "ns_per_op": 56310.0,
+            "iterations": 41859,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+            "line": 14
+          },
+          {
+            "repeat": 2,
+            "ns_per_op": 55985.0,
+            "iterations": 41722,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+            "line": 14
+          },
+          {
+            "repeat": 3,
+            "ns_per_op": 56104.0,
+            "iterations": 42768,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+            "line": 14
+          },
+          {
+            "repeat": 4,
+            "ns_per_op": 59558.0,
+            "iterations": 41672,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+            "line": 14
+          },
+          {
+            "repeat": 5,
+            "ns_per_op": 84790.0,
+            "iterations": 24104,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+            "line": 14
+          }
+        ]
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M08",
+      "name": "ML-KEM Decaps",
+      "value": 55.15,
+      "display_value": "55.15",
+      "unit": "μs/op",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+          "line": 15,
+          "benchmark": "BenchmarkSupplementMLKEM768/DecapsValidAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+          "line": 15,
+          "benchmark": "BenchmarkSupplementMLKEM768/DecapsValidAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+          "line": 15,
+          "benchmark": "BenchmarkSupplementMLKEM768/DecapsValidAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+          "line": 15,
+          "benchmark": "BenchmarkSupplementMLKEM768/DecapsValidAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+          "line": 15,
+          "benchmark": "BenchmarkSupplementMLKEM768/DecapsValidAdapter",
+          "fields": [
+            "iterations",
+            "ns/op"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/supp_primitives_test.go",
+          "role": "archived benchmark scope"
+        },
+        {
+          "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/submission_sm4_bench_test.go",
+          "role": "archived preallocated SM4-GCM scope"
+        }
+      ],
+      "formula": "median(five archived benchmark ns/op) / 1000",
+      "denominator": {
+        "independent_benchmark_processes": 5,
+        "iteration_counts": [
+          43982,
+          44144,
+          44056,
+          42663,
+          26217
+        ]
+      },
+      "batch_and_version": {
+        "label": "archived E02-E05",
+        "run_id": "ag-primitives-formal-01",
+        "go_version": "go version go1.27.1 windows/amd64",
+        "source_manifest_sha256": [
+          "70ccdb05eb9d68e4cbf03c9e2b667145310ab6a3b41e6ec08c8c3ce7ed62cdec"
+        ],
+        "host": {
+          "platform": "Windows-11-10.0.26200-SP0",
+          "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+          "logical_cpu_count": 16
+        },
+        "configuration": "5 distinct benchmark processes; -test.cpu=1; target -test.benchtime=2s; no new invocation"
+      },
+      "measurement_scope": "Raw Go benchmark output of actual cryptosuite adapter.",
+      "limitations": [
+        "Per-process Go benchmark ns/op is a batch mean. Median of five batch means is not individual-operation P50; no fabricated per-call samples or latency confidence interval.",
+        "Five repeats show host/process variation; all original repeat means are retained with sample SD and CV. Descriptive CV is not a security or robustness measure.",
+        "Adapter includes actual interface costs. Encaps includes public-key parsing/validation and randomness. Decaps is valid-ciphertext timing; implicit rejection/structure-error cases are not the timed population."
+      ],
+      "recomputed_details": {
+        "count": 5,
+        "values": [
+          55148.0,
+          55150.0,
+          54533.0,
+          73531.0,
+          77846.0
+        ],
+        "mean": 63241.6,
+        "median": 55150.0,
+        "minimum": 54533.0,
+        "maximum": 77846.0,
+        "sample_standard_deviation": 11467.130386456762,
+        "coefficient_of_variation_percent": 18.132258491968518,
+        "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval.",
+        "unit": "ns/op",
+        "raw_rows": [
+          {
+            "repeat": 1,
+            "ns_per_op": 55148.0,
+            "iterations": 43982,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+            "line": 15
+          },
+          {
+            "repeat": 2,
+            "ns_per_op": 55150.0,
+            "iterations": 44144,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+            "line": 15
+          },
+          {
+            "repeat": 3,
+            "ns_per_op": 54533.0,
+            "iterations": 44056,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+            "line": 15
+          },
+          {
+            "repeat": 4,
+            "ns_per_op": 73531.0,
+            "iterations": 42663,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+            "line": 15
+          },
+          {
+            "repeat": 5,
+            "ns_per_op": 77846.0,
+            "iterations": 26217,
+            "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+            "line": 15
+          }
+        ]
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M09",
+      "name": "20 身份 Suite 2 进程峰值组均值",
+      "value": 24.122709333333333,
+      "display_value": "24.12",
+      "unit": "MB",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/supplement_20261008/memory_C_20_01/memory.jsonl",
+          "fields": [
+            "processes.pid",
+            "processes.process_lifetime_peak_working_set_bytes"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/memory_C_20_02/memory.jsonl",
+          "fields": [
+            "processes.pid",
+            "processes.process_lifetime_peak_working_set_bytes"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/memory_C_20_03/memory.jsonl",
+          "fields": [
+            "processes.pid",
+            "processes.process_lifetime_peak_working_set_bytes"
+          ]
+        }
+      ],
+      "formula": "mean(max(process_lifetime_peak_working_set_bytes) for each of 3 runs) / 1e6",
+      "denominator": {
+        "independent_runs": 3,
+        "samples_per_run": 2400,
+        "seconds_per_run_requested": 240,
+        "sampling_interval_ms": 100
+      },
+      "batch_and_version": {
+        "label": "archived E07 C20",
+        "run_ids": [
+          "ag-E07-C-20-01",
+          "ag-E07-C-20-02",
+          "ag-E07-C-20-03"
+        ],
+        "exe_sha256": "25c41f6542af20e234e8688252204ca42f7ed6e97422aeb1fc4a21f50f7da39d",
+        "go_version": "go1.27.1 historical executable"
+      },
+      "measurement_scope": "One interactive process containing manager, gateway and 20 simulated device actors; OS lifetime high-water mark.",
+      "limitations": [
+        "Excludes browser and other processes; not whole-system RAM, per-device exclusive memory, per-handshake memory or target MCU RAM.",
+        "OS lifetime peak and sampling maximum remain separate; mean of 3 observed peaks is not an absolute upper bound."
+      ],
+      "recomputed_details": {
+        "OS_lifetime_peaks_bytes": {
+          "count": 3,
+          "values": [
+            23896064,
+            24567808,
+            23904256
+          ],
+          "mean": 24122709.333333332,
+          "median": 23904256,
+          "minimum": 23896064,
+          "maximum": 24567808,
+          "sample_standard_deviation": 385488.51411855756,
+          "coefficient_of_variation_percent": 1.5980315842295558,
+          "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval."
+        },
+        "runs": [
+          {
+            "run_id": "ag-E07-C-20-01",
+            "pid": 40456,
+            "sample_count": 2400,
+            "process_lifetime_peak_working_set_bytes": 23896064,
+            "sampled_peak_working_set_bytes": 23896064,
+            "exe_sha256": "25c41f6542af20e234e8688252204ca42f7ed6e97422aeb1fc4a21f50f7da39d"
+          },
+          {
+            "run_id": "ag-E07-C-20-02",
+            "pid": 14352,
+            "sample_count": 2400,
+            "process_lifetime_peak_working_set_bytes": 24567808,
+            "sampled_peak_working_set_bytes": 24567808,
+            "exe_sha256": "25c41f6542af20e234e8688252204ca42f7ed6e97422aeb1fc4a21f50f7da39d"
+          },
+          {
+            "run_id": "ag-E07-C-20-03",
+            "pid": 38564,
+            "sample_count": 2400,
+            "process_lifetime_peak_working_set_bytes": 23904256,
+            "sampled_peak_working_set_bytes": 23904256,
+            "exe_sha256": "25c41f6542af20e234e8688252204ca42f7ed6e97422aeb1fc4a21f50f7da39d"
+          }
+        ]
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M10",
+      "name": "20 设备 UI 批量 Suite 2 中位耗时",
+      "value": 19.38555,
+      "display_value": "19.3856",
+      "unit": "s",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/supplement_20261008/e06_C_01/e06_export.json",
+          "fields": [
+            "batches.warmup",
+            "batches.elapsed_ms",
+            "batches.requests",
+            "batches.operations",
+            "batches.targets",
+            "batches.device_snapshot"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/e06_C_02/e06_export.json",
+          "fields": [
+            "batches.warmup",
+            "batches.elapsed_ms",
+            "batches.requests",
+            "batches.operations",
+            "batches.targets",
+            "batches.device_snapshot"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/e06_C_03/e06_export.json",
+          "fields": [
+            "batches.warmup",
+            "batches.elapsed_ms",
+            "batches.requests",
+            "batches.operations",
+            "batches.targets",
+            "batches.device_snapshot"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/e06_C_04/e06_export.json",
+          "fields": [
+            "batches.warmup",
+            "batches.elapsed_ms",
+            "batches.requests",
+            "batches.operations",
+            "batches.targets",
+            "batches.device_snapshot"
+          ]
+        },
+        {
+          "path": "experiments/supplement_20261008/e06_C_05/e06_export.json",
+          "fields": [
+            "batches.warmup",
+            "batches.elapsed_ms",
+            "batches.requests",
+            "batches.operations",
+            "batches.targets",
+            "batches.device_snapshot"
+          ]
+        }
+      ],
+      "formula": "round(original elapsed_ms*1e6) per formal batch; median of 50 batch elapsed_ns / 1e9; even median averages middle pair",
+      "denominator": {
+        "formal_batches": 50,
+        "devices_per_batch": 20,
+        "operations": 1000,
+        "independent_runs": 5,
+        "warmup_batches_excluded": 5
+      },
+      "batch_and_version": {
+        "label": "archived E06 C",
+        "run_ids": [
+          "ag-E06-C-01",
+          "ag-E06-C-02",
+          "ag-E06-C-03",
+          "ag-E06-C-04",
+          "ag-E06-C-05"
+        ],
+        "source_manifest_sha256": "70ccdb05eb9d68e4cbf03c9e2b667145310ab6a3b41e6ec08c8c3ce7ed62cdec",
+        "clock": "browser performance.now()",
+        "scheduler": "serial taskFn await + waitForBatchOutcome await + 19 setTimeout(35); unchanged"
+      },
+      "measurement_scope": "Capture-click to all native UI terminal states, validated against associated backend ACK evidence.",
+      "limitations": [
+        "Native scheduler submits targets serially and waits for each outcome; result is not synchronized 20-target latency or E01 RTT.",
+        "Includes native UI polling/refresh, observer and export cost. 19.3856 s is observed behavior, not a claimed low-latency concurrency achievement."
+      ],
+      "recomputed_details": {
+        "batches": 50,
+        "operations": 1000,
+        "all_confirmed_batches": 50,
+        "mean_ns": 19460736000,
+        "median_ns": 19385550000.0,
+        "p95_ns": 20011185000.0,
+        "run_summaries": [
+          {
+            "run_id": "ag-E06-C-01",
+            "batches": 10,
+            "mean_ns": 19330530000,
+            "median_ns": 19353050000.0,
+            "p95_ns": 19451115000.0
+          },
+          {
+            "run_id": "ag-E06-C-02",
+            "batches": 10,
+            "mean_ns": 19472420000,
+            "median_ns": 19425100000.0,
+            "p95_ns": 20009745000.0
+          },
+          {
+            "run_id": "ag-E06-C-03",
+            "batches": 10,
+            "mean_ns": 19541240000,
+            "median_ns": 19426400000.0,
+            "p95_ns": 20010535000.0
+          },
+          {
+            "run_id": "ag-E06-C-04",
+            "batches": 10,
+            "mean_ns": 19603550000,
+            "median_ns": 19432650000.0,
+            "p95_ns": 20015200000.0
+          },
+          {
+            "run_id": "ag-E06-C-05",
+            "batches": 10,
+            "mean_ns": 19355940000,
+            "median_ns": 19362550000.0,
+            "p95_ns": 19449640000.0
+          }
+        ],
+        "between_run_mean_ns": {
+          "count": 5,
+          "values": [
+            19330530000,
+            19472420000,
+            19541240000,
+            19603550000,
+            19355940000
+          ],
+          "mean": 19460736000,
+          "median": 19472420000,
+          "minimum": 19330530000,
+          "maximum": 19603550000,
+          "sample_standard_deviation": 117206071.21646899,
+          "coefficient_of_variation_percent": 0.6022694682075179,
+          "interpretation": "Descriptive variation between archived repeats, not an individual-operation latency distribution or confidence interval."
+        }
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M11",
+      "name": "六核心包语句覆盖率",
+      "value": 69.55827567855242,
+      "display_value": "69.56",
+      "unit": "%",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/submission_repair_20261008/fuzz_and_coverage/coverage.out",
+          "fields": [
+            "statement count per block",
+            "execution count per block"
+          ]
+        }
+      ],
+      "formula": "Merge identical locations with equal statement counts and summed atomic counts; 100 * sum(unique-block statement count where merged execution count>0) / sum(unique-block statement count)",
+      "denominator": 1879,
+      "batch_and_version": {
+        "label": "archived six-package atomic coverage",
+        "go_version": "go1.27.1",
+        "source_manifest_sha256": "70ccdb05eb9d68e4cbf03c9e2b667145310ab6a3b41e6ec08c8c3ce7ed62cdec"
+      },
+      "measurement_scope": "cryptosuite, handshake, record, wire, policy, evidence: existing unit tests, atomic statement profile.",
+      "limitations": [
+        "Not full-repository, branch, state-machine or security-correctness coverage. Four external SM2 tests excluded by recorded scope and retained as separate earlier evidence.",
+        "69.56% is descriptive; no new threshold or test execution is invented."
+      ],
+      "recomputed_details": {
+        "covered_statements": 1307,
+        "total_statements": 1879,
+        "by_package": {
+          "example.com/edgehybrid/internal/cryptosuite": {
+            "statements": 394,
+            "covered_statements": 267
+          },
+          "example.com/edgehybrid/internal/evidence": {
+            "statements": 471,
+            "covered_statements": 168
+          },
+          "example.com/edgehybrid/internal/handshake": {
+            "statements": 873,
+            "covered_statements": 747
+          },
+          "example.com/edgehybrid/internal/policy": {
+            "statements": 30,
+            "covered_statements": 21
+          },
+          "example.com/edgehybrid/internal/record": {
+            "statements": 63,
+            "covered_statements": 60
+          },
+          "example.com/edgehybrid/internal/wire": {
+            "statements": 48,
+            "covered_statements": 44
+          }
+        },
+        "unique_source_blocks": 1322,
+        "duplicate_profile_rows_merged": 6610,
+        "merge_method": "Identical source-block locations are merged; statement counts must agree and atomic execution counts are summed. The raw profile is unchanged."
+      },
+      "new_experiment": false
+    },
+    {
+      "id": "M12",
+      "name": "混合 H 历史握手成功/执行",
+      "value": {
+        "successes": 1000,
+        "executed": 1000
+      },
+      "display_value": "1,000/1,000",
+      "unit": "次",
+      "verification_method": "Independent offline recomputation from archived raw files; cross-check with archived summary where available.",
+      "raw_sources": [
+        {
+          "path": "experiments/m5_raw_trials/handshake_H_1/m5a-hybrid-20261001T003903.900873600Z/trials.jsonl",
+          "fields": [
+            "handshake_success",
+            "handshake_total_ns",
+            "trial_id",
+            "run_id"
+          ]
+        },
+        {
+          "path": "experiments/m5_raw_trials/handshake_H_1/m5a-hybrid-20261001T003903.900873600Z/manifest.json",
+          "fields": [
+            "requested_trials",
+            "run_id",
+            "go_version",
+            "source_manifest_sha256"
+          ]
+        }
+      ],
+      "formula": "count(handshake_success == true) / executed; observed success-rate denominator also fixed requested_trials=1000",
+      "denominator": 1000,
+      "batch_and_version": {
+        "label": "historical M5",
+        "run_id": "m5-formal-20261001T003851.926621Z-handshake_H_1",
+        "plan_id": "m5-formal-20261001-v1",
+        "recorded_go_version": "go1.27.1",
+        "source_manifest_sha256": "fad0abe7326003b0b1b1ce51f0699acdb3b7f5bcf6bbc9f636026ada2cf996fd",
+        "environment": "Windows/amd64, local TCP loopback; historical batch, not current rebuilt EXE performance"
+      },
+      "measurement_scope": "Fixed planned handshake attempts; observed success, not future reliability probability.",
+      "limitations": [
+        "Zero durations and minimum positive values near 0.503 ms indicate a limit in these archived timing observations. Stored-value GCD/steps are not a calibration of the physical timer resolution; the exact cause is not independently established. Preserve zeros; do not interpret zero as a physically instantaneous handshake or small mean differences as an isolated algorithm effect.",
+        "One consecutive batch per mode; no independent-repeat confidence interval, synchronized-load result, target MCU measurement or field-network conclusion.",
+        "TLS P and SM2/SM4 T/H differ in protocol, authentication, records, business load and process organization; differences cannot be attributed solely to ML-KEM."
+      ],
+      "recomputed_details": {
+        "mode": "H",
+        "run_id": "m5-formal-20261001T003851.926621Z-handshake_H_1",
+        "requested": 1000,
+        "executed": 1000,
+        "handshake_successes": 1000,
+        "overall_successes": 1000,
+        "success_rate_observed_percent": 100.0,
+        "samples": 1000,
+        "mean_ns": 1112905,
+        "median_ns": 1004200,
+        "p95_ns": 2000500,
+        "zero_duration_count": 47,
+        "zero_duration_proportion": 0.047,
+        "zero_duration_percent": 4.7,
+        "minimum_positive_duration_ns": 503300,
+        "distinct_stored_durations": 581,
+        "minimum_distinct_stored_step_ns": 100,
+        "gcd_of_stored_positive_values_ns": 100,
+        "raw_source": "experiments/m5_raw_trials/handshake_H_1/m5a-hybrid-20261001T003903.900873600Z/trials.jsonl",
+        "manifest_source": "experiments/m5_raw_trials/handshake_H_1/m5a-hybrid-20261001T003903.900873600Z/manifest.json",
+        "recorded_go_version": "go1.27.1",
+        "source_manifest_sha256": "fad0abe7326003b0b1b1ce51f0699acdb3b7f5bcf6bbc9f636026ada2cf996fd",
+        "timing_limit": "Zero durations and minimum positive values near 0.503 ms indicate a limit in these archived timing observations. Stored-value GCD/steps are not a calibration of the physical timer resolution; the exact cause is not independently established. Preserve zeros; do not interpret zero as a physically instantaneous handshake or small mean differences as an isolated algorithm effect."
+      },
+      "new_experiment": false
+    }
+  ],
+  "input_files": [
+    {
+      "path": "experiments/m5_raw_trials/handshake_H_1/m5a-hybrid-20261001T003903.900873600Z/manifest.json",
+      "sha256": "95380135dee6b8d54820a709e95d517847f031fbfd94b985ce0ce2986fee6f7f",
+      "bytes": 2402
+    },
+    {
+      "path": "experiments/m5_raw_trials/handshake_H_1/m5a-hybrid-20261001T003903.900873600Z/trials.jsonl",
+      "sha256": "08b018145593c8b9d0b500e5b8a63809d74104f82d1428954a49fa8fd5571985",
+      "bytes": 1550125
+    },
+    {
+      "path": "experiments/m5_raw_trials/handshake_P_1/manifest.json",
+      "sha256": "6d931b11f398eb3e85aad27761546a88616e2ae26ca68aef8fa4104f92eca269",
+      "bytes": 536
+    },
+    {
+      "path": "experiments/m5_raw_trials/handshake_P_1/p_trials.jsonl",
+      "sha256": "c13ba8d94eb6e508b52945b80d36fa4e24ea64c469e8d1a9bd20a83834b04358",
+      "bytes": 3026146
+    },
+    {
+      "path": "experiments/m5_raw_trials/handshake_T_1/m5a-traditional-20261001T003855.124283300Z/manifest.json",
+      "sha256": "6350d734c9ff3e00694e76a96b624366266a811fa8060c7af25661a47b398fa9",
+      "bytes": 2407
+    },
+    {
+      "path": "experiments/m5_raw_trials/handshake_T_1/m5a-traditional-20261001T003855.124283300Z/trials.jsonl",
+      "sha256": "8651f906d6eb8a2659f43930d184eb8338e07cfb9830e00cc7f0d322870ede5e",
+      "bytes": 1552086
+    },
+    {
+      "path": "experiments/m5_raw_trials/matrix.json",
+      "sha256": "67e0ae1d15d491830a9c7bc2cd9ffe8fca19477726cc09a2bf514242481f9af0",
+      "bytes": 1662
+    },
+    {
+      "path": "experiments/submission_repair_20261008/fuzz_and_coverage/COVERAGE_SUMMARY.json",
+      "sha256": "f3bd3f315fbd002981d7b102b53b2b0889234901ca634dba7d9e09bb50be6a00",
+      "bytes": 1652
+    },
+    {
+      "path": "experiments/submission_repair_20261008/fuzz_and_coverage/coverage.out",
+      "sha256": "56e2a52bc56694297e7bec5494c82f08aff55f8b5d2b099869fa9930b138beb7",
+      "bytes": 548352
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_A_01/e06_export.json",
+      "sha256": "4732832f04621783881c09f324f9b74d72c46eb18fe1c8e750100497d5142b8c",
+      "bytes": 400353
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_A_02/e06_export.json",
+      "sha256": "819c5e00efbf37de584b162e1b72ad64100ae07bceccf74e4c90680e0e625ed2",
+      "bytes": 401008
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_A_03/e06_export.json",
+      "sha256": "5033ff98920848854c2918e1a7dee1983c8ecd8052d8a02c39d3744ccef46441",
+      "bytes": 400697
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_A_04/e06_export.json",
+      "sha256": "011792168b0572c285ba58ec931ce49a888b9290ce091aa024eba950e9f2433a",
+      "bytes": 400388
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_A_05/e06_export.json",
+      "sha256": "ee5fa535a82010a9915b9361b4d215df840c03bf91999e7cd75309344ddbf21a",
+      "bytes": 400291
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_C_01/e06_export.json",
+      "sha256": "1b9972e7ecd3edaa96c26e62145e659db08c02c2bdd2dd1703908b920ba91822",
+      "bytes": 400954
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_C_02/e06_export.json",
+      "sha256": "a0e17dbac135cff10ab98baf4a5ecb5f4c0eb77540e09c33d747b215e82d70b5",
+      "bytes": 401003
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_C_03/e06_export.json",
+      "sha256": "5dceaccc80bac2d01c56da5aeedb62934832812b9d28b78cb48ce71d1ee4e2b5",
+      "bytes": 400769
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_C_04/e06_export.json",
+      "sha256": "c37e092e779ab13c8114d753c2c3b822766d5cfdfa8e14eea863178c67e12cd2",
+      "bytes": 400297
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_C_05/e06_export.json",
+      "sha256": "cbf8c075c9715a6fff084eee2c26a82ca77c8c40db89161178b69b0c50eb2aff",
+      "bytes": 400469
+    },
+    {
+      "path": "experiments/supplement_20261008/e06_summary_01/SUMMARY.json",
+      "sha256": "27489bb19b0c88d72750b4d47d570709f7062971024ff5a9e03a9c90b8555959",
+      "bytes": 3690
+    },
+    {
+      "path": "experiments/supplement_20261008/memory_C_20_01/MEMORY_RECEIPT.json",
+      "sha256": "73c1f7c82ada778c8ecb98ce92fd15205d7747366ee73569c9ffa56ca8b8bb4a",
+      "bytes": 530
+    },
+    {
+      "path": "experiments/supplement_20261008/memory_C_20_01/PROCESS_IDENTITY.json",
+      "sha256": "bf6bacd6dc47424b6fc2126b89770d0d96e98d05163ae4580c5ab43894a45dbc",
+      "bytes": 645
+    },
+    {
+      "path": "experiments/supplement_20261008/memory_C_20_01/memory.jsonl",
+      "sha256": "f14e67bf954103262f464e9b2ca0bb00cf08f67d5492b123fce34928c84c00df",
+      "bytes": 1182553
+    },
+    {
+      "path": "experiments/supplement_20261008/memory_C_20_02/MEMORY_RECEIPT.json",
+      "sha256": "8dc9977d14086c294e39f291e35d98eddf6e3252923e5094896a25cb34169125",
+      "bytes": 529
+    },
+    {
+      "path": "experiments/supplement_20261008/memory_C_20_02/PROCESS_IDENTITY.json",
+      "sha256": "2ecb9a29d2876f4f98b6dd2b3b50f319385d6e52f7464c4a7f1c75236a340dd1",
+      "bytes": 645
+    },
+    {
+      "path": "experiments/supplement_20261008/memory_C_20_02/memory.jsonl",
+      "sha256": "7b5a828f9792551deb30585a3e35cfbb83ad0a544abaedcdcd16325bd915e96e",
+      "bytes": 1184200
+    },
+    {
+      "path": "experiments/supplement_20261008/memory_C_20_03/MEMORY_RECEIPT.json",
+      "sha256": "98baab486b9486ad1acf2ef3c40ef83947ce09000d8e25e3508ae9c11a39fb55",
+      "bytes": 530
+    },
+    {
+      "path": "experiments/supplement_20261008/memory_C_20_03/PROCESS_IDENTITY.json",
+      "sha256": "952df18a6c3e0fd34dd640b2894c7aa7a42544346b70cf61d083acc2e0d5578f",
+      "bytes": 645
+    },
+    {
+      "path": "experiments/supplement_20261008/memory_C_20_03/memory.jsonl",
+      "sha256": "965b61f059ef63b52749a68e7d21246cced667dbff6786e83c38c8bb54c0b5f0",
+      "bytes": 1183806
+    },
+    {
+      "path": "experiments/supplement_20261008/memory_summary_01/SUMMARY.json",
+      "sha256": "9bc92c4ef2aac3d933b626d23e970ba2006fe1bfbdb1606cc9abc093895edaab",
+      "bytes": 12445
+    },
+    {
+      "path": "experiments/supplement_20261008/primitives_formal_01/BENCH_SUMMARY.json",
+      "sha256": "f0fb036cdb5a495b534f8efccf32f924efbee3a7f3df984d0285041f6545f4f9",
+      "bytes": 46549
+    },
+    {
+      "path": "experiments/supplement_20261008/primitives_formal_01/RESULT.json",
+      "sha256": "afe74746e15110595df73a82db54a97d3128b356f66e01fb982f26efb257401c",
+      "bytes": 23943
+    },
+    {
+      "path": "experiments/supplement_20261008/primitives_formal_01/bench_01/stdout.txt",
+      "sha256": "25a18f3ab7aa5a14eddc101b6de36388b9b3440564005feef8f9f8de1ac8ce42",
+      "bytes": 2450
+    },
+    {
+      "path": "experiments/supplement_20261008/primitives_formal_01/bench_02/stdout.txt",
+      "sha256": "4b33c56942ed515d9069d7f2b0af2c682714bd999f5dc3c954a013d3772256c6",
+      "bytes": 2450
+    },
+    {
+      "path": "experiments/supplement_20261008/primitives_formal_01/bench_03/stdout.txt",
+      "sha256": "185b8f048d88a3aaeb583df9c82f0030d973bf3980f69d4eed288d391604c33a",
+      "bytes": 2450
+    },
+    {
+      "path": "experiments/supplement_20261008/primitives_formal_01/bench_04/stdout.txt",
+      "sha256": "16d7a70b2c6095d94ab790777e8ead9bfc67dc7842a74173540ccb7403b49629",
+      "bytes": 2450
+    },
+    {
+      "path": "experiments/supplement_20261008/primitives_formal_01/bench_05/stdout.txt",
+      "sha256": "4e1e58c267596c45abe662901d1cfe9e888b3414a0d577e348d37e0de8ea0f26",
+      "bytes": 2450
+    },
+    {
+      "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/submission_sm4_bench_test.go",
+      "sha256": "b788ed04ad407b077ca310f4d1d7106ce58f7eb96f435a842ebb8edb87bb1641",
+      "bytes": 3078
+    },
+    {
+      "path": "experiments/supplement_20261008/primitives_formal_01/executed_inputs/supp_primitives_test.go",
+      "sha256": "6f9077983508186b09d3995a01990238e5a2b6144c05082adcbc413d80cc317c",
+      "bytes": 4373
+    },
+    {
+      "path": "experiments/supplement_20261008/primitives_formal_01/go_version/stdout.txt",
+      "sha256": "e37270413fda49039b4f31dd90726df0e94c163cf9bca2f62fd40a47d12b5db1",
+      "bytes": 34
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_A_01/RESULT.json",
+      "sha256": "c3688c9b529b8e91a06e17e99f4a090a4373eee9d1c645a577ec40c91e5f689e",
+      "bytes": 13846
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_A_01/rtt_trials.jsonl",
+      "sha256": "94bcba593d3e3cabd3b93aecdc519c2109f1aa93ccbcf9666575b56fc5f6f8fa",
+      "bytes": 164766
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_A_02/RESULT.json",
+      "sha256": "4a5a81e520e626ad24d86eb708a0744b1c898ec7bf1d52415fda399776a6b9ee",
+      "bytes": 13843
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_A_02/rtt_trials.jsonl",
+      "sha256": "317bec3e02ac804e04762f37a65c9c704a39a67c8a318a91b323ff6772a89321",
+      "bytes": 164763
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_A_03/RESULT.json",
+      "sha256": "f342cde5328e34ce37111584aa694777b03e6097a0f0176555985c47dbfc00f9",
+      "bytes": 13845
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_A_03/rtt_trials.jsonl",
+      "sha256": "0a5c0b15b6dbc53b357438605a12f8726a6c5fe700be29bb3c6d96eab0779bca",
+      "bytes": 164766
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_A_04/RESULT.json",
+      "sha256": "1b8a9d6ff17c7bef7196c2df5c2b68637a72f2701a00b241643a5c75f5bf5a6f",
+      "bytes": 13845
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_A_04/rtt_trials.jsonl",
+      "sha256": "1370cb468238df85d857010a61406b270d69f298b3bf9e976796e6b79f8a55f7",
+      "bytes": 164769
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_A_05/RESULT.json",
+      "sha256": "9d51bca0d2a4a59f55315ddc3fbda006bf90b1b5acec6b405361494c87ed2250",
+      "bytes": 13846
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_A_05/rtt_trials.jsonl",
+      "sha256": "8e83e8de2eb4a6ef567d4fb80e23e084147442396d736dd17ab0bb178677036c",
+      "bytes": 164770
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_C_01/RESULT.json",
+      "sha256": "f409488b2bcb16440ff2a7043c78bf347b3a3081a086178fbb5d373b3435b003",
+      "bytes": 13843
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_C_01/rtt_trials.jsonl",
+      "sha256": "151dc5c6d48e1a66e9b92d812c170bfe3bbe97a079a7004bcd5185d41bb40485",
+      "bytes": 164768
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_C_02/RESULT.json",
+      "sha256": "00a5fdb4688d1f6a082b4d213d52e0eaa7a6f65032ce3ccd0848499f33513845",
+      "bytes": 13844
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_C_02/rtt_trials.jsonl",
+      "sha256": "40c7be07abbc049fdcda70252da56329ad02fac3252c07487886cb5ba7bbd906",
+      "bytes": 164760
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_C_03/RESULT.json",
+      "sha256": "2440d524ec3d5476f9636e725d33a686f458193b1585746536562850e17e26ca",
+      "bytes": 13845
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_C_03/rtt_trials.jsonl",
+      "sha256": "47b03406c561f5415f62bab386ff579fc58ebfab9e81b32997d5d2f23ed1b3d2",
+      "bytes": 164760
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_C_04/RESULT.json",
+      "sha256": "bf52c88b66de5ebc9e0fbe00eb267ea058854eb9c83110b742bbf682dcbf79ea",
+      "bytes": 13845
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_C_04/rtt_trials.jsonl",
+      "sha256": "d33ff5377308eda8f691fed6a19132464ee4f21aadd4f1172ef0aaefd5400bea",
+      "bytes": 164769
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_C_05/RESULT.json",
+      "sha256": "06fbc6fb9f5950b1b4e3f00089d88ca2cc5a4d2a45af4e76d0cf91901fd566e9",
+      "bytes": 13843
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_C_05/rtt_trials.jsonl",
+      "sha256": "bd5644d491aa04d7b48f9426a93f6f9f5e744ebd3d4e7d8bcde2f1bd762ac881",
+      "bytes": 164768
+    },
+    {
+      "path": "experiments/supplement_20261008/rtt_summary_01/SUMMARY.json",
+      "sha256": "0d344138730a5213731c3a13fe09db8a9986f1e19d54df2b176022605311e82a",
+      "bytes": 10867
+    }
+  ],
+  "detailed_recomputation_path": "verification/trial_v15/PERFORMANCE_RECOMPUTATION_v15.json"
+}

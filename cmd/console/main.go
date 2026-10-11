@@ -3,6 +3,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"example.com/edgehybrid/internal/console"
 	"example.com/edgehybrid/internal/demo"
@@ -16,10 +17,11 @@ import (
 
 func main() { os.Exit(run()) }
 func run() int {
-	count := flag.Int("devices", 1, "设备预置1或20")
+	count := flag.Int("devices", 1, "初始设备数(1至20，默认1，可在前端动态添加)")
 	port := flag.Int("http-port", 0, "本机端口，0自动分配")
 	stop := flag.Bool("stop", false, "停止本包交互实例")
 	noBrowser := flag.Bool("no-browser", false, "不自动打开页面")
+	appWindow := flag.Bool("app-window", false, "以独立应用窗口启动(无地址栏/标签页)")
 	flag.Parse()
 	if flag.NArg() != 0 {
 		return 2
@@ -39,6 +41,16 @@ func run() int {
 	}
 	instance, e := demo.AcquireInstance(base)
 	if e != nil {
+		if *appWindow {
+			if markerData, readErr := os.ReadFile(filepath.Join(base, "active.json")); readErr == nil {
+				var m console.ActiveMarker
+				if jsonErr := json.Unmarshal(markerData, &m); jsonErr == nil && m.URL != "" {
+					_ = demo.OpenAppWindow(m.URL)
+					fmt.Printf("[EdgeHybrid] 本包演示已在运行 (URL: %s，PID: %d)。已为您重新唤起独立桌面窗口。\n如需重启或停止，请双击 停止交互平台.cmd。\n", m.URL, m.PID)
+					return 0
+				}
+			}
+		}
 		fmt.Fprintln(os.Stderr, e)
 		return 2
 	}
@@ -66,8 +78,17 @@ func run() int {
 		return 3
 	}
 	if !*noBrowser {
-		if e = demo.OpenBrowser(s.URL); e != nil {
-			fmt.Fprintln(os.Stderr, e)
+		if *appWindow {
+			if e = demo.OpenAppWindow(s.URL); e != nil {
+				fmt.Fprintln(os.Stderr, "独立窗口启动失败，回退到默认浏览器:", e)
+				if e = demo.OpenBrowser(s.URL); e != nil {
+					fmt.Fprintln(os.Stderr, e)
+				}
+			}
+		} else {
+			if e = demo.OpenBrowser(s.URL); e != nil {
+				fmt.Fprintln(os.Stderr, e)
+			}
 		}
 	}
 	fmt.Println("输入本机口令后连接设备。关闭页面不会停止；停止脚本/Ctrl+C停止。持久测试身份仅保存在本机private目录。")

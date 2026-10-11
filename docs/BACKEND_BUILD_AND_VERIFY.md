@@ -1,6 +1,6 @@
-# V12前端冻结后的后端构建与验证
+# 当前版本构建与验证
 
-继续当前工程，后端构建版本为`interactive-v1.2-backend1`。被冻结的页面仍显示原V12静态文字和历史图表；当前来源以`GET /api/v1/build`、`build_info.json`、源码清单为准。新的正式数据不写入历史图表。用户软件运行不需要Go、Python、Node、Java或外网CDN。
+当前版本为`interactive-v1.6.1-reviewfix1`。以本轮`build_info.json`、`CURRENT_SOURCE_MANIFEST.sha256`和`GET /api/v1/build`核对同源构建。旧V12/backend1性能、race和组件对照保留历史来源，不代表本轮全部复测。用户运行不需要Go、Python、Node、Java或外网CDN。两个构建入口interactive_build.py/backend_build.py共用同一构建流程，新的输出和证据目录不可已存在。
 
 ## 构建及后端接口
 

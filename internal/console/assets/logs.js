@@ -1,4 +1,4 @@
-import {node, card, button, table, detail} from './components.js';
+import {node, card, button, table, detail, badge} from './components.js';
 import {filterEvents, pageEvents} from './usability.js';
 
 // One bounded view per API/run, including its at-most-2000-event snapshot.
@@ -17,11 +17,11 @@ export function logs(initial, api) {
   const all = node('div'), c = card('本次有界记录'), range = node('p');
   const filterBar = node('div', undefined, 'toolbar'), rows = node('div');
   const pages = node('p'), q = {}, selectors = new Map(), writes = [];
-  const labels = {gateway:'网关', device:'设备', http:'管理接口', api:'操作排队',
-    management:'密钥管理', authenticated:'握手认证完成', telemetry_accepted:'网关验收温度',
-    confirmed:'收到确认', queued:'等待发送', api_result:'接口观测', offline:'已断开',
-    peer_processed:'设备已处理', control_write_result:'控制写出结果', local_sampling:'本地采样调整',
-    ack_written:'ACK已写出', telemetry_written:'温度已写出', unconfirmed:'结果未确认'};
+  const labels = {gateway:'网关 (gateway)', device:'设备 (device)', http:'管理接口 (http)', api:'操作排队 (api)',
+    management:'密钥管理 (management)', authenticated:'安全握手已认证 (authenticated)', telemetry_accepted:'网关验收温度 (telemetry_accepted)',
+    confirmed:'双端确认完成 (confirmed)', queued:'队列等待发送 (queued)', api_result:'接口观测 (api_result)', offline:'通道已断开 (offline)',
+    peer_processed:'设备已处理 (peer_processed)', control_write_result:'控制下发结果 (control_write_result)', local_sampling:'本地采样调整 (local_sampling)',
+    ack_written:'确认回执写出 (ack_written)', telemetry_written:'温度写出结果 (telemetry_written)', unconfirmed:'未收到确认 (unconfirmed)'};
 
   function selector(key, label) {
     const l = node('label', label), s = node('select');
@@ -31,7 +31,7 @@ export function logs(initial, api) {
   selector('device_id', '设备 / 网关');
   selector('endpoint', '观察端');
   selector('stage', '阶段 / 状态');
-  const advancedFilters=node('details'),advancedBody=node('div',undefined,'toolbar'),conditions=node('p',undefined,'muted');advancedFilters.append(node('summary','更多筛选'),advancedBody);
+  const advancedFilters=node('details'),advancedBody=node('div',undefined,'toolbar'),conditions=node('p',undefined,'muted');advancedFilters.open=true;advancedFilters.append(node('summary','筛选选项（F07动态更新）'),advancedBody);
   for(const key of ['device_id','endpoint','stage'])advancedBody.append(selectors.get(key).parentElement);
   filterBar.append(advancedFilters);
 
@@ -65,15 +65,26 @@ export function logs(initial, api) {
   const prev = button('上一页', () => { page--; draw(); }, 'secondary');
   const next = button('下一页', () => { page++; draw(); }, 'secondary');
   prev.dataset.write = next.dataset.write = '0'; pager.append(prev, pages, next);
+  const scrollAnchor = node('button', '', 'scroll-anchor-btn');
+  scrollAnchor.type = 'button'; scrollAnchor.hidden = true;
+  scrollAnchor.onclick = () => {
+    const wrap = rows.querySelector?.('.table-wrap');
+    if (wrap) {
+      if (wrap.scrollTo) wrap.scrollTo({ top: wrap.scrollHeight, behavior: 'smooth' });
+      else wrap.scrollTop = wrap.scrollHeight;
+    }
+    scrollAnchor.hidden = true; scrollAnchor.textContent = '';
+  };
   c.append(node('p', '内存最近2000事件；公共文件最多20MiB。筛选分页针对固定事件范围，轮询不让记录跳页。', 'muted'),
-    range, filterBar, conditions, rows, pager, pl);
+    range, filterBar, conditions, rows, scrollAnchor, pager, pl);
   const exportMenu=node('details',undefined,'overflow'),exportItems=node('div',undefined,'menu');exportMenu.append(node('summary','导出记录 ⌄'),exportItems);filterBar.append(exportMenu);
 
   for (const format of ['json', 'csv', 'html']) {
     const exportButton = button('导出筛选记录 ' + format.toUpperCase(), async () => {
       out.replaceChildren();
-      const selection = {run_id:snapshot.run_id, from_event_id:snapshot.events[0]?.event_id ?? 0,
-        to_event_id:snapshot.cursor, ...q};
+      const fromEventId = (snapshot.events && snapshot.events.length > 0 && snapshot.events[0].event_id > 0) ? snapshot.events[0].event_id : (snapshot.cursor || 1);
+      const activeFilters = Object.fromEntries(Object.entries(q).filter(([, v]) => typeof v === 'string' && v.trim() !== ''));
+      const selection = {run_id:snapshot.run_id, from_event_id:fromEventId, to_event_id:snapshot.cursor, ...activeFilters};
       if(payload.checked && api.confirmPayload && !await api.confirmPayload())return;
       const r = await api('/exports', {format, include_payload:payload.checked, selection,
         ...(payload.checked ? {confirm:'include_simulated_payload'} : {})});
@@ -100,10 +111,24 @@ export function logs(initial, api) {
     page = p.page; pages.textContent = `第 ${page}/${p.pages}页 · 匹配 ${matches.length}条`;
     prev.disabled = page === 1; next.disabled = page === p.pages;
     range.textContent = `run ${snapshot.run_id} · 事件 ${snapshot.events[0]?.event_id ?? 0}～${snapshot.cursor} · 内存已省略早期 ${snapshot.events_omitted}条（旧公共文件保留）；导出当前筛选全部匹配条目。`;
-    rows.replaceChildren(table(['时间','观察端 / 设备','阶段','详情'], p.rows.map(e => [
-      new Date(e.at).toLocaleTimeString(), e.endpoint + ' / ' + (e.device_id || '本机'), e.stage, detail(e)
-    ])));
+    const tbl = table(['时间','观察端 / 设备','阶段','详情'], p.rows.map(e => [
+      new Date(e.at).toLocaleTimeString(), e.endpoint + ' / ' + (e.device_id || '本机'), badge(e.stage), detail(e)
+    ]));
+    rows.replaceChildren(tbl);
     if (!p.rows.length) rows.append(node('p', '该条件下没有记录。', 'muted'));
+    scrollAnchor.hidden = true; scrollAnchor.textContent = '';
+    if (typeof tbl.addEventListener === 'function') {
+      tbl.addEventListener('scroll', () => {
+        const scrolledUp = tbl.scrollTop > 30 && (tbl.scrollHeight - tbl.scrollTop - tbl.clientHeight > 40);
+        if (scrolledUp) {
+          scrollAnchor.textContent = '⬇️ 回到底部';
+          scrollAnchor.hidden = false;
+        } else {
+          scrollAnchor.hidden = true;
+          scrollAnchor.textContent = '';
+        }
+      });
+    }
   }
   all.refresh = () => {if(api.store)for(const b of writes){b.guard=()=>api.store.authValid()?'':'本机授权不可用';b.disabled=!!b.dataset.busy||!!b.guard();}}; // Preserve intentional fixed-range pagination.
   lastView = {api, run: initial.run_id, view: all, restore() {

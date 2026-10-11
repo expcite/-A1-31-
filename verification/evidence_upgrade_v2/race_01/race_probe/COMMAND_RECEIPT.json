@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "C:/AgentWorkspace/EH_Supplement_Integrated_v2/toolchain/go_1.27.2/bin\\go.exe",
+    "test",
+    "-mod=readonly",
+    "-race",
+    "-json",
+    "-count=1",
+    "-timeout=60s",
+    "."
+  ],
+  "cwd": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\evidence\\race_01\\probe_source",
+  "started_utc": "2026-10-11T04:15:24.751872+00:00",
+  "timeout_seconds": 180,
+  "exit_code": 1,
+  "timed_out": false,
+  "launch_error": null,
+  "termination_commands": [],
+  "environment": {
+    "CGO_ENABLED": "1",
+    "GOCACHE": "C:\\AgentWorkspace\\EH_Evidence_Test_Upgrade_v1\\cache\\go-build",
+    "GOFLAGS": "",
+    "GOMAXPROCS": "2",
+    "GOPROXY": "off",
+    "GOTOOLCHAIN": "local",
+    "GOWORK": "off"
+  },
+  "owned_pid": 13672,
+  "finished_utc": "2026-10-11T04:15:44.468393+00:00",
+  "elapsed_seconds": 19.719000000040978,
+  "stdout_sha256": "e04a52d510749b2e57ab32a6c93edeb2c7d6707b9dedbc5419f1a087ad31ed38",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

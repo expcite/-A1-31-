@@ -1,0 +1,14 @@
+{
+  "task": "EH-FINAL-v16",
+  "status": "FINAL_DOCUMENT_AND_PACKAGE_READY",
+  "scope": "Final report terminology, visible submission text, references, pagination and local package identity.",
+  "historical_status": "history/final_v16_input/ACCEPTANCE_STATUS.json",
+  "historical_optional_exclusions_unchanged": true,
+  "new_product_tests": false,
+  "new_performance_experiments": false,
+  "code_changes": false,
+  "exe_rebuilds": false,
+  "not_claimed": "Completed AKE proof, new private-key ACL protection, target-device field-network measurements, certification or organizer acceptance.",
+  "next_validation_plan": "verification/final_v16/NEXT_TECHNICAL_PRIORITY_v16.md",
+  "submission_state": "Prepared locally; not externally submitted."
+}

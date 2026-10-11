@@ -7,6 +7,7 @@ import (
 	"net"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"example.com/edgehybrid/internal/app"
@@ -17,8 +18,8 @@ import (
 )
 
 func New(ctx context.Context, o Options) (*Manager, error) {
-	if o.Count != 1 && o.Count != 20 {
-		return nil, errors.New("设备预置必须为1或20")
+	if o.Count < 1 || o.Count > 20 {
+		return nil, errors.New("设备预置须为1至20")
 	}
 	id, e := randomID()
 	if e != nil {
@@ -281,4 +282,63 @@ func (m *Manager) refreshMetadata() {
 		d.view.Lifecycle = p.EffectiveLifecycle()
 		d.view.Minimum = string(p.MinimumMode)
 	}
+}
+
+func (m *Manager) AddDevice(targetID string) (DeviceView, error) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	if m.ctx.Err() != nil {
+		return DeviceView{}, errors.New("本运行已停止")
+	}
+	if len(m.devices) >= 20 {
+		return DeviceView{}, errors.New("已达设备池上限（最多支持20台设备）")
+	}
+	id := strings.TrimSpace(targetID)
+	if id == "" {
+		for i := 1; i <= 20; i++ {
+			candidate := fmt.Sprintf("D%03d", i)
+			if m.devices[candidate] == nil {
+				id = candidate
+				break
+			}
+		}
+	}
+	if id == "" {
+		return DeviceView{}, errors.New("无可用空闲设备编号（仅限D001~D020）")
+	}
+	if !strings.HasPrefix(id, "D") || len(id) < 2 {
+		return DeviceView{}, errors.New("设备编号格式须为 Dxxx (如 D002)")
+	}
+	if m.devices[id] != nil {
+		return DeviceView{}, fmt.Errorf("设备 %s 已存在于当前设备池中", id)
+	}
+
+	p, err := identity.Metadata(m.reg, id)
+	if err != nil {
+		return DeviceView{}, fmt.Errorf("设备 %s 未在预置信任库中登记: %w", id, err)
+	}
+	if p.Role != identity.RoleDevice {
+		return DeviceView{}, errors.New("目标身份不是设备角色")
+	}
+
+	d := &device{
+		view: DeviceView{
+			ID:           id,
+			Status:       "offline",
+			Interval:     1000,
+			Auto:         true,
+			Temperature:  25,
+			Role:         p.Role,
+			Generation:   p.KeyGeneration,
+			Revision:     p.Revision,
+			SignKey:      p.Public.SignKeyID,
+			AgreementKey: p.Public.AgreementKeyID,
+			Lifecycle:    p.EffectiveLifecycle(),
+			Minimum:      string(p.MinimumMode),
+		},
+		requests: make(chan localRequest, 32),
+	}
+	m.devices[id] = d
+	m.emitLocked(Event{Endpoint: "device", Device: id, Stage: "device_added", Detail: fmt.Sprintf("手动添加设备 %s 到设备池", id)})
+	return d.view, nil
 }
