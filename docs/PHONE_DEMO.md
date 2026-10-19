@@ -1,48 +1,52 @@
-# 摩托罗拉 X30 / Android 14 手机接入验证
+# Android 实机验证终端
 
-目标：Windows 电脑开移动热点，Android 手机作为独立终端，通过现有 Suite 2（SM2 + ML-KEM-768、HKDF-SM3、SM4-GCM）上报电池温度，接收并执行上报间隔控制，再返回安全 ACK。手机可在控制生效后调用一次震动提示；API 返回不等于对马达动作的独立观测。
+本终端用于验证独立物理设备通过局域网接入 EdgeHybrid。已验证设备为摩托罗拉 X30、Android 14、aarch64，Termux 电池 API 返回真实电池温度。设备使用 Suite 2 的混合握手和安全记录通道，上报温度并接收上报间隔控制。该结果不代表其他机型已经适配，也不替代既有性能试验。
 
-当前已确认：用户手机 uname -m 为 aarch64，Termux 电池 API 实际返回 temperature=33.0。电脑热点已观测到 192.168.137.1。尚待完成：Android 程序实际启动、跨热点握手、真实上报、远程控制和震动实测。
+2026年10月19日的已有实机验收通过：手机通过电脑热点连接，温度持续上报，10秒间隔控制收到安全ACK；用户在1.7.2更新后确认每次设置均能亮灯。震动仅观察到API返回，未观察到物理动作，最终演示改用手电筒。1.8.0完整包已在独立手机目录通过新配对连接、温度上报和控制确认，用户确认重复设置均亮灯；视频尚待录制。初选9444端口受Windows保留范围阻止，现已改用经实际绑定检查的10443，并增加启动前检查。新的发布重建身份与实测身份分别记录，不将已有验收改标为另一个构建实测。
 
-## 启动顺序
+## 首次部署
 
-1. 电脑开启移动热点，手机连接该热点。
-2. 打开生成目录中的“01_启动手机验证.cmd”。浏览器只在电脑的 127.0.0.1 提供管理页面；手机连接的是 192.168.137.1:9443 加密业务端口。
-3. 把启动窗口的一次口令填入电脑网页，选择 D001。无需点击“连接当前设备”，等待手机主动握手。
-4. 第一次使用时，右键“02_允许手机连接.cmd”，以管理员身份运行。脚本只允许本验证程序的热点地址、TCP 9443 和本地子网入站。
-5. 使用 USB 文件传输，把 EdgeHybrid_Phone_v27.zip 放到手机 Download 文件夹。本包包含本次演示设备的独立私钥，保留在电脑和手机，不上传 GitHub 或作为公开竞赛附件。
+电脑运行“00_启动电脑演示.cmd”即可使用完整本机模拟演示。手机验证为可选入口，不要求评委持有手机才能运行核心流程。
 
-手机 Termux 依次执行：
+手机依赖 Termux、同一安装来源的 Termux:API 安卓应用，以及命令行 termux-api 和 unzip。首次安装允许联网；安装后演示通过电脑移动热点运行，不调用外网服务。官方项目入口：https://github.com/termux/termux-app 和 https://github.com/termux/termux-api 。手机命令行API包已观测为0.60.0。
+
+1. 电脑开启移动热点，手机连接热点。默认地址192.168.137.1，新的验证入口使用TCP 10443，避免与既有9443演示冲突。
+2. 电脑运行“01_生成本机手机配对包.cmd”。它创建全新的本机身份和可首次安装的手机ZIP，不依赖旧手机目录。生成的local-phone目录含本机部署私钥，不放入公开交付或GitHub。
+3. 右键“02_允许手机连接.cmd”以管理员身份运行，只添加本程序、热点地址和TCP 10443的本地子网入站规则；不关闭防火墙。
+4. 运行“03_启动手机验证.cmd”。电脑网页仍只监听127.0.0.1，用新启动窗口的一次口令登录，不访问旧网页。
+5. 将local-phone/EdgeHybrid_Phone_Fresh_v28.zip复制到手机Download。
+
+先在手机旧程序中按CTRL+C退出；保留旧目录不变。Termux执行：
 
 ```bash
 termux-setup-storage
-pkg install unzip
-mkdir -p ~/edgehybrid-phone27
-unzip ~/storage/downloads/EdgeHybrid_Phone_v27.zip -d ~/edgehybrid-phone27
-cd ~/edgehybrid-phone27
+pkg install termux-api unzip
+mkdir ~/edgehybrid-phone28-clean
+unzip ~/storage/downloads/EdgeHybrid_Phone_Fresh_v28.zip -d ~/edgehybrid-phone28-clean
+cd ~/edgehybrid-phone28-clean
 bash run-phone.sh
 ```
 
-存储授权时允许 Termux 访问文件。程序在 Termux 自有目录运行，不直接在 Download 或共享存储运行。run-phone.sh 会设置该演示目录和私钥的访问权限。已有同名安装目录时，先核对是否为同一份配对包，不覆盖其他配对身份。
+mkdir若提示目录已存在，停止操作并核对已有内容，不覆盖旧部署。程序必须在Termux自有目录运行。配置和配对由电脑生成，不能把一套手机私钥接到另一套网关身份。
 
-若电脑热点地址不是 192.168.137.1，电脑启动脚本可用参数 -HotspotIP 指定实际地址；手机执行 `bash run-phone.sh 实际地址:9443`。不要把业务地址改成手机自己的 IP。
+若热点地址不同，在电脑PowerShell依次运行 `powershell -NoProfile -ExecutionPolicy Bypass -File .\prepare_phone.ps1 -HotspotIP 实际IP`、对应的allow_phone.ps1和start_phone.ps1并传相同参数；已生成配对后修改地址时应另行生成独立目录，不覆盖既有配对。手机可用 `bash run-phone.sh 实际IP:10443` 覆盖连接地址。
 
-## 验收一条真实链路
+## 验收和视频
 
-1. 手机出现 authenticated，电脑 D001 显示在线且套件为混合安全通道。
-2. 电脑显示手机的电池温度及最近接收时间；这是电池温度，不是环境温度。采集失败不会生成零值或模拟温度。断连或长时间无新数据时保留并标记上次观测。
-3. 电脑“设置间隔”申请 5 秒，观察手机 interval_applied_ack_written 与同一操作 ID 的电脑确认回执。手机支持 1～60 秒。
-4. 手机按新间隔继续采集。调用电池 API 的耗时与系统调度会叠加到报告间隔中，不把该界面值当成严格实时周期。
-5. 若震动 API 成功返回，可现场观察手机是否震动。回执只确认上报间隔生效；震动调用单独记录。
+手机build_identity应显示interactive-v1.8.0-phone28；随后authenticated，电脑D001在线。温度来自电池传感器，不是环境温度。连续看到至少3笔新温度记录后，依次设置10秒、5秒、10秒，两次操作至少间隔6秒。每次点击“设置上报间隔”后检查新操作的安全ACK，再观察手机亮灯约1秒并熄灭。不要把选中下拉框当成已提交。
 
-默认一次运行10分钟，手机 Ctrl+C可结束，重新启动会进行完整新握手，不自动重发旧控制。当前手机版不通过本机设备队列执行手动模拟温度、暂停模拟采样或网页换钥；需要新会话时重启手机程序。原正式实验与原报告保持原批次，本次软件联调不冒充手机实测或新的性能样本。
+闪灯只由新的有效间隔控制触发，不是每次温度上报都会闪。程序串行执行off、等1秒、on、等1秒、off、等2秒。最多8个待处理提示；队列已满会单独记录提示失败。间隔ACK确认设置生效，torch_api_returned只表示调用结束，物理亮灯由现场观察确认。
+
+借另一部手机录制约一分钟，使电脑和被测手机背面同时入镜。展示新版身份、在线状态、持续温度、三次控制的确认与对应灯光。拍摄时只保留作品界面和被测设备；遵循匿名评审模板，不出现单位、教师或团队成员姓名。视频是否上传按赛事平台的实际要求处理。
+
+手机默认每次运行10分钟，CTRL+C退出；重新启动进行新握手。原始JSON日志保存在Termux目录phone-events-*.jsonl，建议和电脑日志一起导出用于对应SID和操作ID。两端时钟不同，不将时间戳直接相减作为网络时延。
 
 ## 构建
 
-沿用已验证的 Go 1.27.2 与 go.mod/go.sum 固定依赖，执行：
+Go 1.27.2，Windows/amd64网关与Android/arm64设备，CGO关闭，依赖由go.mod/go.sum固定。先安装所需模块缓存，再运行：
 
 ```powershell
-python -X utf8 -B scripts/build_phone_demo.py --out <不存在的输出目录>
+python -X utf8 -B scripts/build_phone_release.py --out <不存在的公开软件目录> --evidence <不存在的构建日志目录>
 ```
 
-构建两个独立程序：Windows/amd64 的 EdgeHybridPhoneGateway.exe 与 Android/arm64 的 edgehybrid-phone，均关闭 cgo。手机安装 Termux、同来源的 Termux:API 应用及 termux-api 命令行包；该机的命令行包已观测为0.60.0。构建成功仅证明目标文件可生成，实机验收另外记录。
+公开包不含预置私钥，使用时自行生成配对。既有原实验值、计时边界和批次继续按原始记录解释；本次现场功能验证没有产生跨主机性能统计、更多机型或长时间稳定性结论。

@@ -1,6 +1,6 @@
 # EdgeHybrid 软件源码
 
-当前公开运行版本为 `interactive-v1.6.3-ui24`，保持既有协议及业务机制，使用相同 Go 1.27.2 工具链重新构建，并对全部 8 个程序启用路径裁剪。源码中嵌入的历史数据仅对本机环境路径作文本脱敏，历史测量值不改写。
+本轮交付版本为 `interactive-v1.8.0-phone28`，默认保留纯电脑演示，另提供可选 Android 实机验证终端；沿用 Go 1.27.2 和固定模块依赖。源码中嵌入的历史数据仅对本机环境路径作文本脱敏，历史测量值不改写。
 
 ## 构建与测试
 
@@ -8,7 +8,7 @@
 
 ```powershell
 go test ./... -count=1
-python -X utf8 -B scripts/backend_build.py --out <不存在的输出目录> --evidence <不存在的构建日志目录> --version interactive-v1.6.3-ui24
+python -X utf8 -B scripts/backend_build.py --out <不存在的输出目录> --evidence <不存在的构建日志目录> --version interactive-v1.8.0-phone28
 ```
 
 构建脚本从 PATH 查找 Go，或使用环境变量 GO 指定可执行文件；没有某个开发工具专有目录的依赖。其余历史采集脚本可能需要按各脚本参数指定本机路径，当前交付入口及版本以包根 README 和 runtime/build_info.json 为准。
@@ -25,7 +25,7 @@ python -X utf8 -B scripts/backend_build.py --out <不存在的输出目录> --ev
 
 ## GitHub 当前提交
 
-当前默认分支同步竞赛提交v26，软件版本为interactive-v1.6.3-ui24。
+历史正式性能材料对应v26及interactive-v1.6.3-ui24。本轮手机功能、构建和独立部署验收分别记录，不把旧性能值改标为新程序实测。
 
 - [最新作品设计报告](report/作品设计报告.pdf)
 - [可编辑报告](report/作品设计报告_可编辑.html)
@@ -33,3 +33,7 @@ python -X utf8 -B scripts/backend_build.py --out <不存在的输出目录> --ev
 - [历史验收记录](verification/submission_v26/)
 
 源码位于本仓库根目录。运行程序和完整实验原件随本地支撑材料ZIP交付；本仓库保留对应身份和验收摘要。Git文本文件统一LF换行，原构建源码清单仅标识本地交付原件，不能直接冒充本仓库的新构建记录。旧版本可在Git历史中查阅。
+
+## 可选手机实机入口
+
+[手机端部署与验收](docs/PHONE_DEMO.md)说明依赖安装、生成独立配对、首次完整部署和录像步骤。构建完整公开软件包使用`scripts/build_phone_release.py`；公开包没有预置私钥，使用者首次部署时生成。当前新包独立目录验收及视频以实际回执为准。

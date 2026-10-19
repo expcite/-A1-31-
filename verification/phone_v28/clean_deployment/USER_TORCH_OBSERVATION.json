@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-19",
+  "source": "Direct user reply",
+  "user_reply": "重复设置都亮灯，视频还没录",
+  "result": "PASS_USER_OBSERVED_REPEATED_TORCH_ON_CLEAN_DEPLOYMENT",
+  "recorded_video": "PENDING",
+  "exact_repetition_count": "NOT_RECORDED_IN_REPLY"
+}

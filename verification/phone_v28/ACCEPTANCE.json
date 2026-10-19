@@ -1,0 +1,13 @@
+{
+  "status": "PASS_FUNCTIONAL_CLEAN_DEPLOYMENT_AND_REPEATED_USER_OBSERVED_TORCH",
+  "tested_version": "interactive-v1.8.0-phone28",
+  "tested_source_sha256": "1226a669f500d8601654a934458168e820bd090cb197ff64724e3a6571321634",
+  "final_source_sha256": "b72996789d7053f4ac774b9707775852865dec3877bd3978835b8f36c67a5e57",
+  "build_relationship": "See BUILD_PROVENANCE_COMPARISON.json; only deployment builder and documentation changed, runtime source is identical. Earlier physical execution identity retained.",
+  "default_desktop": "PASS_LOCAL_STARTUP_AUTH_AND_ONLINE",
+  "cross_device_connection_telemetry_control": "PASS_GATEWAY_LOG_AND_TCP",
+  "repeated_torch": "PASS_USER_OBSERVATION",
+  "video": "PENDING_USER_RECORDING",
+  "phone_scope": "Motorola X30 / Android 14 / aarch64 only",
+  "performance": "No new mobile performance statistics"
+}

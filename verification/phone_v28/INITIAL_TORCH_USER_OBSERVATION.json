@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-19",
+  "status": "PASS_USER_OBSERVED_REPEATED_CONTROL_TORCH",
+  "phone_version_under_test": "interactive-v1.7.2-phone27torch",
+  "version_basis": "Update instructions immediately preceding user confirmation; no new build-identity screenshot supplied",
+  "observation_source": "Direct user reply in this conversation",
+  "user_reply": "每次都亮，是不是我理解错了，我理解的是每一次上报都亮，其实是这样吗",
+  "interpretation": "User observed repeated flashlight activation after interval-setting operations. Trigger is each new valid control operation, not each automatic telemetry report.",
+  "exact_repetition_count": "NOT_RECORDED_IN_USER_REPLY",
+  "physical_result": "PASS_USER_OBSERVED_REPEATED_LIGHT_OUTPUT",
+  "independent_optical_measurement": false,
+  "original_local_record_sha256": "c152bb1581ccb461e36a0dce95c32e4a6b4df4a6fcff30624d6ef528ab42bf27",
+  "public_software_test_log": "phone_1_7_2_software_tests.jsonl",
+  "initial_public_gateway_log": "initial_physical/gateway_events_snapshot.jsonl",
+  "scope_note": "Excerpt of the earlier user observation; original local artifact links omitted from this public copy."
+}

@@ -1,0 +1,28 @@
+{
+  "status": "PASS_PACKAGE_AND_LOCAL_STARTUP; CLEAN_PHYSICAL_DEPLOYMENT_PENDING",
+  "public_zip_private_keys": 0,
+  "all_public_manifest_files": "PASS",
+  "powershell_syntax": "PASS",
+  "fresh_pairing_generation": "PASS",
+  "existing_pairing_overwrite_refused": "PASS",
+  "phone_zip_complete_first_install": "PASS",
+  "phone_private_key_count": 2,
+  "gateway_keys_exported": 0,
+  "default_desktop": {
+    "startup_login_build_identity_shutdown": "PASS",
+    "scope": "LOCAL_LOOPBACK_SOFTWARE_CHECK; NOT_PHYSICAL_PHONE",
+    "management_binding": "127.0.0.1",
+    "mode": "interactive-v1.2"
+  },
+  "optional_phone_gateway": {
+    "startup_login_build_identity_shutdown": "PASS",
+    "scope": "LOCAL_LOOPBACK_SOFTWARE_CHECK; NOT_PHYSICAL_PHONE",
+    "management_binding": "127.0.0.1",
+    "mode": "phone-bridge-v27"
+  },
+  "phone_version": "interactive-v1.8.0-phone28",
+  "source_manifest_sha256": "1226a669f500d8601654a934458168e820bd090cb197ff64724e3a6571321634",
+  "phone_private_archive_sha256": "42371bfd2b988290991b27f46fafb4bafabc13aea35686a573dd42c6eb7c3790",
+  "clean_physical_phone_test": "PENDING",
+  "recorded_video": "PENDING"
+}

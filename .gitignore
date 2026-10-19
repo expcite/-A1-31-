@@ -8,3 +8,7 @@
 coverage.out
 *.pprof
 .env
+
+/local-phone/
+/phone-logs/
+/phone-export/

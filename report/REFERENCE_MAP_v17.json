@@ -1,14 +1,15 @@
 {
-  "schema": "edgehybrid.reference-map.v26",
+  "schema": "edgehybrid.reference-map.v28",
   "updated_on": "2026-10-19",
   "source_document": {
     "path": "report/作品设计报告_可编辑.html",
-    "sha256": "c9f4388a23be2f0aef4fca2449566e8e326f81ddcff4bc5b086706d50e5eaf20",
-    "version": "v26"
+    "sha256": "6c1c18ffbbb4a3df395e86f68d5a501d7401ca1a43f8f8cf7e0ca6f87907de2e",
+    "version": "v28"
   },
   "previous_document": {
-    "path": "v25/report/作品设计报告_可编辑.html",
-    "sha256": "26d2b4679d789891a5a2038657da9ed985c07fc4037cf552530697fae3233c37"
+    "path": "report/作品设计报告_可编辑.html",
+    "sha256": "c9f4388a23be2f0aef4fca2449566e8e326f81ddcff4bc5b086706d50e5eaf20",
+    "version": "v26"
   },
   "policy": [
     "仅记录官方标准机构、RFC Editor、出版社、作者研究机构页面与IACR官方作者稿的primary URLs。",

@@ -1,0 +1,13 @@
+{
+  "status": "PASS_FINAL_PUBLIC_SOFTWARE_PACKAGE",
+  "public_private_key_count": 0,
+  "archive_and_all_file_checksums": "PASS",
+  "powershell_parse": "PASS",
+  "reserved_9444_rejected_before_creating_pairing": "PASS",
+  "free_10444_fresh_pairing_and_first_install_zip": "PASS",
+  "existing_pairing_overwrite_refused": "PASS",
+  "default_desktop": "PASS_STARTUP_AUTH_BUILD_ID_STATE_AND_CLEAN_SHUTDOWN",
+  "optional_gateway_on_actual_hotspot_address": "PASS_STARTUP_AUTH_BUILD_ID_STATE_AND_CLEAN_SHUTDOWN",
+  "physical_phone_evidence": "Separate tested build identity retained in physical_clean_20261019_1602",
+  "video": "PENDING"
+}

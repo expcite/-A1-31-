@@ -1,0 +1,17 @@
+{
+  "status": "PORT_SELECTION_CORRECTED_PHYSICAL_RETRY_PENDING",
+  "old_port": 9444,
+  "windows_excluded_range": [
+    9444,
+    9543
+  ],
+  "new_port": 10443,
+  "actual_bind_on_hotspot_ip": "PASS",
+  "pairing_keys_changed": false,
+  "phone_binary_changed": false,
+  "current_local_scripts_updated": true,
+  "phone_archive_address_updated": true,
+  "existing_phone_install_override": "bash run-phone.sh 192.168.137.1:10443",
+  "original_public_zip_status": "BUILD_DRAFT_WITH_FAILED_9444_DEFAULT; SUPERSEDE_BEFORE_FINAL_PUBLICATION",
+  "packaged_gateway_real_hotspot_bind_login_shutdown": "PASS"
+}

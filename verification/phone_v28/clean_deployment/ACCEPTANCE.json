@@ -1,0 +1,22 @@
+{
+  "status": "PASS_CLEAN_DEPLOYMENT_CONNECTION_TELEMETRY_AND_CONTROL; REPEATED_PHYSICAL_LIGHT_AND_VIDEO_AWAITING_USER_CONFIRMATION",
+  "tested_version": "interactive-v1.8.0-phone28",
+  "tested_source_manifest_sha256": "1226a669f500d8601654a934458168e820bd090cb197ff64724e3a6571321634",
+  "run_id": "interactive-64eee4898c67b3e69e9c687b71609526",
+  "sid": "c1b9f8d32d3767216126de140f2e0cdf",
+  "accepted_samples_in_snapshot": 42,
+  "confirmed_control_operation_ids": [
+    "7ca85396-132b-41b2-889d-be7ed7c713a2"
+  ],
+  "observed_temperature_range_c": [
+    27,
+    27
+  ],
+  "device_address": "192.168.137.1:10443",
+  "phone_remote_address": "192.168.137.106",
+  "observation_boundary": "Gateway log and live TCP metadata; phone light requires user physical observation; no cross-clock latency subtraction",
+  "phone_directory": "~/edgehybrid-phone28-clean",
+  "user_feedback": "好了",
+  "exact_repetition_count": "NOT_INFERRED_FROM_GENERIC_REPLY",
+  "recorded_video": "PENDING"
+}

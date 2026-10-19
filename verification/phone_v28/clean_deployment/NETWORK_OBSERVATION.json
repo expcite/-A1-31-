@@ -1,0 +1,16 @@
+[
+  {
+    "LocalAddress": "192.168.137.1",
+    "LocalPort": 10443,
+    "RemoteAddress": "192.168.137.106",
+    "RemotePort": 38588,
+    "State": 5
+  },
+  {
+    "LocalAddress": "192.168.137.1",
+    "LocalPort": 10443,
+    "RemoteAddress": "0.0.0.0",
+    "RemotePort": 0,
+    "State": 2
+  }
+]

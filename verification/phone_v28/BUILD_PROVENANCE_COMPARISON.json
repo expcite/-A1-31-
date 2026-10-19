@@ -1,0 +1,26 @@
+{
+  "status": "PASS_IMPLEMENTATION_SOURCE_AND_TEXT_COMPARISON",
+  "tested_source_hash": "1226a669f500d8601654a934458168e820bd090cb197ff64724e3a6571321634",
+  "final_source_hash": "b72996789d7053f4ac774b9707775852865dec3877bd3978835b8f36c67a5e57",
+  "changed_build_inputs": [
+    "docs/PHONE_DEMO.md",
+    "scripts/build_phone_release.py"
+  ],
+  "go_source_and_dependency_files_identical": true,
+  "text_sections_equal_after_removing_recognized_PE_Go_build_ID_header": {
+    "bench.exe": true,
+    "device.exe": true,
+    "EdgeHybridInteractive.exe": true,
+    "EdgeHybridPhoneGateway.exe": true,
+    "fleet.exe": true,
+    "gateway.exe": true,
+    "pbench.exe": true,
+    "scenario.exe": true,
+    "secctl.exe": true,
+    "edgehybrid-phone": true
+  },
+  "android_text_section_compared_without_normalization": true,
+  "whole_binary_files_identical": false,
+  "physical_log_policy": "Retain tested source identity. This comparison is not another physical run or security proof.",
+  "source_zip_android_build": "PASS"
+}
