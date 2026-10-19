@@ -36,7 +36,7 @@ def main():
  doc=SimpleDocTemplate(str(pdf),pagesize=A4,rightMargin=50,leftMargin=50,topMargin=44,bottomMargin=44,title='EdgeHybrid 最终设计说明书',author='EdgeHybrid 项目',pageCompression=1)
  doc.build(flow,onFirstPage=footer,onLaterPages=footer)
  render=ROOT/'results/raw/m6_20261001/pdf_render';render.mkdir(exist_ok=True)
- poppler='C:/Users/20477/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/poppler/Library/bin/pdftoppm.exe'
+ poppler='C:/Users/[REDACTED_USER]/.cache/local_review-runtimes/local_review-primary-runtime/dependencies/native/poppler/Library/bin/pdftoppm.exe'
  subprocess.run([poppler,'-r','130','-png',str(pdf),str(render/'page')],check=True)
  print('PDF generated and rendered:',pdf)
 if __name__=='__main__':main()

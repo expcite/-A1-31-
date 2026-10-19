@@ -1,0 +1,72 @@
+PASS normal initial filter works
+PASS explicit refresh discovers endpoints and stages
+PASS new filter and export use same new scope
+PASS still-valid selection survives refresh
+PASS vanished selection is explicit, not broadened
+PASS options rebuilt from unfiltered scope and deduplicated
+PASS poll refresh does not change fixed range
+PASS API failure preserves old range and selections
+PASS different run is not silently adopted
+PASS same-run empty snapshot renders empty without old facet claims
+PASS option values remain text, not HTML markup
+PASS same API and run remount preserves snapshot filters and page
+PASS new API or run never reuses previous view
+{
+  "scope": "actual module copies under a minimal DOM adapter; not a browser or network test",
+  "passed": 13,
+  "failed": 0,
+  "cases": [
+    {
+      "name": "normal initial filter works",
+      "pass": true
+    },
+    {
+      "name": "explicit refresh discovers endpoints and stages",
+      "pass": true
+    },
+    {
+      "name": "new filter and export use same new scope",
+      "pass": true
+    },
+    {
+      "name": "still-valid selection survives refresh",
+      "pass": true
+    },
+    {
+      "name": "vanished selection is explicit, not broadened",
+      "pass": true
+    },
+    {
+      "name": "options rebuilt from unfiltered scope and deduplicated",
+      "pass": true
+    },
+    {
+      "name": "poll refresh does not change fixed range",
+      "pass": true
+    },
+    {
+      "name": "API failure preserves old range and selections",
+      "pass": true
+    },
+    {
+      "name": "different run is not silently adopted",
+      "pass": true
+    },
+    {
+      "name": "same-run empty snapshot renders empty without old facet claims",
+      "pass": true
+    },
+    {
+      "name": "option values remain text, not HTML markup",
+      "pass": true
+    },
+    {
+      "name": "same API and run remount preserves snapshot filters and page",
+      "pass": true
+    },
+    {
+      "name": "new API or run never reuses previous view",
+      "pass": true
+    }
+  ]
+}

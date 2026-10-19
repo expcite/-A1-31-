@@ -2,7 +2,7 @@
 import argparse, datetime, hashlib, json, os, pathlib, shutil, subprocess, sys, zipfile
 import source_manifest
 R = pathlib.Path(__file__).resolve().parents[1]
-GO = r'C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe'
+GO = r'C:\Users\[REDACTED_USER]\.local_workspace\binaries\go\go\bin\go.exe'
 OUT = R / 'results/raw/backend_friend_20261002'
 
 def write(p, v):
@@ -30,7 +30,7 @@ def main():
         with zipfile.ZipFile(work/'baseline_workspace_source.zip','w',zipfile.ZIP_DEFLATED) as z:
             for rel in files:z.write(R/rel,rel)
         shutil.copytree(R.parent/'EdgeHybrid_FriendReview_Followup',OUT/'review_input',dirs_exist_ok=True)
-        with zipfile.ZipFile(r'C:\Users\20477\Downloads\EdgeHybrid_Friend_Review.zip') as z:
+        with zipfile.ZipFile(r'C:\Users\[REDACTED_USER]\Downloads\EdgeHybrid_Friend_Review.zip') as z:
             names=[n for n in z.namelist() if '/Source/' not in n and not n.endswith('/')]
             write(OUT/'friend_zip_index.json',names)
             for n in names:

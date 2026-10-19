@@ -1,0 +1,83 @@
+{
+  "scope": "isolated UI_ONLY fixtures; no TCP or browser claim",
+  "passed": 19,
+  "failed": 0,
+  "cases": [
+    {
+      "name": "exact causal receipt and later protected message complete G3",
+      "status": "PASS"
+    },
+    {
+      "name": "reject receipt rekey_id",
+      "status": "PASS"
+    },
+    {
+      "name": "reject receipt run_id",
+      "status": "PASS"
+    },
+    {
+      "name": "reject receipt device_id",
+      "status": "PASS"
+    },
+    {
+      "name": "reject receipt old_sid",
+      "status": "PASS"
+    },
+    {
+      "name": "reject receipt new_sid",
+      "status": "PASS"
+    },
+    {
+      "name": "reject receipt status",
+      "status": "PASS"
+    },
+    {
+      "name": "reject receipt client_authenticated_at",
+      "status": "PASS"
+    },
+    {
+      "name": "reject receipt gateway_authenticated_at",
+      "status": "PASS"
+    },
+    {
+      "name": "reject receipt completed_at",
+      "status": "PASS"
+    },
+    {
+      "name": "reject verification sid",
+      "status": "PASS"
+    },
+    {
+      "name": "reject verification status",
+      "status": "PASS"
+    },
+    {
+      "name": "reject verification device_id",
+      "status": "PASS"
+    },
+    {
+      "name": "reject verification queued_at",
+      "status": "PASS"
+    },
+    {
+      "name": "reject verification confirmed_at",
+      "status": "PASS"
+    },
+    {
+      "name": "evicted receipt keeps evidence insufficient",
+      "status": "PASS"
+    },
+    {
+      "name": "stale snapshot cannot complete G3",
+      "status": "PASS"
+    },
+    {
+      "name": "foreign rekey response never stored as this guide receipt",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy accepted plus changed SID remains insufficient",
+      "status": "PASS"
+    }
+  ]
+}

@@ -11,7 +11,7 @@ import subprocess
 import sys
 import source_manifest
 
-GO = Path(os.environ.get('GO', r'C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe'))
+GO = Path(os.environ.get('GO', r'C:\Users\[REDACTED_USER]\.local_workspace\binaries\go\go\bin\go.exe'))
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()

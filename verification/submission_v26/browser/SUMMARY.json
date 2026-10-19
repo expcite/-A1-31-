@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "browser": "Microsoft Edge",
+  "viewport": [
+    1440,
+    1080
+  ],
+  "mobile": [
+    390,
+    1000
+  ],
+  "checks": [
+    "correct run title, actual 13 operations, four cards and collapsed raw data",
+    "raw disclosure survives polling; reading sends no POST",
+    "Escape closes and returns keyboard focus",
+    "390px drawer has no horizontal overflow",
+    "dark theme rendered with shared design tokens",
+    "device detail uses readable fields"
+  ],
+  "console_errors": [],
+  "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5"
+}

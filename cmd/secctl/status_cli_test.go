@@ -62,11 +62,16 @@ func f09Object(t *testing.T, m map[string]any, key string) map[string]any {
 }
 
 func TestSecctlStatusRealCLICapabilitiesAndVerificationScope(t *testing.T) {
-	s := f09BuildAndStatus(t, "")
+	defaultBuild := f09BuildAndStatus(t, "")
+	if defaultBuild["schema"] != "edgehybrid-status/2" || defaultBuild["version"] != StatusVersion {
+		t.Fatalf("wrong unlinked default schema/version: %#v", defaultBuild)
+	}
 	version, err := os.ReadFile("../../VERSION")
 	if err != nil {
 		t.Fatal(err)
 	}
+	// VERSION identifies the release; reproduce its existing linker override.
+	s := f09BuildAndStatus(t, "-X main.StatusVersion="+strings.TrimSpace(string(version)))
 	if s["schema"] != "edgehybrid-status/2" || s["version"] != strings.TrimSpace(string(version)) {
 		t.Fatalf("wrong current schema/version: %#v", s)
 	}

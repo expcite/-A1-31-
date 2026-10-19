@@ -1,0 +1,216 @@
+{
+  "status": "PASS",
+  "baseline": "v25",
+  "scope": "Numeric tokens excluding citation labels; reference numbers intentionally reordered",
+  "tables_checked": 52,
+  "checks": [
+    {
+      "table": "tab-constraints",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-threat",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-contribution-v15",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-1-1",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-1-2",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-1-3",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-1-4",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-2-1",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-2-2",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-integration",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-2-3",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-2-4",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-2-5",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-2-6",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-2-7",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-assumptions-v15",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-2-8",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-1",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-2",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-clock-v15",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-3",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-4",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-5",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-6",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-7",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-8",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-9",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-10",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-11",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-12",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-13",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-14",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-15",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-16",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-17",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-cost-layers-v15",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-18",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-19",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-20",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-21",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-22",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-23",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-24",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-24a",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-24b",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-26c",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-3-25",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-4-1",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-4-2",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-5-1",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-A-1",
+      "numeric_tokens_unchanged": true
+    },
+    {
+      "table": "tab-D-1",
+      "numeric_tokens_unchanged": true
+    }
+  ]
+}

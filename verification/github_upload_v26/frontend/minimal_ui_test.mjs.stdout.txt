@@ -1,0 +1,27 @@
+{
+  "scope": "UI_ONLY presentation tests; not TCP admission evidence",
+  "passed": 5,
+  "failed": 0,
+  "cases": [
+    {
+      "name": "20 successful admissions remain compact and distinguish online",
+      "status": "PASS"
+    },
+    {
+      "name": "first/middle/last partial failure counts retained 0",
+      "status": "PASS"
+    },
+    {
+      "name": "first/middle/last partial failure counts retained 9",
+      "status": "PASS"
+    },
+    {
+      "name": "first/middle/last partial failure counts retained 19",
+      "status": "PASS"
+    },
+    {
+      "name": "unknown or inconsistent batch cannot be displayed as success",
+      "status": "PASS"
+    }
+  ]
+}

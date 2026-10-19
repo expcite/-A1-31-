@@ -1,0 +1,30 @@
+[
+  {
+    "name": "detail_presenter_test.mjs",
+    "exit_code": 0
+  },
+  {
+    "name": "interactive_frontend_test.mjs",
+    "exit_code": 0
+  },
+  {
+    "name": "minimal_ui_test.mjs",
+    "exit_code": 0
+  },
+  {
+    "name": "referenceui_review_test.mjs",
+    "exit_code": 0
+  },
+  {
+    "name": "g3_rekey_state_test.mjs",
+    "exit_code": 0
+  },
+  {
+    "name": "bplus_state_test.mjs",
+    "exit_code": 0
+  },
+  {
+    "name": "logs_refresh_test.mjs",
+    "exit_code": 0
+  }
+]

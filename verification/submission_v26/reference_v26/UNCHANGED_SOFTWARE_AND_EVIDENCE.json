@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "baseline": "template-v25-20261019",
+  "files_checked": 1765,
+  "all_byte_identical": true,
+  "software_version": "interactive-v1.6.3-ui24",
+  "binaries_rebuilt": false,
+  "tests_rerun": false,
+  "historical_performance_resampled": false
+}

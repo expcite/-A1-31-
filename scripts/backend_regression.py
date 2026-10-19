@@ -2,7 +2,7 @@
 import argparse,json,os,pathlib,subprocess,sys,hashlib,datetime
 import m5_formal_run
 R=pathlib.Path(__file__).resolve().parents[1]
-GO=pathlib.Path(os.environ.get('GO',r'C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe'))
+GO=pathlib.Path(os.environ.get('GO',r'C:\Users\[REDACTED_USER]\.local_workspace\binaries\go\go\bin\go.exe'))
 def main():
  ap=argparse.ArgumentParser();ap.add_argument('--out',required=True,type=pathlib.Path);ap.add_argument('--cc',required=True,type=pathlib.Path);ap.add_argument('--node',required=True,type=pathlib.Path);ap.add_argument('--history-root',type=pathlib.Path);ap.add_argument('--package-parallelism',type=int,default=1);a=ap.parse_args()
  if not 1<=a.package_parallelism<=16:ap.error('package-parallelism must be 1..16')

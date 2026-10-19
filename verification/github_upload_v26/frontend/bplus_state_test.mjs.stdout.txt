@@ -1,0 +1,157 @@
+{
+  "scope": "isolated UI state and transport-fault fixtures; not Windows browser/TCP/cryptographic verification",
+  "passed": 30,
+  "failed": 0,
+  "cases": [
+    {
+      "test_id": "A03",
+      "name": "controlled route recovery and invalid routes",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A08",
+      "name": "draft isolation by run/device/action and no persistent payload",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A09",
+      "name": "bidirectional submitted parameters retained independently",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A10",
+      "name": "read timeout bounded and staleness independent of hung fetch",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A11",
+      "name": "fresh recovery never unlocks offline or revoked identity",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A12",
+      "name": "older request cannot supersede a newer snapshot",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A12",
+      "name": "retired run and expired authorization epoch rejected",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A13",
+      "name": "metadata rejection does not change state success timestamp",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A14",
+      "name": "explicit safe stop remains available when state stale",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A15",
+      "name": "lost write response is unknown and never retried",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A16",
+      "name": "same target action locked while distinct target can submit",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A16",
+      "name": "device removed during interaction does not retarget silently",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A18",
+      "name": "written/unconfirmed/late confirmed have separate meanings",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A22",
+      "name": "guide public reference operations make no API call",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A23",
+      "name": "skipped/failed/unknown cannot become completed",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A24",
+      "name": "already online condition distinct from newly established",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A25",
+      "name": "historical and automatic operations do not satisfy G2",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A25",
+      "name": "wrong device or guide token cannot claim an operation",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A26",
+      "name": "accepted rekey + new SID never claim causal success",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A27",
+      "name": "another tab SID change cannot complete manual rekey",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A28",
+      "name": "restored references revalidate against retained operations",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A29",
+      "name": "device/run changes start isolated guide contexts",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A30",
+      "name": "online/connecting/unknown jobs prevent experiment start",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A31",
+      "name": "exit zero alone is not a rule PASS",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A32",
+      "name": "fixed selection equality includes all filtering dimensions",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A34",
+      "name": "public detail serializer removes secret and payload fields",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A34",
+      "name": "guide storage holds public references only",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A35",
+      "name": "401 wipes sensitive state without automatic login/replay",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A36",
+      "name": "queue and operation limit remedies remain distinct",
+      "status": "PASS"
+    },
+    {
+      "test_id": "A36",
+      "name": "presentation receipt memory is bounded",
+      "status": "PASS"
+    }
+  ]
+}

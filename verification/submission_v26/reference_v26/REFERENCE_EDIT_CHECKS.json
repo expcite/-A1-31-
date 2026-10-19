@@ -1,0 +1,529 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "file": "作品设计报告_可编辑.html",
+      "references": 20,
+      "citation_links": 34,
+      "first_occurrence_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "mapping_from_v25": {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6,
+        "7": 7,
+        "14": 8,
+        "15": 9,
+        "20": 10,
+        "8": 11,
+        "9": 12,
+        "11": 13,
+        "18": 14,
+        "19": 15,
+        "13": 16,
+        "10": 17,
+        "12": 18,
+        "16": 19,
+        "17": 20
+      },
+      "tables_checked": [
+        {
+          "table": "tab-constraints",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-threat",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-contribution-v15",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-1-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-1-2",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-1-3",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-1-4",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-2",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-integration",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-3",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-4",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-5",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-6",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-7",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-assumptions-v15",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-8",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-2",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-clock-v15",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-3",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-4",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-5",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-6",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-7",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-8",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-9",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-10",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-11",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-12",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-13",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-14",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-15",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-16",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-17",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-cost-layers-v15",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-18",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-19",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-20",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-21",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-22",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-23",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-24",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-24a",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-24b",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-26c",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-25",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-4-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-4-2",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-5-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-A-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-D-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        }
+      ]
+    },
+    {
+      "file": "body_print.html",
+      "references": 20,
+      "citation_links": 34,
+      "first_occurrence_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "mapping_from_v25": {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6,
+        "7": 7,
+        "14": 8,
+        "15": 9,
+        "20": 10,
+        "8": 11,
+        "9": 12,
+        "11": 13,
+        "18": 14,
+        "19": 15,
+        "13": 16,
+        "10": 17,
+        "12": 18,
+        "16": 19,
+        "17": 20
+      },
+      "tables_checked": [
+        {
+          "table": "tab-constraints",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-threat",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-contribution-v15",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-1-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-1-2",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-1-3",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-1-4",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-2",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-integration",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-3",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-4",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-5",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-6",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-7",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-assumptions-v15",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-2-8",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-2",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-clock-v15",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-3",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-4",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-5",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-6",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-7",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-8",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-9",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-10",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-11",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-12",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-13",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-14",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-15",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-16",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-17",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-cost-layers-v15",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-18",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-19",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-20",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-21",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-22",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-23",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-24",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-24a",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-24b",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-26c",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-3-25",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-4-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-4-2",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-5-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-A-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        },
+        {
+          "table": "tab-D-1",
+          "numeric_tokens_unchanged_excluding_citations": true
+        }
+      ]
+    }
+  ],
+  "sources": {
+    "corrected_pages": "https://pure.royalholloway.ac.uk/en/publications/a-comprehensive-symbolic-analysis-of-tls-13/",
+    "article_number": "https://sites.cc.gatech.edu/fac/cpeikert/",
+    "HKDF": "https://www.rfc-editor.org/info/rfc5869/"
+  },
+  "software_or_experiment_changes": false
+}

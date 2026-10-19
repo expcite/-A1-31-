@@ -25,10 +25,10 @@ import sys
 
 INCLUDE_DIRS = ("cmd", "internal", "configs", "scripts", "docs", ".github")
 INCLUDE_ROOT_FILES = (
-    "go.mod", "go.sum", "README.md", "AGENTS.md", "TASKS.md", "VERSION", "CURRENT_HANDOFF.md", "CURRENT_COMPLETION.md",
-    "IMPLEMENTATION_STATUS.json", ".gitignore", ".gitattributes",
-    "AGENT_PROMPT.md", "CODEX_HANDOFF_M5B.md", "PACKAGE_INFO.md", "PATCH_REVALIDATION.md", "main.go", "LICENSE.txt", "THIRD_PARTY_NOTICES.md",
+    "go.mod", "go.sum", "README.md", "VERSION", ".gitignore", ".gitattributes",
+    "main.go", "LICENSE.txt", "THIRD_PARTY_NOTICES.md",
 )
+
 EXCLUDE_PARTS = (".git", "runtime", "__pycache__", "node_modules")
 EXCLUDE_EXT = {".exe", ".test", ".dll", ".so", ".a", ".key", ".pem", ".zip", ".pyc"}
 

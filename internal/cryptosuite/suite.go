@@ -4,7 +4,7 @@
 //
 // This package deliberately contains NO self-written SM2/SM3/SM4/ML-KEM
 // arithmetic. The work here is interface adaptation, domain-separated encoding
-// and protocol state handling, per AGENTS.md.
+// and protocol state handling, per the project implementation requirements.
 //
 // Readiness: RequireImplemented(suite) admits the implemented suites 1 and 2.
 // gateway/device/bench use the real H1-H4 handshake; component availability

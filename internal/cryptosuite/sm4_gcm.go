@@ -12,7 +12,7 @@ import (
 // SM4-GCM here is SM4 in Galois/Counter Mode. It is NOT AES-GCM with a
 // different key size: the block cipher is SM4 (GB/T 32907-2016) and only the
 // GCM mode construction is shared. Substituting AES would change every
-// ciphertext and every tag, and is forbidden by AGENTS.md.
+// ciphertext and every tag, and is forbidden by the project implementation requirements.
 //
 // The size limits below are what the record layer relies on. crypto/cipher's
 // NewGCM standardises nonce to 12 bytes and tag to 16 bytes, and this adapter

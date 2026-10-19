@@ -1,0 +1,16 @@
+{
+  "package_revision": "references-v26-20261019",
+  "software_version": "interactive-v1.6.3-ui24",
+  "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+  "report_sha256": "6030134fcdad21db43a3c87d233a37e4a311c2767841eb420ecdcc4fa84121cd",
+  "report_pages": 53,
+  "report_scope": "Reference metadata corrections, HKDF source addition and first-occurrence citation numbering; template front unchanged; 52 table figures unchanged. Software and experimental files byte-identical to v25.",
+  "production_go_non_comment_tokens_equal": true,
+  "current_binaries_rebuilt": 8,
+  "historical_performance_resampled": false,
+  "production_release_ready": false,
+  "public_copy_map": "verification/PUBLIC_COPY_MAP.json",
+  "report_editable_sha256": "c9f4388a23be2f0aef4fca2449566e8e326f81ddcff4bc5b086706d50e5eaf20",
+  "template_sha256": "4f81348bf085527f7ebe5de2787fd91ba05e5b5531754916badb005fcfb512c2",
+  "reference_count": 20
+}

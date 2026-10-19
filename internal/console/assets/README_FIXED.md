@@ -4,7 +4,7 @@
 
 ## 1. 修复文件与位置
 本目录所有文件位于：
-`C:\Users\20477\Downloads\fixed_reference_ui\`
+`C:\Users\[REDACTED_USER]\Downloads\fixed_reference_ui\`
 
 包含全部完整运行所需的前端 ESM 资源：
 - `index.html`：主结构入口，语义化与 a11y 骨架
@@ -49,7 +49,7 @@
 ## 3. 如何同步到源码并重新构建（若需要发布新 EXE）
 
 若需要将这些修好的文件编译进新的 Windows 原生可执行文件（`EdgeHybridInteractive.exe`）：
-1. 将本目录（`C:\Users\20477\Downloads\fixed_reference_ui\`）中的 `.js`, `.html`, `.css` 复制覆盖到源码目录：
+1. 将本目录（`C:\Users\[REDACTED_USER]\Downloads\fixed_reference_ui\`）中的 `.js`, `.html`, `.css` 复制覆盖到源码目录：
    `source/edgehybrid-agent-starter/internal/console/assets/`
 2. 运行构建脚本：
    ```powershell

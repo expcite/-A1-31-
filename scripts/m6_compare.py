@@ -4,7 +4,7 @@ from pathlib import Path
 import source_manifest
 from m6_evidence_contract import mutation_outcome, strict_events
 ROOT=Path(__file__).resolve().parents[1]
-GO=os.environ.get('GO',r'C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe')
+GO=os.environ.get('GO',r'C:\Users\[REDACTED_USER]\.local_workspace\binaries\go\go\bin\go.exe')
 def read(p): return json.loads(p.read_text(encoding='utf-8'))
 def write(p,x): p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()

@@ -23,7 +23,7 @@ func TestReadOnlyLoopbackHostOriginAndStaticBoundaries(t *testing.T) {
 		{"rebind", "GET", "/api/state", "attacker.test", "", "127.0.0.1:1234", 403}, {"wrong-port", "GET", "/api/state", "127.0.0.1:1", "", "127.0.0.1:1234", 403},
 		{"cross-origin", "GET", "/api/state", host, "https://evil.test", "127.0.0.1:1234", 403}, {"remote", "GET", "/api/state", host, "", "192.0.2.1:1234", 403},
 		{"post-stop", "POST", "/api/state", host, "", "127.0.0.1:1234", 405}, {"runtime", "GET", "/runtime/keys/D001/signing.key", host, "", "127.0.0.1:1234", 404},
-		{"traversal", "GET", "/../AGENTS.md", host, "", "127.0.0.1:1234", 404}, {"path-query", "GET", "/api/state?path=keys", host, "", "127.0.0.1:1234", 400},
+		{"traversal", "GET", "/../LOCAL_GUIDANCE_OMITTED.md", host, "", "127.0.0.1:1234", 404}, {"path-query", "GET", "/api/state?path=keys", host, "", "127.0.0.1:1234", 400},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			r := httptest.NewRequest(tc.method, "http://"+host+tc.path, nil)

@@ -1,7 +1,7 @@
-﻿param(
+param(
     [Parameter(Mandatory=$true)][string]$OutDir,
     [Parameter(Mandatory=$true)][ValidatePattern('^[0-9a-f]{64}$')][string]$SourceSHA256,
-    [string]$Go = 'C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe'
+    [string]$Go = 'C:\Users\[REDACTED_USER]\.local_workspace\binaries\go\go\bin\go.exe'
 )
 $ErrorActionPreference = 'Stop'
 $taskRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))

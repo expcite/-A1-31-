@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "tests": 12,
+  "cases": [
+    {
+      "name": "run has correct title and no raw JSON in summary",
+      "pass": true
+    },
+    {
+      "name": "zero is an observed value",
+      "pass": true
+    },
+    {
+      "name": "missing usage stays unknown without progress",
+      "pass": true
+    },
+    {
+      "name": "limits do not invent usage or an aggregate queue ratio",
+      "pass": true
+    },
+    {
+      "name": "bytes use readable units",
+      "pass": true
+    },
+    {
+      "name": "stale snapshots are explicitly marked",
+      "pass": true
+    },
+    {
+      "name": "offline device refers to last session and preserves zero temperature",
+      "pass": true
+    },
+    {
+      "name": "unknown bool is not false",
+      "pass": true
+    },
+    {
+      "name": "unconfirmed control does not fabricate completed steps",
+      "pass": true
+    },
+    {
+      "name": "telemetry uses its three observed stages",
+      "pass": true
+    },
+    {
+      "name": "structured event data stays in technical disclosure",
+      "pass": true
+    },
+    {
+      "name": "invalid and zero Go timestamps stay unobserved",
+      "pass": true
+    }
+  ]
+}

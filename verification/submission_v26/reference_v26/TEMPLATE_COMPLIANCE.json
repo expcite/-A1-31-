@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "pages": 53,
+  "template_original_unchanged": true,
+  "template_cover_native_copy": true,
+  "template_basic_info_six_rows": true,
+  "abstract_and_five_keywords_on_info_page": true,
+  "anonymous_identity_check": true,
+  "template_placeholder_notes_removed": true,
+  "template_chapter_coverage": true,
+  "toc_links_checked": 86,
+  "folio_rule": "Unnumbered cover, basic info 1, then continuous numbering",
+  "blank_body_pages": [],
+  "software_and_experiments_modified": false,
+  "render_backend": "Native template front matter exported by WPS; HTML body printed by Edge; final merged PDF rendered to PNG for review"
+}

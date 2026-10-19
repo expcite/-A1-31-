@@ -1,15 +1,35 @@
-# EdgeHybrid 交互通信平台
+# EdgeHybrid 软件源码
 
-当前程序发布版本 `interactive-v1.6.2-e08fix1`，提交 Final_v13（说明同步 1），前端 `MINIMAL-UI-v1.0`。既定软件原型与补测范围已完成；当前状态见 `CURRENT_COMPLETION.md`、`CURRENT_HANDOFF.md` 与 `IMPLEMENTATION_STATUS.json`。本次仅同步说明，不更换协议或增加功能。
+当前公开运行版本为 `interactive-v1.6.3-ui24`，保持既有协议及业务机制，使用相同 Go 1.27.2 工具链重新构建，并对全部 8 个程序启用路径裁剪。源码中嵌入的历史数据仅对本机环境路径作文本脱敏，历史测量值不改写。
 
-8 个现有程序由 Go 1.27.2 构建，原构建源码清单为 `02863dd2efb03dd8885fb45133fdac44128eb462f581d03301417068f39b29ad`。当前说明更新后的清单另列在 `../verification/document_sync_v13_1/`；原构建清单、EXE 和原始实验不改写为新构建或重测。
+## 构建与测试
 
-[快速入门与完整手册](docs/user/MINIMALUI_MANUAL.md) · [API](docs/INTERACTIVE_API.md) · [原题要求](docs/REQUIREMENTS.md) · [本轮修复边界](docs/REFERENCEUI_REVIEW_FIXES.md)。
+需要本机 Go 及模块缓存；依赖版本由 go.mod/go.sum 固定。推荐设置 GOTOOLCHAIN=local、GOPROXY=off，避免在复核时自动换工具链或下载模块。
 
-Windows运行包：双击`启动1台设备.cmd`或`启动20台设备.cmd`；授权后明确连接，输入26.3/28.7发送并核对真实回执。停止用`停止交互平台.cmd`。关闭网页不退出软件，刷新/切页不重发。运行不依赖Go/Python/Node/Java/CDN。
+```powershell
+go test ./... -count=1
+python -X utf8 -B scripts/backend_build.py --out <不存在的输出目录> --evidence <不存在的构建日志目录> --version interactive-v1.6.3-ui24
+```
 
-批量：HTTP接受只代表受理，只有本次run/身份/SID/ID关联的真实操作确认才计为确认。连接/断开的本机状态观测、未知、未确认、拒绝分别列出；超时可能已执行，不自动重发。换钥双端新握手与之后的业务验证分开。
+构建脚本从 PATH 查找 Go，或使用环境变量 GO 指定可执行文件；没有某个开发工具专有目录的依赖。其余历史采集脚本可能需要按各脚本参数指定本机路径，当前交付入口及版本以包根 README 和 runtime/build_info.json 为准。
 
-构建统一使用`scripts/interactive_build.py`（委托`scripts/backend_build.py`），从同一源码清单构建全部8个程序及内嵌页面，新输出目录不覆盖已有包。`build_info.json`、`CURRENT_SOURCE_MANIFEST.sha256`和实际命令绑定版本；软件GET /api/v1/build可核对源码哈希。开发默认值不冒称发布版。
+原题、协议、威胁模型和接口说明在 docs/。密码原语、握手、记录和业务实现在 internal/，运行入口在 cmd/。原始测量位于包根 experiments/，不是本轮重建后重新采样。
 
-旧M5/M6/SM2/OpenSSL/race记录保持原字节与原版本来源，不能作为本次全面安全认证或当前实时性能。历史阶段的正式1000次/1800秒结果保留原来源；后续已列明的补测独立记录，本次说明同步没有新增采样。M6历史A/B覆盖和检出相同，改进是审计信息更完整；当前任务原始输出和进程退出、回执持久化分别记录。
+开发提示词、阶段交接材料、旧编译产物和重复报告不作为当前源码交付。文件保留范围及公开文本身份见包根 verification/PUBLIC_COPY_MAP.json。
+
+## 详情界面
+
+右侧抽屉采用中文摘要、容量卡片和操作时间线；关联编号与公开原始记录按需展开。缺失值、合法零值和状态过期分别显示，刷新保留展开状态。布局沿用工作台的颜色、卡片和明暗主题。
+
+可用 Node 运行 scripts/detail_presenter_test.mjs --assets internal/console/assets，检查缺失值、容量上限、零值、过期状态及操作进度的展示规则。
+
+## GitHub 当前提交
+
+当前默认分支同步竞赛提交v26，软件版本为interactive-v1.6.3-ui24。
+
+- [最新作品设计报告](report/作品设计报告.pdf)
+- [可编辑报告](report/作品设计报告_可编辑.html)
+- [上传范围与验证说明](GITHUB_UPLOAD.md)
+- [历史验收记录](verification/submission_v26/)
+
+源码位于本仓库根目录。运行程序和完整实验原件随本地支撑材料ZIP交付；本仓库保留对应身份和验收摘要。Git文本文件统一LF换行，原构建源码清单仅标识本地交付原件，不能直接冒充本仓库的新构建记录。旧版本可在Git历史中查阅。

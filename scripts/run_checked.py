@@ -13,7 +13,7 @@ import platform
 import subprocess
 import sys
 
-GO = r"C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe"
+GO = r"C:\Users\[REDACTED_USER]\.local_workspace\binaries\go\go\bin\go.exe"
 
 def main():
     p = argparse.ArgumentParser()

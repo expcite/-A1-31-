@@ -15,7 +15,7 @@ import sys
 import source_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
-GO = Path(os.environ.get('GO', r'C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe'))
+GO = Path(os.environ.get('GO', r'C:\Users\[REDACTED_USER]\.local_workspace\binaries\go\go\bin\go.exe'))
 
 
 def manifest(root):
@@ -39,7 +39,7 @@ def main():
         'EDGEHYBRID_BC_SHA256': 'cefef94b35315f4b94c2653a99e38c94ca8b312a59dd61b0d5e956839fa858b9',
         'EDGEHYBRID_JAVA': r'C:\Program Files\JetBrains\PyCharm 2025.2.3\jbr\bin\java.exe',
         'EDGEHYBRID_JAVAC': r'C:\Program Files\JetBrains\PyCharm 2025.2.3\jbr\bin\javac.exe',
-        'EDGEHYBRID_OPENSSL': r'C:\Users\20477\.workbuddy\binaries\PortableGit\versions\1.2.0\usr\bin\openssl.exe',
+        'EDGEHYBRID_OPENSSL': r'C:\Users\[REDACTED_USER]\.local_workspace\binaries\PortableGit\versions\1.2.0\usr\bin\openssl.exe',
     })
     rows = []
 

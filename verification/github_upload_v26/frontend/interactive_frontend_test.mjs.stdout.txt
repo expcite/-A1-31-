@@ -1,0 +1,2 @@
+{"test":"pending control state and partial batch display","status":"PASS","assertions":7}
+{"test":"novice presentation, exact units, truthful states and bounded pagination","status":"PASS","assertions":36}

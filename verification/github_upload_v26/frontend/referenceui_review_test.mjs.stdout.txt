@@ -1,0 +1,99 @@
+{
+  "scope": "Isolated frontend state and excerpt parser; no actual browser/Channel claim",
+  "passed": 23,
+  "failed": 0,
+  "cases": [
+    {
+      "name": "missing success count and receipt remain unobserved",
+      "status": "PASS"
+    },
+    {
+      "name": "FAIL receipt remains explicit FAIL",
+      "status": "PASS"
+    },
+    {
+      "name": "missing denominator is not inferred from hardcoded smoke size",
+      "status": "PASS"
+    },
+    {
+      "name": "normal complete summary retains counts and zero timing",
+      "status": "PASS"
+    },
+    {
+      "name": "M6 exit zero never supplies blanket rule verdict",
+      "status": "PASS"
+    },
+    {
+      "name": "receipt persistence is distinct from rule result",
+      "status": "PASS"
+    },
+    {
+      "name": "queued HTTP acceptance cannot be confirmation",
+      "status": "PASS"
+    },
+    {
+      "name": "normal exact protected-operation observation confirms",
+      "status": "PASS"
+    },
+    {
+      "name": "foreign run_id cannot complete request",
+      "status": "PASS"
+    },
+    {
+      "name": "foreign device_id cannot complete request",
+      "status": "PASS"
+    },
+    {
+      "name": "foreign sid cannot complete request",
+      "status": "PASS"
+    },
+    {
+      "name": "foreign kind cannot complete request",
+      "status": "PASS"
+    },
+    {
+      "name": "foreign operation_id cannot complete request",
+      "status": "PASS"
+    },
+    {
+      "name": "confirmed without processed time or applied cannot be invented",
+      "status": "PASS"
+    },
+    {
+      "name": "unconfirmed may have executed and is not failed",
+      "status": "PASS"
+    },
+    {
+      "name": "terminal failure and cancellation retained",
+      "status": "PASS"
+    },
+    {
+      "name": "wrong session and revoked authorization stop observation",
+      "status": "PASS"
+    },
+    {
+      "name": "rekey requires exact cause and both endpoint admissions",
+      "status": "PASS"
+    },
+    {
+      "name": "connect and disconnect report observation, not causal remote ACK",
+      "status": "PASS"
+    },
+    {
+      "name": "timeout is unknown, subscription cleaned, later genuine confirmation remains inspectable",
+      "status": "PASS"
+    },
+    {
+      "name": "actual snapshot notification resolves once and frees waiter",
+      "status": "PASS"
+    },
+    {
+      "name": "actual telemetry accepts gateway evidence without inventing control ACK fields",
+      "status": "PASS"
+    },
+    {
+      "name": "telemetry does not confirm absent or unrelated gateway receive evidence",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,3 +1,0 @@
-# 当前交接：interactive-v1.2
-
-本轮A网关生命周期与B简洁流程完成，固定范围结束，不扩展功能。最终源码0febefe557f00534d93aa6b40b89f2a19fd5e010004069827ee4067aa4242fe8，EXEce3cc09583d7cf5c16ed52973f4df8b0070453033fd293cec9fd1fa86dcc8779。历史M5/M6和原Demo未修改；无Git，清单固定339项。查看deliverables/Interactive_V12/ISSUE_CLOSURE.md、UI_EVIDENCE.json、VERIFICATION_REPORT.md及results/milestone_Interactive_V12.md。原始证据含失败/中断，不能删失败凑成功；race和独立SM2仍pending，无真人试用。

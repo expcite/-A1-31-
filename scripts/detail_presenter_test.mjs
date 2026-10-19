@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+const assetIndex=process.argv.indexOf('--assets');if(assetIndex<0)throw Error('--assets required');
+const assets=process.argv[assetIndex+1],tmp=await fs.mkdtemp(path.join(os.tmpdir(),'eh-detail-'));
+for(const name of ['usability','detail-presenter'])await fs.writeFile(path.join(tmp,name+'.mjs'),(await fs.readFile(path.join(assets,name+'.js'),'utf8')).replaceAll('./usability.js','./usability.mjs'));
+const {presentDetail,bytes,timeLabel}=await import(pathToFileURL(path.join(tmp,'detail-presenter.mjs')));
+const cases=[];
+function test(name,fn){fn();cases.push({name,pass:true});}
+const s={run_id:'interactive-long-run',devices:[{status:'online'},{status:'offline'}],events:[{}],capacity:{operations_used:13,operations_limit:256,rekeys_used:0,rekeys_limit:256,log_bytes:223710,log_bytes_limit:20971520,events_limit:2000,exports_limit:16,jobs_limit:8,queue_limit:32}};
+test('run has correct title and no raw JSON in summary',()=>{const m=presentDetail('run',s,s,true);assert.equal(m.title,'本次运行概览');assert.ok(!m.summary.includes(s.run_id));assert.ok(!m.summary.includes('{'));assert.equal(m.metrics[0].value,'13');assert.equal(m.metrics[0].limit,'256');});
+test('zero is an observed value',()=>{assert.equal(presentDetail('run',s,s,true).metrics[1].value,'0');assert.equal(bytes(0),'0 B');});
+test('missing usage stays unknown without progress',()=>{const x={...s,capacity:{operations_limit:256}};const m=presentDetail('run',x,x,true);assert.equal(m.metrics[0].value,'未观测');assert.equal(m.metrics[0].percent,null);});
+test('limits do not invent usage or an aggregate queue ratio',()=>{const m=presentDetail('run',s,s,true);assert.deepEqual(m.limits,[['每个队列','32 项上限'],['导出文件','16 份上限'],['后台任务','8 项上限']]);});
+test('bytes use readable units',()=>{assert.equal(bytes(223710),'218.5 KiB');assert.equal(bytes(20971520),'20.0 MiB');assert.equal(bytes(null),'未观测');});
+test('stale snapshots are explicitly marked',()=>{assert.match(presentDetail('run',s,s,false).status,/过期/);});
+test('offline device refers to last session and preserves zero temperature',()=>{const m=presentDetail('device',{id:'D001',status:'offline',suite:2,auto:false,temperature_c:0,accepted_samples:0},s,true);assert.ok(m.fields.some(([k,v])=>k==='最近会话模式'&&v==='国密与抗量子混合'));assert.ok(m.fields.some(([k,v])=>v==='0 ℃'));assert.ok(m.fields.some(([k,v])=>v==='已关闭'));});
+test('unknown bool is not false',()=>{assert.ok(presentDetail('device',{id:'D001'},s,true).fields.some(([k,v])=>k==='自动上报'&&v==='未观测'));});
+test('unconfirmed control does not fabricate completed steps',()=>{const m=presentDetail('operation',{kind:'control',status:'unconfirmed',device_id:'D001',queued_at:'2026-10-19T01:00:00Z',written_at:'2026-10-19T01:00:01Z',peer_processed_at:null,confirmed_at:null},s,true);assert.deepEqual(m.timeline.map(x=>x.done),[true,true,false,false]);});
+test('telemetry uses its three observed stages',()=>{assert.equal(presentDetail('operation',{kind:'telemetry'},s,true).timeline.length,3);});
+test('structured event data stays in technical disclosure',()=>{const m=presentDetail('event',{stage:'other',detail:'{"x":1}'},s,true);assert.ok(!m.summary.includes('{'));assert.match(m.summary,/技术记录/);});
+test('invalid and zero Go timestamps stay unobserved',()=>{for(const v of [null,'bad','0001-01-01T00:00:00Z'])assert.equal(timeLabel(v),'未观测');});
+await fs.rm(tmp,{recursive:true,force:true});
+console.log(JSON.stringify({status:'PASS',tests:cases.length,cases},null,2));

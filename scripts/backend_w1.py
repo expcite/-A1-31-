@@ -33,12 +33,12 @@ def snapshot(root, folder, name):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--out", required=True)
-    p.add_argument("--go", default=r"C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe")
+    p.add_argument("--go", default=r"C:\Users\[REDACTED_USER]\.local_workspace\binaries\go\go\bin\go.exe")
     p.add_argument("--java", default=r"C:\Program Files\JetBrains\PyCharm 2025.2.3\jbr\bin\java.exe")
     p.add_argument("--javac", default=r"C:\Program Files\JetBrains\PyCharm 2025.2.3\jbr\bin\javac.exe")
     p.add_argument("--bc-jar", default=r"C:\Program Files\JetBrains\PyCharm 2025.2.3\lib\bouncy-castle.jar")
     p.add_argument("--bc-sha256", default="cefef94b35315f4b94c2653a99e38c94ca8b312a59dd61b0d5e956839fa858b9")
-    p.add_argument("--openssl", default=r"C:\Users\20477\.workbuddy\binaries\PortableGit\versions\1.2.0\usr\bin\openssl.exe")
+    p.add_argument("--openssl", default=r"C:\Users\[REDACTED_USER]\.local_workspace\binaries\PortableGit\versions\1.2.0\usr\bin\openssl.exe")
     p.add_argument("--fuzz-seconds", type=int, default=20)
     a = p.parse_args()
     if a.fuzz_seconds < 1 or a.fuzz_seconds > 60:

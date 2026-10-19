@@ -200,7 +200,7 @@ M5原证据索引在 results/raw/m5_formal_20261001/data/results_index.json；�
 
 正式重新采样不是本轮验收条件。需要新采样时遵循 FORMAL_EXPERIMENT_PLAN.md，在新目录重新prepare/freeze，停止Demo和其他实验，原参数T/H/P各1000、T/H各5×100资源、吞吐各5×200；不向旧结果目录追填。m5_formal_run.py对source/binary/plan有严格冻结守卫，交付源码新增M6后旧freeze运行入口应拒绝，不绕开守卫。失败/超时/中断保留，固定分母，禁止补成功或修改旧raw。
 
-P包括TLS1.3真实混合组和双向证书，并非Suite3。资源是100握手进程批次，未测单次指标保持null。全部性能图表数据由 m6_materials.py 从原逐次/逐轮文件重算，chart_data.json附原路径和hash。答辩构建 scripts/m6_deck.mjs、PDF说明书构建 scripts/m6_pdf.py 使用Codex捆绑artifact-tool/reportlab，不是生产Go依赖；需本机存在对应包/字体，渲染记录仅证明本机生成和检查，不证明各版本PowerPoint行为。Word草稿m6_docx.py已执行，但render_docx.py因缺LibreOffice失败；Word也未安装，所以草稿保留在包外，不交作已验证文档。正式说明书为Markdown和PDF，PPTX可编辑。
+P包括TLS1.3真实混合组和双向证书，并非Suite3。资源是100握手进程批次，未测单次指标保持null。全部性能图表数据由 m6_materials.py 从原逐次/逐轮文件重算，chart_data.json附原路径和hash。答辩构建 scripts/m6_deck.mjs、PDF说明书构建 scripts/m6_pdf.py 使用local_review捆绑artifact-tool/reportlab，不是生产Go依赖；需本机存在对应包/字体，渲染记录仅证明本机生成和检查，不证明各版本PowerPoint行为。Word草稿m6_docx.py已执行，但render_docx.py因缺LibreOffice失败；Word也未安装，所以草稿保留在包外，不交作已验证文档。正式说明书为Markdown和PDF，PPTX可编辑。
 
 归档验证：`python scripts/package_review.py --verify ../EdgeHybrid_M6_Review_Package.zip`。MANIFEST逐条覆盖包内文件（自身除外）。不分享runtime/private/私钥/令牌，不嵌套旧ZIP或exe。race/独立SM2交换没有新执行，继续pending。
 ''')

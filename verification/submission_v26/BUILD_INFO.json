@@ -1,0 +1,59 @@
+{
+  "source_unchanged_during_build": true,
+  "version": "interactive-v1.6.3-ui24",
+  "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+  "source_files": 404,
+  "binaries": {
+    "bench.exe": {
+      "sha256": "ab3875be78aab1b6e28f63598544a03a2fe6aa74a7e498241391ff8f3acb22d8",
+      "bytes": 8868352,
+      "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+      "test_only": false
+    },
+    "pbench.exe": {
+      "sha256": "8bed00cd7e19f29037d3c665251ffbea5421b75b6d3e49f2149e98eaf48675a4",
+      "bytes": 9669120,
+      "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+      "test_only": false
+    },
+    "gateway.exe": {
+      "sha256": "03fff977a710654c75fac39ee06a5966accb66eddbbe60bd15663c8aef885401",
+      "bytes": 7901184,
+      "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+      "test_only": false
+    },
+    "device.exe": {
+      "sha256": "11f0c173c8a50df0bd840ede7a2889c9b3924ae0b5db6549b8a78e52f1f1fafe",
+      "bytes": 7133184,
+      "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+      "test_only": false
+    },
+    "fleet.exe": {
+      "sha256": "20d1c50f94f30af140308ec9a773b75aeb6da7bd7cfc772928d4d4d0630806d2",
+      "bytes": 7195648,
+      "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+      "test_only": false
+    },
+    "secctl.exe": {
+      "sha256": "cd7b3e8ddb7761318b2c87d7ec56917513d8b88a0cfbd8fb085f7dd082e6db0a",
+      "bytes": 5728256,
+      "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+      "test_only": false
+    },
+    "scenario.exe": {
+      "sha256": "78bd26101539587b062287867ce18c05cd335431985ca5ceae2ff0177e7b5428",
+      "bytes": 9225216,
+      "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+      "test_only": true
+    },
+    "EdgeHybridInteractive.exe": {
+      "sha256": "245a88691e295a841262f89d70a65d432d2a0042c2cdb78c2920368404467e1a",
+      "bytes": 14624256,
+      "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+      "test_only": false
+    }
+  },
+  "go": "go version go1.27.2 windows/amd64",
+  "frontend": "MINIMAL-UI-v1.0; embedded native ES modules; shared authenticated API state; bounded G3 rekey receipts; no runtime CDN",
+  "created_utc": "2026-10-19T02:03:36.546803+00:00"
+}

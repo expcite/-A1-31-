@@ -138,7 +138,7 @@ Suite 2 的握手里，网关真实 `Encapsulate`、设备真实 `Decapsulate`�
 |---|---|---|---|
 |JBR/java/javac|OpenJDK `21.0.8`；JBR `21.0.8+1-1038.72-jcef`，build `21.0.8+1-b1038.72`；javac `21.0.8`|`C:/Program Files/JetBrains/PyCharm 2025.2.3/jbr/bin`|编译并运行测试隔离的 BC SM2 交换桥|
 |Bouncy Castle Provider|Provider info `BouncyCastle Security Provider v1.80`；Java `getVersionStr()` 返回 `1.8`，与构造版本数字的表示有关；准确组件版本为 **1.80**|现成 PyCharm `lib/bouncy-castle.jar`；随 PyCharm 的 `license/third-party-libraries.json` 也记录 provider/PGP 为 1.80、MIT|SM2 核心共享结果第二实现，**不**执行标准 S1/S2 确认|
-|OpenSSL|`OpenSSL 3.5.7 9 Jun 2026`；Msys-x86_64，built `Wed Jun 10 11:53:26 2026 UTC`|现成 `C:/Users/20477/.workbuddy/binaries/PortableGit/versions/1.2.0/usr/bin/openssl.exe`|当前动态 SM2 双向签名/验签，以及身份/消息/签名负例|
+|OpenSSL|`OpenSSL 3.5.7 9 Jun 2026`；Msys-x86_64，built `Wed Jun 10 11:53:26 2026 UTC`|现成 `C:/Users/[REDACTED_USER]/.local_workspace/binaries/PortableGit/versions/1.2.0/usr/bin/openssl.exe`|当前动态 SM2 双向签名/验签，以及身份/消息/签名负例|
 
 本地 BC 重打包 JAR 的 SHA-256 为
 `cefef94b35315f4b94c2653a99e38c94ca8b312a59dd61b0d5e956839fa858b9`。

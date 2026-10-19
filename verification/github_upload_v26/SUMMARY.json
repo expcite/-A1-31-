@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "date": "2026-10-19",
+  "scope": "Actual Git checkout ordinary Go tests and frontend checks; no race or new performance claim",
+  "go_version": "go1.27.2 windows/amd64",
+  "command": [
+    "go",
+    "test",
+    "./...",
+    "-count=1",
+    "-json"
+  ],
+  "exit_code": 0,
+  "passed_tests_including_subtests": 1132,
+  "skipped_tests_including_subtests": 5,
+  "race_detector": false,
+  "frontend_suites": 7,
+  "software_version": "interactive-v1.6.3-ui24"
+}

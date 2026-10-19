@@ -27,7 +27,7 @@
       {
         "mode": "T",
         "run_id": "m5-formal-20261001T003851.926621Z-handshake_T_1",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_T_1\\m5a-traditional-20261001T003855.124283300Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_T_1\\m5a-traditional-20261001T003855.124283300Z",
         "config_hash": "bb5fafc13aa7f21a632ce2e973a17eccde789c07679a993f8e30813869ed10c4",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -61,7 +61,7 @@
       {
         "mode": "H",
         "run_id": "m5-formal-20261001T003851.926621Z-handshake_H_1",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_H_1\\m5a-hybrid-20261001T003903.900873600Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_H_1\\m5a-hybrid-20261001T003903.900873600Z",
         "config_hash": "5529d9c42c7d18f1ae8f69e771cdb3b8f3f6e8ad39cddadfceccbe001b96d6fd",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -95,7 +95,7 @@
       {
         "mode": "P",
         "run_id": "m5-formal-20261001T003851.926621Z-handshake_P_1",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_P_1",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_P_1",
         "config_hash": "c7b46aadd743f17e890ae19b3dd730b81e8684f1caa3c7ea2461424536235213",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -131,7 +131,7 @@
       {
         "mode": "T",
         "run_id": "m5-formal-20261001T003851.926621Z-resource_T_1",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_1\\m5b-resource-20261001T003946.934378100Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_1\\m5b-resource-20261001T003946.934378100Z",
         "config_hash": "0123b05230a3ac7ac212f4cca2a20cbe766586a6d5a328d17f81fabb474fbcd6",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -226,7 +226,7 @@
       {
         "mode": "T",
         "run_id": "m5-formal-20261001T003851.926621Z-resource_T_2",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_2\\m5b-resource-20261001T003949.828577100Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_2\\m5b-resource-20261001T003949.828577100Z",
         "config_hash": "0387e1b02651dd89854a6da59d76c2b542e14421d6753e5c4917c7ca9349e555",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -321,7 +321,7 @@
       {
         "mode": "T",
         "run_id": "m5-formal-20261001T003851.926621Z-resource_T_3",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_3\\m5b-resource-20261001T003952.717373400Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_3\\m5b-resource-20261001T003952.717373400Z",
         "config_hash": "9655ed33557abf7b7639ab431044f98421c566031973cf73e1fc0bc3a32f7f63",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -416,7 +416,7 @@
       {
         "mode": "T",
         "run_id": "m5-formal-20261001T003851.926621Z-resource_T_4",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_4\\m5b-resource-20261001T003955.672446600Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_4\\m5b-resource-20261001T003955.672446600Z",
         "config_hash": "9c27284dc29be5b44f9ccbca361360ef46d1fb4986398b6321743970b8bcd291",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -511,7 +511,7 @@
       {
         "mode": "T",
         "run_id": "m5-formal-20261001T003851.926621Z-resource_T_5",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_5\\m5b-resource-20261001T003958.548700200Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_5\\m5b-resource-20261001T003958.548700200Z",
         "config_hash": "d7c81a84b53679bbde5362470e9ec469367d811e8d0d7666608463cae042f0d5",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -606,7 +606,7 @@
       {
         "mode": "H",
         "run_id": "m5-formal-20261001T003851.926621Z-resource_H_1",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_1\\m5b-resource-20261001T004001.449410600Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_1\\m5b-resource-20261001T004001.449410600Z",
         "config_hash": "771a794067743a99a9f213f4bba229ea1ba57cc556b423357733c22eddd5e1cc",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -701,7 +701,7 @@
       {
         "mode": "H",
         "run_id": "m5-formal-20261001T003851.926621Z-resource_H_2",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_2\\m5b-resource-20261001T004004.314035600Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_2\\m5b-resource-20261001T004004.314035600Z",
         "config_hash": "dc24c8e2c6e23bda5988faabdf04637feef9c1d026b6a75d2b1bbcbe28ec4b87",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -796,7 +796,7 @@
       {
         "mode": "H",
         "run_id": "m5-formal-20261001T003851.926621Z-resource_H_3",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_3\\m5b-resource-20261001T004007.228539000Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_3\\m5b-resource-20261001T004007.228539000Z",
         "config_hash": "6217cd0cabc6afa0338ddd1be8a9301b436a956f0ffb50fae7763e08465dbe70",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -891,7 +891,7 @@
       {
         "mode": "H",
         "run_id": "m5-formal-20261001T003851.926621Z-resource_H_4",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_4\\m5b-resource-20261001T004010.155614900Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_4\\m5b-resource-20261001T004010.155614900Z",
         "config_hash": "af2bc696152548345eccee0a106d7c3c7d29af9dc82b37d958b11a6a278bfc72",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -986,7 +986,7 @@
       {
         "mode": "H",
         "run_id": "m5-formal-20261001T003851.926621Z-resource_H_5",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_5\\m5b-resource-20261001T004013.054383500Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_5\\m5b-resource-20261001T004013.054383500Z",
         "config_hash": "557f49512998335c5d2bae316c8e73a00f2b30df863c3b70be47f40b30d5593f",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -1083,7 +1083,7 @@
       {
         "mode": "T",
         "run_id": "m5-formal-20261001T003851.926621Z-throughput_T_1",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_T_1\\m5b-throughput-20261001T004015.993109900Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_T_1\\m5b-throughput-20261001T004015.993109900Z",
         "config_hash": "ee032f458fcc0670de86bb9fbf92cf4b5c47c156c5bfcd65f3295d5e790d25cc",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -15302,7 +15302,7 @@
       {
         "mode": "H",
         "run_id": "m5-formal-20261001T003851.926621Z-throughput_H_1",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_H_1\\m5b-throughput-20261001T004019.579107600Z",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_H_1\\m5b-throughput-20261001T004019.579107600Z",
         "config_hash": "12564a09461ec4afdee6b53965e2f5a2b651d8a95b953e417240868498c1a7c9",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -29521,7 +29521,7 @@
       {
         "mode": "P",
         "run_id": "m5-formal-20261001T003851.926621Z-throughput_P_1",
-        "result_dir": "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_P_1",
+        "result_dir": "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_P_1",
         "config_hash": "3a55ed23cc692d206cfda873bb7c9683e26fcf9512c1bf48f18d3dbe45d63a02",
         "producer_exit_code": 0,
         "status": "PASS",
@@ -43862,10 +43862,10 @@
       {
         "name": "handshake_T_1",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_T_1\\m5a-traditional-20261001T003855.124283300Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_T_1\\m5a-traditional-20261001T003855.124283300Z",
           "-exit-code",
           "0"
         ],
@@ -43874,10 +43874,10 @@
       {
         "name": "handshake_H_1",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_H_1\\m5a-hybrid-20261001T003903.900873600Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_H_1\\m5a-hybrid-20261001T003903.900873600Z",
           "-exit-code",
           "0"
         ],
@@ -43886,10 +43886,10 @@
       {
         "name": "handshake_P_1",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\pbench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\pbench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_P_1",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\handshake_P_1",
           "-exit-code",
           "0"
         ],
@@ -43898,10 +43898,10 @@
       {
         "name": "resource_T_1",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_1\\m5b-resource-20261001T003946.934378100Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_1\\m5b-resource-20261001T003946.934378100Z",
           "-exit-code",
           "0"
         ],
@@ -43910,10 +43910,10 @@
       {
         "name": "resource_T_2",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_2\\m5b-resource-20261001T003949.828577100Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_2\\m5b-resource-20261001T003949.828577100Z",
           "-exit-code",
           "0"
         ],
@@ -43922,10 +43922,10 @@
       {
         "name": "resource_T_3",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_3\\m5b-resource-20261001T003952.717373400Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_3\\m5b-resource-20261001T003952.717373400Z",
           "-exit-code",
           "0"
         ],
@@ -43934,10 +43934,10 @@
       {
         "name": "resource_T_4",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_4\\m5b-resource-20261001T003955.672446600Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_4\\m5b-resource-20261001T003955.672446600Z",
           "-exit-code",
           "0"
         ],
@@ -43946,10 +43946,10 @@
       {
         "name": "resource_T_5",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_5\\m5b-resource-20261001T003958.548700200Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_T_5\\m5b-resource-20261001T003958.548700200Z",
           "-exit-code",
           "0"
         ],
@@ -43958,10 +43958,10 @@
       {
         "name": "resource_H_1",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_1\\m5b-resource-20261001T004001.449410600Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_1\\m5b-resource-20261001T004001.449410600Z",
           "-exit-code",
           "0"
         ],
@@ -43970,10 +43970,10 @@
       {
         "name": "resource_H_2",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_2\\m5b-resource-20261001T004004.314035600Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_2\\m5b-resource-20261001T004004.314035600Z",
           "-exit-code",
           "0"
         ],
@@ -43982,10 +43982,10 @@
       {
         "name": "resource_H_3",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_3\\m5b-resource-20261001T004007.228539000Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_3\\m5b-resource-20261001T004007.228539000Z",
           "-exit-code",
           "0"
         ],
@@ -43994,10 +43994,10 @@
       {
         "name": "resource_H_4",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_4\\m5b-resource-20261001T004010.155614900Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_4\\m5b-resource-20261001T004010.155614900Z",
           "-exit-code",
           "0"
         ],
@@ -44006,10 +44006,10 @@
       {
         "name": "resource_H_5",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_5\\m5b-resource-20261001T004013.054383500Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\resource_H_5\\m5b-resource-20261001T004013.054383500Z",
           "-exit-code",
           "0"
         ],
@@ -44018,10 +44018,10 @@
       {
         "name": "throughput_T_1",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_T_1\\m5b-throughput-20261001T004015.993109900Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_T_1\\m5b-throughput-20261001T004015.993109900Z",
           "-exit-code",
           "0"
         ],
@@ -44030,10 +44030,10 @@
       {
         "name": "throughput_H_1",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\bench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_H_1\\m5b-throughput-20261001T004019.579107600Z",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_H_1\\m5b-throughput-20261001T004019.579107600Z",
           "-exit-code",
           "0"
         ],
@@ -44042,10 +44042,10 @@
       {
         "name": "throughput_P_1",
         "command": [
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\pbench.exe",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\EdgeHybrid_M5_Formal_Binaries_20261001\\pbench.exe",
           "-verify",
           "-dir",
-          "C:\\Users\\20477\\WorkBuddy\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_P_1",
+          "C:\\Users\\[REDACTED_USER]\\local_workspace\\密码技术竞赛\\edgehybrid-agent-starter\\results\\raw\\m5_formal_20261001\\data\\throughput_P_1",
           "-exit-code",
           "0"
         ],

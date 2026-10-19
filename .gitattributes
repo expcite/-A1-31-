@@ -26,3 +26,13 @@
 *.key binary
 *.pem binary
 *.p12 binary
+
+# Reports and font assets are binary; never normalize their bytes.
+*.pdf binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+
+# Preserve historical receipts and paired report identities byte for byte.
+verification/** -text
+report/** -text

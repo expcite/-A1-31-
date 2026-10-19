@@ -19,7 +19,7 @@ import (
 //     and to the initiator/responder roles.
 //
 // Substituting ECDH would therefore produce a value that "looks like" a shared
-// secret while providing none of those bindings. AGENTS.md forbids that
+// secret while providing none of those bindings. the project implementation requirements forbids that
 // substitution, so this adapter only ever calls SM2MQV/SM2SharedKey.
 //
 // Role and ordering: SM2SharedKey's isResponder flag selects whether ZA||ZB or

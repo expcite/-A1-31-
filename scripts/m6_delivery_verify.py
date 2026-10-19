@@ -1,7 +1,7 @@
 """Verify an extracted M6 delivery and M5 raw with freshly rebuilt validators."""
 import argparse,hashlib,json,subprocess,sys
 from pathlib import Path
-GO=r'C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe'
+GO=r'C:\Users\[REDACTED_USER]\.local_workspace\binaries\go\go\bin\go.exe'
 def read(p):return json.loads(p.read_text(encoding='utf-8'))
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():

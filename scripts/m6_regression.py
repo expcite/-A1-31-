@@ -1,7 +1,7 @@
 """Save actual complete Go regression, original Python controls and M5 revalidation."""
 import subprocess,sys
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1];GO=r'C:\Users\20477\.workbuddy\binaries\go\go\bin\go.exe';OUT=ROOT/'results/raw/m6_20261001/regression'
+ROOT=Path(__file__).resolve().parents[1];GO=r'C:\Users\[REDACTED_USER]\.local_workspace\binaries\go\go\bin\go.exe';OUT=ROOT/'results/raw/m6_20261001/regression'
 def run(name,cmd,timeout=360):
  r=subprocess.run([sys.executable,str(ROOT/'scripts/run_checked.py'),'--log-dir',str(OUT),'--name',name,'--timeout',str(timeout),'--',*cmd],cwd=ROOT)
  if r.returncode:raise SystemExit(r.returncode)

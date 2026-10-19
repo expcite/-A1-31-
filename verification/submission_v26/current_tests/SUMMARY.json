@@ -1,0 +1,15 @@
+{
+  "command": [
+    "C:\\Program Files\\Go\\bin\\go.exe",
+    "test",
+    "./...",
+    "-count=1",
+    "-json"
+  ],
+  "exit_code": 0,
+  "started_utc": "2026-10-19T02:03:37.019949+00:00",
+  "source_manifest_sha256": "20bece9e3315a3267c8dd520eae4eae9347ef6c3d85ee9bd482b802dcf5af5f5",
+  "passed_tests_including_subtests": 1132,
+  "skipped_tests_including_subtests": 5,
+  "race_detector": false
+}

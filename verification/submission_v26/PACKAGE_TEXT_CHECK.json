@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "explicit_tool_name_hits": 0,
+  "runtime_binary_tool_name_hits": 0,
+  "text_files_checked": 2468,
+  "runtime_binaries_checked": 8,
+  "pdf_pages_text_checked": 53,
+  "scope": "Known explicit names in filenames, UTF-8 text, PDF extractable text/metadata and executable strings; no claim about writing-style classifiers or every image pixel."
+}
