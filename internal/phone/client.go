@@ -31,15 +31,22 @@ type Event struct {
 }
 
 type Options struct {
-	Config config.Config
-	Sample func(context.Context) (float64, error)
-	Notify func(context.Context) error
-	Emit   func(Event)
+	Config     config.Config
+	Sample     func(context.Context) (float64, error)
+	Notify     func(context.Context) error
+	NotifyKind string
+	Emit       func(Event)
 }
 
 func Run(parent context.Context, o Options) error {
 	if o.Sample == nil || o.Config.Role != "device" {
 		return errors.New("手机需要真实采集器及设备角色配置")
+	}
+	if o.NotifyKind == "" {
+		o.NotifyKind = "vibration"
+	}
+	if o.NotifyKind != "vibration" && o.NotifyKind != "torch" {
+		return errors.New("不支持的硬件提示类型")
 	}
 	ctx, cancel := context.WithCancel(parent)
 	defer cancel()
@@ -187,13 +194,13 @@ func Run(parent context.Context, o Options) error {
 			}
 			emit(Event{Stage: "interval_applied_ack_written", SID: sid, Operation: a.OperationID, Interval: a.SamplingIntervalMS})
 			if o.Notify != nil && !a.Duplicate {
-				nctx, stop := context.WithTimeout(ctx, time.Second)
+				nctx, stop := context.WithTimeout(ctx, 2*time.Second)
 				e = o.Notify(nctx)
 				stop()
 				if e != nil {
-					emit(Event{Stage: "vibration_api_failed", SID: sid, Operation: a.OperationID, Error: e.Error()})
+					emit(Event{Stage: o.NotifyKind + "_api_failed", SID: sid, Operation: a.OperationID, Error: e.Error()})
 				} else {
-					emit(Event{Stage: "vibration_api_returned", SID: sid, Operation: a.OperationID})
+					emit(Event{Stage: o.NotifyKind + "_api_returned", SID: sid, Operation: a.OperationID})
 				}
 			}
 		}

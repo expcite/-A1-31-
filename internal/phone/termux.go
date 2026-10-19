@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
+	"time"
 
 	"example.com/edgehybrid/internal/app"
 )
@@ -60,4 +61,52 @@ func Vibrate(ctx context.Context) error {
 	cmd.Stdout = &boundedBuffer{limit: 2048}
 	cmd.Stderr = &boundedBuffer{limit: 2048}
 	return cmd.Run()
+}
+
+// TorchPulse reports API completion only. Physical light output is observed
+// separately by the operator. Shutdown is attempted even after cancellation or
+// an ambiguous error while enabling the light.
+func TorchPulse(ctx context.Context) error {
+	return pulseTorch(ctx, func(c context.Context) error { return torchCommand(c, "on") }, func(c context.Context) error { return torchCommand(c, "off") }, 500*time.Millisecond)
+}
+
+func torchCommand(ctx context.Context, state string) error {
+	if state != "on" && state != "off" {
+		return errors.New("手电筒状态只允许on/off")
+	}
+	cmd := exec.CommandContext(ctx, "termux-torch", state)
+	out := &boundedBuffer{limit: 16384}
+	cmd.Stdout = out
+	cmd.Stderr = &boundedBuffer{limit: 2048}
+	if e := cmd.Run(); e != nil {
+		return fmt.Errorf("手电筒%s调用失败: %w", state, e)
+	}
+	var reply map[string]json.RawMessage
+	if json.Unmarshal(out.Bytes(), &reply) == nil {
+		if e, ok := reply["error"]; ok && string(e) != "null" {
+			return fmt.Errorf("手电筒%s API返回错误: %s", state, e)
+		}
+	}
+	return nil
+}
+
+func pulseTorch(ctx context.Context, on, off func(context.Context) error, hold time.Duration) (result error) {
+	defer func() {
+		cleanup, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+		defer cancel()
+		if e := off(cleanup); e != nil {
+			result = errors.Join(result, fmt.Errorf("手电筒关闭API未成功: %w", e))
+		}
+	}()
+	if e := on(ctx); e != nil {
+		return e
+	}
+	timer := time.NewTimer(hold)
+	defer timer.Stop()
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	case <-timer.C:
+		return nil
+	}
 }
