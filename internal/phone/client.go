@@ -100,6 +100,52 @@ func Run(parent context.Context, o Options) error {
 		}
 	}()
 	defer func() { cancel(); _ = ch.Close(); workers.Wait() }()
+	// Keep Android hardware calls off the actor that sends secure ACKs and
+	// telemetry. One bounded worker prevents overlapping torch pulses.
+	notifications := make(chan string, 8)
+	notificationEvents := make(chan Event, 16)
+	if o.Notify != nil {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			publish := func(e Event) bool {
+				select {
+				case notificationEvents <- e:
+					return true
+				case <-ctx.Done():
+					return false
+				}
+			}
+			for {
+				if ctx.Err() != nil {
+					return
+				}
+				select {
+				case <-ctx.Done():
+					return
+				case operation := <-notifications:
+					if ctx.Err() != nil || !publish(Event{Stage: o.NotifyKind + "_api_started", SID: sid, Operation: operation}) {
+						return
+					}
+					timeout := 2 * time.Second
+					if o.NotifyKind == "torch" {
+						timeout = 10 * time.Second
+					}
+					nctx, stop := context.WithTimeout(ctx, timeout)
+					e := o.Notify(nctx)
+					stop()
+					result := Event{Stage: o.NotifyKind + "_api_returned", SID: sid, Operation: operation}
+					if e != nil {
+						result.Stage = o.NotifyKind + "_api_failed"
+						result.Error = e.Error()
+					}
+					if !publish(result) {
+						return
+					}
+				}
+			}
+		}()
+	}
 	type reading struct {
 		value float64
 		err   error
@@ -129,6 +175,8 @@ func Run(parent context.Context, o Options) error {
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
+		case e := <-notificationEvents:
+			emit(e)
 		case <-timer.C:
 			if !sampling {
 				sampling = true
@@ -194,13 +242,11 @@ func Run(parent context.Context, o Options) error {
 			}
 			emit(Event{Stage: "interval_applied_ack_written", SID: sid, Operation: a.OperationID, Interval: a.SamplingIntervalMS})
 			if o.Notify != nil && !a.Duplicate {
-				nctx, stop := context.WithTimeout(ctx, 2*time.Second)
-				e = o.Notify(nctx)
-				stop()
-				if e != nil {
-					emit(Event{Stage: o.NotifyKind + "_api_failed", SID: sid, Operation: a.OperationID, Error: e.Error()})
-				} else {
-					emit(Event{Stage: o.NotifyKind + "_api_returned", SID: sid, Operation: a.OperationID})
+				select {
+				case notifications <- a.OperationID:
+					emit(Event{Stage: o.NotifyKind + "_api_queued", SID: sid, Operation: a.OperationID})
+				default:
+					emit(Event{Stage: o.NotifyKind + "_api_failed", SID: sid, Operation: a.OperationID, Error: "硬件提示队列已满；间隔设置仍已应用，请等待已有提示结束"})
 				}
 			}
 		}

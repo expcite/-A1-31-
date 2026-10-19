@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
+	"strings"
 	"time"
 
 	"example.com/edgehybrid/internal/app"
@@ -67,7 +68,9 @@ func Vibrate(ctx context.Context) error {
 // separately by the operator. Shutdown is attempted even after cancellation or
 // an ambiguous error while enabling the light.
 func TorchPulse(ctx context.Context) error {
-	return pulseTorch(ctx, func(c context.Context) error { return torchCommand(c, "on") }, func(c context.Context) error { return torchCommand(c, "off") }, 500*time.Millisecond)
+	// Match the sequence observed working repeatedly on the physical phone.
+	// Termux's Torch API does not expose a hardware state acknowledgement.
+	return pulseTorch(ctx, func(c context.Context) error { return torchCommand(c, "on") }, func(c context.Context) error { return torchCommand(c, "off") }, time.Second, time.Second, 2*time.Second)
 }
 
 func torchCommand(ctx context.Context, state string) error {
@@ -76,10 +79,11 @@ func torchCommand(ctx context.Context, state string) error {
 	}
 	cmd := exec.CommandContext(ctx, "termux-torch", state)
 	out := &boundedBuffer{limit: 16384}
+	stderr := &boundedBuffer{limit: 2048}
 	cmd.Stdout = out
-	cmd.Stderr = &boundedBuffer{limit: 2048}
+	cmd.Stderr = stderr
 	if e := cmd.Run(); e != nil {
-		return fmt.Errorf("手电筒%s调用失败: %w", state, e)
+		return fmt.Errorf("手电筒%s调用失败: %w; %s", state, errors.Join(e, ctx.Err()), strings.TrimSpace(stderr.String()))
 	}
 	var reply map[string]json.RawMessage
 	if json.Unmarshal(out.Bytes(), &reply) == nil {
@@ -90,18 +94,33 @@ func torchCommand(ctx context.Context, state string) error {
 	return nil
 }
 
-func pulseTorch(ctx context.Context, on, off func(context.Context) error, hold time.Duration) (result error) {
+func pulseTorch(ctx context.Context, on, off func(context.Context) error, reset, hold, recovery time.Duration) (result error) {
 	defer func() {
-		cleanup, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+		cleanup, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 		defer cancel()
 		if e := off(cleanup); e != nil {
 			result = errors.Join(result, fmt.Errorf("手电筒关闭API未成功: %w", e))
+		} else if result == nil {
+			result = waitTorch(ctx, recovery)
 		}
 	}()
+	if e := ctx.Err(); e != nil {
+		return e
+	}
+	if e := off(ctx); e != nil {
+		return fmt.Errorf("手电筒预关闭失败: %w", e)
+	}
+	if e := waitTorch(ctx, reset); e != nil {
+		return e
+	}
 	if e := on(ctx); e != nil {
 		return e
 	}
-	timer := time.NewTimer(hold)
+	return waitTorch(ctx, hold)
+}
+
+func waitTorch(ctx context.Context, d time.Duration) error {
+	timer := time.NewTimer(d)
 	defer timer.Stop()
 	select {
 	case <-ctx.Done():

@@ -3,8 +3,10 @@ package phone_test
 import (
 	"context"
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
+	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -34,7 +36,7 @@ func until(t *testing.T, fn func() bool) {
 
 // These are software integration fixtures over real authenticated TCP. The
 // injected sensor is a test fixture, not evidence of a physical Android run.
-func setup(t *testing.T, sample func(context.Context) (float64, error), notify func(context.Context) error) (*live.Manager, <-chan phone.Event) {
+func setup(t *testing.T, sample func(context.Context) (float64, error), notify func(context.Context) error, kind ...string) (*live.Manager, <-chan phone.Event) {
 	t.Helper()
 	base := t.TempDir()
 	private := filepath.Join(base, "pc")
@@ -63,8 +65,12 @@ func setup(t *testing.T, sample func(context.Context) (float64, error), notify f
 	c.Address = m.Snapshot().Address
 	events := make(chan phone.Event, 100)
 	done := make(chan error, 1)
+	notifyKind := ""
+	if len(kind) > 0 {
+		notifyKind = kind[0]
+	}
 	go func() {
-		done <- phone.Run(ctx, phone.Options{Config: c, Sample: sample, Notify: notify, Emit: func(e phone.Event) {
+		done <- phone.Run(ctx, phone.Options{Config: c, Sample: sample, Notify: notify, NotifyKind: notifyKind, Emit: func(e phone.Event) {
 			select {
 			case events <- e:
 			default:
@@ -133,6 +139,59 @@ func TestRemotePhoneTelemetryControlAndHonestObservations(t *testing.T) {
 	until(t, func() bool { return m.Snapshot().Devices[0].Status == "offline" })
 }
 
+func TestRepeatedControlNotifiesForEveryNewOperationAfterAPIFailure(t *testing.T) {
+	var notified atomic.Int32
+	m, events := setup(t, func(context.Context) (float64, error) { return 33, nil }, func(context.Context) error {
+		if notified.Add(1) == 2 {
+			return errors.New("fixture torch API failure")
+		}
+		return nil
+	}, "torch")
+	until(t, func() bool { return m.Snapshot().Devices[0].Accepted > 0 })
+	// Repeat the same interval with fresh operation IDs, then change it. Neither
+	// a repeated value nor a previous notification failure may suppress a call.
+	for i, interval := range []uint32{5000, 5000, 5000, 10000, 5000} {
+		id := fmt.Sprintf("repeat-phone-control-%d", i)
+		if _, err := m.Control("D001", id, interval); err != nil {
+			t.Fatal(err)
+		}
+		until(t, func() bool {
+			s := m.Snapshot()
+			if len(s.Operations) != i+1 || notified.Load() != int32(i+1) {
+				return false
+			}
+			for _, op := range s.Operations {
+				if op.Confirmed == nil {
+					return false
+				}
+			}
+			return true
+		})
+		if _, err := m.Control("D001", id, interval); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if got := notified.Load(); got != 5 || len(m.Snapshot().Operations) != 5 {
+		t.Fatalf("每个新操作应提示一次，原请求重试应复用结果: calls=%d", got)
+	}
+	failed, returned := 0, 0
+	until(t, func() bool {
+		for {
+			select {
+			case e := <-events:
+				switch e.Stage {
+				case "torch_api_failed":
+					failed++
+				case "torch_api_returned":
+					returned++
+				}
+			default:
+				return failed == 1 && returned == 4
+			}
+		}
+	})
+}
+
 func TestSensorFailureDoesNotProduceTelemetry(t *testing.T) {
 	m, events := setup(t, func(context.Context) (float64, error) { return 0, errors.New("fixture sensor unavailable") }, nil)
 	deadline := time.NewTimer(5 * time.Second)
@@ -177,4 +236,107 @@ func TestUnsafeListenAddressesRejected(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestSlowTorchDoesNotBlockSecureACKOrTelemetry(t *testing.T) {
+	release := make(chan struct{})
+	var once sync.Once
+	t.Cleanup(func() { once.Do(func() { close(release) }) })
+	var active, calls, overlapping atomic.Int32
+	m, _ := setup(t, func(context.Context) (float64, error) { return 33, nil }, func(ctx context.Context) error {
+		if active.Add(1) != 1 {
+			overlapping.Add(1)
+		}
+		defer active.Add(-1)
+		calls.Add(1)
+		select {
+		case <-release:
+			return nil
+		case <-ctx.Done():
+			return ctx.Err()
+		}
+	}, "torch")
+	until(t, func() bool { return m.Snapshot().Devices[0].Accepted > 0 })
+	before := m.Snapshot().Devices[0].Accepted
+	for i := 0; i < 5; i++ {
+		if _, err := m.Control("D001", fmt.Sprintf("slow-torch-%d", i), 1000); err != nil {
+			t.Fatal(err)
+		}
+		until(t, func() bool {
+			s := m.Snapshot()
+			if len(s.Operations) != i+1 {
+				return false
+			}
+			for _, op := range s.Operations {
+				if op.Confirmed == nil {
+					return false
+				}
+			}
+			return true
+		})
+		if i == 0 {
+			until(t, func() bool { return calls.Load() == 1 })
+		}
+	}
+	// The hardware adapter is still blocked: ACKs and the next sensor reading
+	// must already arrive. A second hardware invocation must wait its turn.
+	until(t, func() bool { return m.Snapshot().Devices[0].Accepted > before })
+	if calls.Load() != 1 || overlapping.Load() != 0 {
+		t.Fatal("hardware calls overlapped")
+	}
+	once.Do(func() { close(release) })
+	until(t, func() bool { return calls.Load() == 5 && active.Load() == 0 })
+	if overlapping.Load() != 0 {
+		t.Fatal("hardware calls must stay serialized")
+	}
+}
+
+func TestFullTorchQueueReportsHintFailureWithoutInvalidatingControl(t *testing.T) {
+	started := make(chan struct{}, 1)
+	m, events := setup(t, func(context.Context) (float64, error) { return 33, nil }, func(ctx context.Context) error {
+		select {
+		case started <- struct{}{}:
+		default:
+		}
+		<-ctx.Done()
+		return ctx.Err()
+	}, "torch")
+	until(t, func() bool { return m.Snapshot().Devices[0].Accepted > 0 })
+	for i := 0; i < 11; i++ {
+		if _, err := m.Control("D001", fmt.Sprintf("full-torch-%d", i), 1000); err != nil {
+			t.Fatal(err)
+		}
+		until(t, func() bool {
+			s := m.Snapshot()
+			if len(s.Operations) != i+1 {
+				return false
+			}
+			for _, op := range s.Operations {
+				if op.Confirmed == nil {
+					return false
+				}
+			}
+			return true
+		})
+		if i == 0 {
+			select {
+			case <-started:
+			case <-time.After(time.Second):
+				t.Fatal("torch worker did not start")
+			}
+		}
+	}
+	failed := 0
+	until(t, func() bool {
+		for {
+			select {
+			case e := <-events:
+				if e.Stage == "torch_api_failed" && e.Error != "" {
+					failed++
+				}
+			default:
+				return failed == 2
+			}
+		}
+	})
 }

@@ -25,7 +25,7 @@ func run() int {
 	gateway := flag.String("gateway", "", "可覆盖热点网关IPv4:端口")
 	duration := flag.Duration("run-for", 10*time.Minute, "本次运行时长（最多30分钟）")
 	vibrate := flag.Bool("vibrate-on-control", false, "收到有效间隔控制后调用一次300ms震动提示")
-	torch := flag.Bool("torch-on-control", false, "收到有效间隔控制后手电筒短亮约500ms并关闭")
+	torch := flag.Bool("torch-on-control", false, "有效间隔控制后排队提示：先关闭等待1秒，亮1秒，关闭后等待2秒")
 	version := flag.Bool("version", false, "显示本设备程序构建身份")
 	flag.Parse()
 	if flag.NArg() != 0 || *duration <= 0 || *duration > 30*time.Minute || (*vibrate && *torch) {
