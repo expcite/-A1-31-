@@ -3,8 +3,8 @@
   "updated_on": "2026-10-19",
   "source_document": {
     "path": "report/作品设计报告_可编辑.html",
-    "sha256": "6c1c18ffbbb4a3df395e86f68d5a501d7401ca1a43f8f8cf7e0ca6f87907de2e",
-    "version": "v28"
+    "sha256": "e0245821ca28d725675bee1f81d3af50ea3e4a6958d50ce106a2b8e9fdd52c6a",
+    "version": "v28-media-completion"
   },
   "previous_document": {
     "path": "report/作品设计报告_可编辑.html",
@@ -655,5 +655,6 @@
         }
       ]
     }
-  ]
+  ],
+  "media_completion": "Three desktop screenshots, video viewing note, and public repository URL added; references and 34 citation anchors unchanged."
 }

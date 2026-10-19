@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-19",
+  "page": "http://127.0.0.1:6168/#communication",
+  "capture": "Actual user-opened Edge tab; screenshots captured through browser API",
+  "screenshots": [
+    {
+      "original": "phone_temperature.jpg",
+      "original_sha256": "fd1b8ac0dcc8d026da7cd6ba2592855e25c780853f4fd6f07940d4b5a727d9ef",
+      "report_crop": "temperature_focus.jpg",
+      "crop_rectangle": [
+        442,
+        175,
+        1774,
+        723
+      ],
+      "content_modified": false
+    },
+    {
+      "original": "phone_control_confirmed.jpg",
+      "original_sha256": "cfe171d645c70e9050706e11b64094db33d5e4480cfe11ce6d5f039e20fb4a96",
+      "report_crop": "control_focus.jpg",
+      "crop_rectangle": [
+        442,
+        175,
+        1459,
+        846
+      ],
+      "content_modified": false
+    },
+    {
+      "original": "phone_device_details.jpg",
+      "original_sha256": "f555b01132e77d0b01f6067476b86775921827a587d93009e7cd142fa3cdb54d",
+      "report_crop": "device_focus.jpg",
+      "crop_rectangle": [
+        1461,
+        0,
+        2012,
+        666
+      ],
+      "content_modified": false
+    }
+  ]
+}

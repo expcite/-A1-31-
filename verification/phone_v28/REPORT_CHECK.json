@@ -1,10 +1,10 @@
 {
-  "pages": 54,
+  "pages": 56,
   "old_numbered_tables_present": 52,
   "old_table_numeric_tokens_unchanged_except_updated_scope_table": true,
   "references_unchanged": 20,
   "citation_links": 34,
-  "toc_links_checked": 88,
+  "toc_links_checked": 90,
   "anonymous_text_check": "PASS",
   "phone_pages": [
     3,
@@ -12,7 +12,12 @@
     21,
     44
   ],
-  "visual_review": "PASS_ALL_PAGE_OVERVIEWS_AND_NEW_FRONT_MATTER_AND_PHONE_PAGES",
-  "template_cover": "Original v26 native template cover retained",
-  "template_info": "Six-row template form regenerated with updated abstract; same fields and five keywords"
+  "visual_review": "PASS_ALL_56_PAGE_OVERVIEWS_AND_NEW_PAGES_45_46_AT_FULL_SIZE",
+  "new_figures": [
+    "fig-3-1",
+    "fig-3-2",
+    "fig-3-3"
+  ],
+  "new_video": "demo/IMG_1445.MP4 (public metadata-stripped copy)",
+  "runtime_code_changes": false
 }

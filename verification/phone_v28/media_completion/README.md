@@ -1,0 +1,9 @@
+# 实机截图与视频补充
+
+2026年10月19日从用户已打开的真实验证页面截取3张网页图片。phone_temperature.jpg为温度上报，phone_control_confirmed.jpg为5秒间隔的双端确认，phone_device_details.jpg为设备摘要。原图保持原样；report_crops仅裁去留白，裁剪坐标和哈希记录在SCREENSHOT_RECORD.json。
+
+截图是视频录制后另一轮运行的页面，不将二者的样本数、时间戳或会话拼成同一记录。设备摘要截图时接收91条样本，后续仍更新；此前42条日志属于独立部署验收的截取范围。
+
+视频公开副本见仓库demo/IMG_1445.MP4，支撑材料中位于videos/IMG_1445.MP4。公开副本仅移除拍摄位置等元数据，视音频压缩样本不变，原件在本地保留。VIDEO_INSPECTION.json记录长度、哈希、观察内容及边界；PUBLIC_VIDEO_PREPARATION.json记录媒体样本比较；video_keyframes保留约47.5秒未亮、48秒亮灯、49秒熄灭的解码帧。视频展示一次控制，重复设置的物理结果仍以原独立验收用户观察为依据。
+
+旧PACKAGE_CHECK、FINAL_PACKAGE_CHECK及构建记录描述当时状态，原始记录中的PENDING不改写为其当时已经完成录像；当前交付状态以MEDIA_COMPLETION.json和本记录为准。未新增性能测量，程序实现未修改。

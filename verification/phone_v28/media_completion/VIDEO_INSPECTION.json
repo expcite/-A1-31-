@@ -1,0 +1,20 @@
+{
+  "status": "VIDEO_RECEIVED_AND_VISUALLY_REVIEWED",
+  "original_name": "IMG_1445.MP4",
+  "bytes": 93793047,
+  "sha256": "25bd588531459510f650b7d4d94c8451835b3203234dd64fb8d843e1b27f49ab",
+  "duration_seconds": 51.7216666,
+  "original_preserved_locally": true,
+  "public_copy": "Capture/location and auxiliary metadata removed; compressed video and both audio tracks preserved byte for byte. No recompression or editing.",
+  "review_method": "Windows native MediaComposition decoded frames at 5-second intervals, plus 0.25-second sampling around the visible torch action; public copy decoded and compared with original",
+  "observed": [
+    "Desktop startup and authorization views",
+    "Phone Termux program and desktop battery temperature display",
+    "Interval control confirmed on desktop",
+    "Phone rear torch visibly illuminated around 47.75-48.50 seconds and off by approximately 48.75 seconds"
+  ],
+  "limits": "The video demonstrates one visible control/torch action. Repeated control acceptance relies on separately retained user observations; no RTT, throughput, or accuracy result is inferred.",
+  "repository_video_path": "demo/IMG_1445.MP4",
+  "package_video_path": "videos/IMG_1445.MP4",
+  "public_keyframe_pixel_comparison": "PASS_EXACT_AT_47_5_48_0_49_0_SECONDS"
+}

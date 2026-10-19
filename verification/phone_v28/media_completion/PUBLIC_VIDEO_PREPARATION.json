@@ -1,0 +1,105 @@
+{
+  "method": "Lossless MP4 metadata removal: metadata tracks and moov metadata converted to equal-length free boxes; data outside retained audio/video chunks zeroed, including unused metadata copies. All audio/video compressed samples preserved byte for byte. No recompression, timeline editing, or audio removal.",
+  "original_sha256": "0e0553175c1cda67fbc3e46ef04ac3065140fa317e1906ffdac966f9efa667bc",
+  "public_sha256": "25bd588531459510f650b7d4d94c8451835b3203234dd64fb8d843e1b27f49ab",
+  "original_bytes": 93793047,
+  "public_bytes": 93793047,
+  "location_metadata_present_in_original": true,
+  "location_metadata_absent_in_public": true,
+  "non_audio_video_bytes_zeroed": 591103,
+  "metadata_tracks_removed": [
+    {
+      "handler": "meta",
+      "chunks": 1,
+      "bytes": 10
+    },
+    {
+      "handler": "meta",
+      "chunks": 1,
+      "bytes": 394
+    },
+    {
+      "handler": "meta",
+      "chunks": 1,
+      "bytes": 8
+    },
+    {
+      "handler": "meta",
+      "chunks": 104,
+      "bytes": 446688
+    },
+    {
+      "handler": "meta",
+      "chunks": 104,
+      "bytes": 37224
+    },
+    {
+      "handler": "meta",
+      "chunks": 1,
+      "bytes": 44
+    }
+  ],
+  "container_boxes_replaced": [
+    {
+      "kind": "trak",
+      "offset": 93773852,
+      "bytes": 629
+    },
+    {
+      "kind": "trak",
+      "offset": 93774481,
+      "bytes": 615
+    },
+    {
+      "kind": "trak",
+      "offset": 93775096,
+      "bytes": 1074
+    },
+    {
+      "kind": "trak",
+      "offset": 93776170,
+      "bytes": 1768
+    },
+    {
+      "kind": "trak",
+      "offset": 93777938,
+      "bytes": 13846
+    },
+    {
+      "kind": "trak",
+      "offset": 93791784,
+      "bytes": 642
+    },
+    {
+      "kind": "meta",
+      "offset": 93792426,
+      "bytes": 621
+    }
+  ],
+  "audio_video_sample_verification": [
+    {
+      "handler": "vide",
+      "chunks": 114,
+      "sample_bytes": 89450660,
+      "original_sample_sha256": "783fe6d8fcc04edc2252b0b71b7ba423ceea425e1dff86bd4b78a5ba4cecae82",
+      "public_sample_sha256": "783fe6d8fcc04edc2252b0b71b7ba423ceea425e1dff86bd4b78a5ba4cecae82",
+      "compressed_samples_byte_identical": true
+    },
+    {
+      "handler": "soun",
+      "chunks": 104,
+      "sample_bytes": 1156076,
+      "original_sample_sha256": "b4dc64cf8bce910b38399d9b50ba8dadd2ca4546fb9a7b565f9ab84721a90d7d",
+      "public_sample_sha256": "b4dc64cf8bce910b38399d9b50ba8dadd2ca4546fb9a7b565f9ab84721a90d7d",
+      "compressed_samples_byte_identical": true
+    },
+    {
+      "handler": "soun",
+      "chunks": 104,
+      "sample_bytes": 2506231,
+      "original_sample_sha256": "d2e32561092f3252419aea42e6024af67fccfed1a4bdbf5795c7813fec9a0a25",
+      "public_sample_sha256": "d2e32561092f3252419aea42e6024af67fccfed1a4bdbf5795c7813fec9a0a25",
+      "compressed_samples_byte_identical": true
+    }
+  ]
+}

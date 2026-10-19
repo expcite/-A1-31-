@@ -36,3 +36,7 @@
 # Preserve historical receipts and paired report identities byte for byte.
 verification/** -text
 report/** -text
+
+# Preserve original demonstration media bytes.
+*.mp4 binary
+*.MP4 binary
