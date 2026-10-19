@@ -33,6 +33,9 @@ func (m *Manager) submit(id, request, kind string, interval uint32, temp *float6
 		return *o, nil
 	}
 	d, s := m.devices[id], m.sessions[id]
+	if id == m.remoteDevice && kind != "control" {
+		return Operation{}, errors.New("手机温度由真实电池采集自动上报，不能手填模拟温度")
+	}
 	if d == nil || s == nil || d.view.Status != "online" || d.view.SID != sid(s.ch) {
 		return Operation{}, errors.New("offline: 目标未完成双端在线准入")
 	}
@@ -40,6 +43,9 @@ func (m *Manager) submit(id, request, kind string, interval uint32, temp *float6
 		return Operation{}, ErrOperationLimit
 	}
 	o := &Operation{Run: m.run, ID: request, Device: id, SID: sid(s.ch), Kind: kind, Interval: interval, Temperature: temp, Status: "queued", Queued: time.Now().UTC()}
+	if id == m.remoteDevice {
+		o.Transport = "remote"
+	}
 	m.operations[request] = o
 	if kind == "control" {
 		select {
@@ -60,6 +66,9 @@ func (m *Manager) submit(id, request, kind string, interval uint32, temp *float6
 	return *o, nil
 }
 func (m *Manager) Control(id, request string, interval uint32) (Operation, error) {
+	if id == m.remoteDevice && interval < 1000 {
+		return Operation{}, errors.New("手机电池采集间隔支持1至60秒")
+	}
 	if interval < 100 || interval > 60000 {
 		return Operation{}, errors.New("周期必须为100..60000ms")
 	}
@@ -72,6 +81,9 @@ func (m *Manager) Telemetry(id, request string, temp float64) (Operation, error)
 	return m.submit(id, request, "telemetry", 0, &temp)
 }
 func (m *Manager) Sampling(ctx context.Context, id string, auto bool, temp float64) error {
+	if id == m.remoteDevice {
+		return errors.New("手机由Termux采集真实电池温度，请通过上报间隔控制调整频率")
+	}
 	if e := ctx.Err(); e != nil {
 		return e
 	}
@@ -100,6 +112,9 @@ func (m *Manager) Sampling(ctx context.Context, id string, auto bool, temp float
 	}
 }
 func (m *Manager) Rekey(id string) error {
+	if id == m.remoteDevice {
+		return errors.New("手机验证版请退出并重启手机程序完成新的完整握手")
+	}
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	d := m.devices[id]

@@ -68,6 +68,12 @@ func (m *Manager) serve(conn net.Conn, release func()) {
 		return
 	}
 	m.sessions[id] = s
+	if id == m.remoteDevice {
+		d := m.devices[id]
+		now := time.Now().UTC()
+		d.view.Status, d.view.SID, d.view.Suite = "online", sid(ch), ch.Suite()
+		d.view.Started, d.view.Error = &now, ""
+	}
 	m.emitLocked(Event{Endpoint: "gateway", Device: id, SID: sid(ch), Stage: "authenticated", Detail: "H1–H4和当前registry准入通过", GatewaySnapshot: &localSnapshot})
 	m.completeRekeysLocked(id)
 	m.mu.Unlock()
@@ -80,6 +86,11 @@ func (m *Manager) serve(conn net.Conn, release func()) {
 		m.mu.Lock()
 		if m.sessions[id] == s {
 			delete(m.sessions, id)
+			if id == m.remoteDevice {
+				d := m.devices[id]
+				d.view.Status, d.view.SID, d.view.Started = "offline", "", nil
+				m.emitLocked(Event{Endpoint: "gateway", Device: id, SID: sid(ch), Stage: "offline", Detail: "远程手机会话已结束；此状态由网关观测"})
+			}
 		}
 		for _, o := range m.operations {
 			if o.Device == id && o.SID == sid(ch) && o.Confirmed == nil && o.Status != "cancelled" && o.Status != "failed" {
@@ -130,6 +141,11 @@ func (m *Manager) serve(conn net.Conn, release func()) {
 			d.view.Accepted++
 			v := t.TemperatureC
 			d.view.Last = &v
+			received := time.Now().UTC()
+			d.view.LastReceived = &received
+			if id == m.remoteDevice {
+				d.view.Temperature = v
+			}
 			op := ""
 			for _, o := range m.operations {
 				if o.Run == m.run && o.Kind == "telemetry" && o.Device == id && o.SID == sid(ch) && o.Sample == t.SampleID && (o.Status == "writing" || o.Status == "written" || o.Status == "unconfirmed") {
@@ -179,5 +195,8 @@ func (m *Manager) acceptAck(id, session string, a app.Ack) {
 		o.Status = "confirmed"
 	}
 	o.Error = ""
+	if id == m.remoteDevice {
+		m.devices[id].view.Interval = a.SamplingIntervalMS
+	}
 	m.emitLocked(Event{Endpoint: "gateway", Device: id, SID: session, Operation: o.ID, Stage: o.Status, Detail: "真实安全ACK已验证"})
 }

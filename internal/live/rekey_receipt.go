@@ -32,6 +32,9 @@ func (e *requestedRekey) Unwrap() error { return errRekey }
 // Existing Rekey remains the untracked compatibility entry. Only this explicit
 // request owns a receipt; automatic age/record rekeys never acquire its ID.
 func (m *Manager) RekeyTracked(id, request string) (RekeyReceipt, error) {
+	if id == m.remoteDevice {
+		return RekeyReceipt{}, errors.New("手机验证版请退出并重启手机程序完成新的完整握手")
+	}
 	if request == "" || len(request) > 128 {
 		return RekeyReceipt{}, errors.New("request_id必须为1..128字符")
 	}

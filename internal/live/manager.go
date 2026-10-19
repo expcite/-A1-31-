@@ -21,12 +21,25 @@ func New(ctx context.Context, o Options) (*Manager, error) {
 	if o.Count < 1 || o.Count > 20 {
 		return nil, errors.New("设备预置须为1至20")
 	}
+	address := "127.0.0.1:0"
+	if o.ListenAddress != "" {
+		host, _, err := net.SplitHostPort(o.ListenAddress)
+		ip := net.ParseIP(host)
+		if err != nil || ip == nil || ip.To4() == nil || !(ip.IsPrivate() || ip.IsLoopback()) {
+			return nil, errors.New("设备监听须指定本机私网IPv4地址和端口，不能使用公网或通配地址")
+		}
+		address = o.ListenAddress
+	}
+	if o.RemoteDevice != "" && (o.RemoteDevice != "D001" || o.Count != 1) {
+		return nil, errors.New("手机验证模式只预置一台远程设备D001")
+	}
 	id, e := randomID()
 	if e != nil {
 		return nil, e
 	}
 	ctx, cancel := context.WithCancel(ctx)
 	m := &Manager{ctx: ctx, cancel: cancel, run: "interactive-" + id, private: o.PrivateDir, devices: map[string]*device{}, sessions: map[string]*gatewaySession{}, operations: map[string]*Operation{}, sessionAge: o.SessionAge, recordThreshold: o.RecordThreshold}
+	m.remoteDevice = o.RemoteDevice
 	m.connections = map[net.Conn]struct{}{}
 	if m.sessionAge == 0 {
 		m.sessionAge = 15 * time.Minute
@@ -39,6 +52,11 @@ func New(ctx context.Context, o Options) (*Manager, error) {
 		id := fmt.Sprintf("D%03d", i)
 		ids = append(ids, id)
 		m.devices[id] = &device{view: DeviceView{ID: id, Status: "offline", Interval: 1000, Auto: true, Temperature: 25}, requests: make(chan localRequest, 32)}
+		if id == o.RemoteDevice {
+			m.devices[id].view.Transport = "remote"
+			m.devices[id].view.Sensor = "android_battery"
+			m.devices[id].view.Temperature = 0
+		}
 	}
 	created := false
 	if _, e = os.Stat(filepath.Join(o.PrivateDir, "trust.json")); os.IsNotExist(e) {
@@ -85,7 +103,7 @@ func New(ctx context.Context, o Options) (*Manager, error) {
 		cancel()
 		return nil, e
 	}
-	ln, e := net.Listen("tcp4", "127.0.0.1:0")
+	ln, e := net.Listen("tcp4", address)
 	if e != nil {
 		cancel()
 		_ = m.log.Close()
@@ -172,6 +190,9 @@ func (m *Manager) Connect(id string) error {
 	d := m.devices[id]
 	if d == nil {
 		return errors.New("未知设备")
+	}
+	if id == m.remoteDevice {
+		return errors.New("请在手机Termux中启动设备程序；工作台等待远程手机主动连接")
 	}
 	if d.cancel != nil {
 		return nil
@@ -287,6 +308,9 @@ func (m *Manager) refreshMetadata() {
 func (m *Manager) AddDevice(targetID string) (DeviceView, error) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
+	if m.remoteDevice != "" {
+		return DeviceView{}, errors.New("手机验证模式只使用已配对的D001")
+	}
 	if m.ctx.Err() != nil {
 		return DeviceView{}, errors.New("本运行已停止")
 	}

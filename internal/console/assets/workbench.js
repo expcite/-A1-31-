@@ -11,8 +11,8 @@ export function communication(initial,api){
  const details=readButton('设备详情 →',()=>api.drawer.open('device',store.selected),'link-button');mode.className='badge mode-badge';gateway.className='strip-meta';latest.hidden=true;info.hidden=true;
  top.append(label,node('span',undefined,'strip-divider'),connection,mode,gateway,node('span',undefined,'fill'),connect,details,latest,info);all.append(top);
  const layout=node('div',undefined,'workbench-layout'),main=node('div'),taskPanel=node('section',undefined,'task-panel'),grid=node('div',undefined,'task-grid'),tabs=node('div',undefined,'action-tabs');grid.id='bidirectional';const cards={},inputs={},panels={};let activeAction='telemetry';
- const tabButtons={};
- function selectAction(kind){activeAction=kind;for(const k of ['telemetry','control']){panels[k].hidden=k!==kind;tabButtons[k].classList.toggle('selected',k===kind);tabButtons[k].setAttribute('aria-selected',String(k===kind));tabButtons[k].tabIndex=k===kind?0:-1}}
+ const tabButtons={};let remoteMode=false;const phoneCard=card('手机真实电池温度'),phoneValue=node('strong',undefined,'phone-temperature-value'),phoneHint=node('p',undefined,'muted');phoneCard.append(node('p','手机真实电池温度','eyebrow'),phoneValue,phoneHint);phoneCard.hidden=true;grid.append(phoneCard);
+ function selectAction(kind){activeAction=kind;for(const k of ['telemetry','control']){panels[k].hidden=k!==kind||(remoteMode&&k==='telemetry');tabButtons[k].classList.toggle('selected',k===kind);tabButtons[k].setAttribute('aria-selected',String(k===kind));tabButtons[k].tabIndex=k===kind?0:-1}phoneCard.hidden=!(remoteMode&&kind==='telemetry')}
  tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','通信任务');
  for(const [kind,label] of [['telemetry','发送温度'],['control','设置间隔']]){const b=readButton(label,()=>selectAction(kind));b.id='tab-'+kind;b.dataset.actionTab=kind;b.setAttribute('role','tab');b.setAttribute('aria-controls','panel-'+kind);b.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const next=e.key==='Home'?'telemetry':e.key==='End'?'control':kind==='telemetry'?'control':'telemetry';selectAction(next);tabButtons[next].focus()});tabs.append(b);tabButtons[kind]=b}taskPanel.append(tabs,grid);main.append(taskPanel);layout.append(main);
  for(const kind of ['telemetry','control']){
@@ -47,10 +47,11 @@ export function communication(initial,api){
   input.addEventListener('input',()=>store.setDraft(store.selected,kind,input.value));
   input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();if(!send.disabled)send.click()}});
   const submitRow=node('div',undefined,'submit-row');submitRow.append(send,node('small',kind==='telemetry'?'通过设备安全通道发送':'由网关主动下发，等待实际设备确认'));
-  c.append(target,l,node('p',kind==='telemetry'?'手动输入不会改变自动采样使用的模拟温度。':'0.1～60秒；严格换算为整数毫秒。申请值与当前生效值分别记录。','field-hint'),submitRow,out);
+  const hint=node('p',undefined,'field-hint');hint.textContent=kind==='telemetry'?'手动输入不会改变自动采样使用的模拟温度。':'0.1～60秒；严格换算为整数毫秒。申请值与当前生效值分别记录。';
+  c.append(target,l,node('p',kind==='telemetry'?'手动输入不会改变自动采样使用的模拟温度。':'0.1～60秒；严格换算为整数毫秒。申请值与当前生效值分别记录。','field-hint'),submitRow,out);c.querySelector('.field-hint').replaceWith(hint);
   let presets;
   if(kind==='control'){const presetLabel=node('label','申请下发上报间隔（待下发）');presets=node('select');presets.id='interval-preset';presets.className='control-select';for(const n of [1,5,10,'自定义']){const o=node('option',n==='自定义'?'自定义间隔…':'申请每 '+n+' 秒上报一次');o.value=String(n);presets.append(o)}presets.value='5';l.hidden=true;presets.onchange=()=>{l.hidden=presets.value!=='自定义';if(presets.value!=='自定义'){input.value=presets.value;store.setDraft(store.selected,kind,input.value);validation.clear()}else input.focus()};presetLabel.append(presets);c.insertBefore(presetLabel,l)}
-  cards[kind]={target,submitted,msg,status,when,opid,evidence,send,out,validation,presets,custom:l,steps:[s1,s2,s3,s4]};inputs[kind]=input;panels[kind]=c;grid.append(c);
+  cards[kind]={hint,target,submitted,msg,status,when,opid,evidence,send,out,validation,presets,custom:l,steps:[s1,s2,s3,s4]};inputs[kind]=input;panels[kind]=c;grid.append(c);
  }
  selectAction(activeAction);
  const sampling=card('自动采样与会话'),auto=node('p'),[sl,source]=field('自动采样源 ℃（本机模拟传感器）','number','25');source.id='auto-source';source.step='.1';source.addEventListener('input',()=>store.setDraft(store.selected,'sampling',source.value));
@@ -75,19 +76,19 @@ export function communication(initial,api){
  function refresh(){
   const s=store.snapshot;if(!s)return;const ids=s.devices.map(d=>d.id),key=JSON.stringify(ids);
   if(key!==optionsKey){optionsKey=key;select.replaceChildren(node('option','请选择设备'));select.options[0].value='';for(const id of ids){const o=node('option',id);o.value=id;select.append(o)}}select.value=store.selected;
-  const id=store.selected,d=store.device();if(lastDevice!==id||lastRun!==s.run_id){for(const kind of ['telemetry','control']){inputs[kind].value=store.draft(id,kind,kind==='telemetry'?'26.3':'5');cards[kind].validation.clear();if(kind==='control'){const common=['1','5','10'].includes(inputs[kind].value);cards[kind].presets.value=common?inputs[kind].value:'自定义';cards[kind].custom.hidden=common}}source.value=store.draft(id,'sampling','25');lastDevice=id;lastRun=s.run_id;eventsKey=''}
+  const id=store.selected,d=store.device();remoteMode=d?.transport==='remote';setText(contextCard.querySelector('.context-note'),remoteMode?'电池温度来自远程手机；控制结果以安全ACK为准。':'本机采样源与网关控制是不同操作。');selectAction(activeAction);setText(tabButtons.telemetry,remoteMode?'电池温度':'发送温度');setText(phoneValue,d?.last_received_temperature_c!=null?d.last_received_temperature_c+' ℃':'等待首条真实上报');setText(phoneHint,remoteMode?'手机通过加密通道自动上报电池温度；此数值不是环境温度。'+(d?.last_received_at?'最近接收：'+new Date(d.last_received_at).toLocaleTimeString()+'。':'等待手机连接并完成首次采集。')+(d?.status!=='online'||(d.last_received_at&&Date.now()-Date.parse(d.last_received_at)>Math.max(5000,3*d.interval_ms))?' 当前未收到新数据；显示上次观测。':''):'');setText(cards.control.hint,remoteMode?'1～60秒；手机实际应用间隔后返回安全ACK，震动提示单独记录。':'0.1～60秒；严格换算为整数毫秒。申请值与当前生效值分别记录。');sl.hidden=remoteMode;for(const b of samplingButtons)b.hidden=remoteMode&&b!==disconnect;guide.hidden=remoteMode;guideNote.hidden=remoteMode;if(lastDevice!==id||lastRun!==s.run_id){for(const kind of ['telemetry','control']){inputs[kind].value=store.draft(id,kind,kind==='telemetry'?'26.3':'5');cards[kind].validation.clear();if(kind==='control'){const common=['1','5','10'].includes(inputs[kind].value);cards[kind].presets.value=common?inputs[kind].value:'自定义';cards[kind].custom.hidden=common}}source.value=store.draft(id,'sampling','25');lastDevice=id;lastRun=s.run_id;eventsKey=''}
   updateBadge(connection,store.fresh()?d?.status:'未知／上次观测');setText(mode,d?.sid?(d.suite===2?'混合安全通道':'可信策略允许的传统通道'):'尚无安全会话');setText(gateway,'网关 '+(s.gateway?.id||'未观测')+' · '+(s.gateway?.status||'未观测'));
   setText(latest,'设备当前间隔 '+(d?.interval_ms!=null?d.interval_ms/1000+'秒':'未观测')+' · 网关最近接收 '+(d?.last_received_temperature_c!=null?d.last_received_temperature_c+'℃':'未观测'));
   setText(tech,'run '+s.run_id+' · SID '+(d?.sid||'未观测')+' · 授权剩余 '+Math.max(0,Math.ceil((store.expiry-store.wall())/60000))+'分钟');
-  setText(auto,'自动采样 '+(d?.auto?'开启':'暂停／未观测')+' · 自动源 '+(d?.temperature_c??'未观测')+'℃');
-  setText(currentDevice,id||'未选择');setText(contextValues.interval,d?.interval_ms!=null?d.interval_ms/1000+' 秒':'未观测');setText(contextValues.auto,d?.auto===true?'进行中':d?.auto===false?'已暂停':'未观测');setText(contextValues.source,d?.temperature_c!=null?d.temperature_c+' ℃':'未观测');setText(contextValues.received,d?.last_received_temperature_c!=null?d.last_received_temperature_c+' ℃':'未观测');
+  setText(auto,remoteMode?'手机自行采集电池温度，修改上报间隔请使用工作台的“设置间隔”。':'自动采样 '+(d?.auto?'开启':'暂停／未观测')+' · 自动源 '+(d?.temperature_c??'未观测')+'℃');
+  setText(currentDevice,id||'未选择');setText(contextValues.interval,d?.interval_ms!=null?d.interval_ms/1000+' 秒':'未观测');setText(contextValues.auto,d?.auto===true?'进行中':d?.auto===false?'已暂停':'未观测');setText(contextValues.source,remoteMode?'手机电池传感器':d?.temperature_c!=null?d.temperature_c+' ℃':'未观测');setText(contextValues.received,d?.last_received_temperature_c!=null?d.last_received_temperature_c+' ℃':'未观测');
    const curTemp=String(d?.last_received_temperature_c??'');
    if(curTemp&&contextValues.received.dataset.lastVal!==curTemp){
     contextValues.received.dataset.lastVal=curTemp;
     contextValues.received.classList.remove('metric-flash');
     void contextValues.received.offsetWidth;
     contextValues.received.classList.add('metric-flash');
-   }contextColumn.dataset.stale=store.fresh()?'0':'1';connect.hidden=['online','connecting'].includes(d?.status);samplingOpen.disabled=!id||!store.authValid();
+   }contextColumn.dataset.stale=store.fresh()?'0':'1';connect.hidden=remoteMode||['online','connecting'].includes(d?.status);samplingOpen.disabled=remoteMode||!id||!store.authValid();
   for(const kind of ['telemetry','control']){
    const v=cards[kind],r=store.receipt(id,kind),o=r?.operation_id?store.operation(r.operation_id):null,evicted=r?.operation_id&&!o;
    delete v.out.dataset.error;setText(v.target,(kind==='telemetry'?(id||'未选择')+' → '+(s.gateway?.id||'网关未观测'):(s.gateway?.id||'网关未观测')+' → '+(id||'未选择'))+' · '+(kind==='telemetry'?'设备安全上报':'网关主动控制'));setText(v.submitted,r?'本次已提交：'+(kind==='telemetry'?r.submitted.temperature_c+'℃':r.submitted.interval_ms/1000+'秒'):'申请值、已提交值和实际接收值分别展示。');
@@ -112,7 +113,7 @@ export function communication(initial,api){
     else if(['written','peer_processed','confirmed','late_confirmed'].includes(o?.status)||['written','telemetry_written','control_write_result','telemetry_accepted'].includes(o?.stage)){st2.className='tracker-step done';st2.textContent=kind==='telemetry'?'2. 设备已写出 ✓':'2. 网关已下发 ✓'}
     else{st2.className='tracker-step active';st2.textContent='2. 等待网关受理…'}
     if(['rejected','unknown'].includes(r?.local_status)||(o?.status==='failed'&&!o?.peer_processed_at)){st3.className='tracker-step pending';st3.textContent=kind==='telemetry'?'3. 网关接收':'3. 设备处理'}
-    else if(['confirmed','late_confirmed'].includes(o?.status)||o?.status==='peer_processed'||o?.peer_processed_at||['peer_processed','telemetry_accepted'].includes(o?.stage)){st3.className='tracker-step done';st3.textContent=kind==='telemetry'?'3. 网关已接收 ✓':'3. 设备已处理 ✓'}
+    else if(['confirmed','late_confirmed'].includes(o?.status)||o?.status==='peer_processed'||o?.peer_processed_at||['peer_processed','telemetry_accepted'].includes(o?.stage)){st3.className='tracker-step done';st3.textContent=kind==='telemetry'?'3. 网关已接收 ✓':remoteMode?'3. 手机执行回执有效 ✓':'3. 设备已处理 ✓'}
     else if(st2.className.includes('done')){st3.className='tracker-step active';st3.textContent=kind==='telemetry'?'3. 等待网关接收…':'3. 设备处理中…'}
     else{st3.className='tracker-step pending';st3.textContent=kind==='telemetry'?'3. 网关接收':'3. 设备处理'}
     if(o?.status==='confirmed'||o?.status==='late_confirmed'){
@@ -161,7 +162,7 @@ export function communication(initial,api){
     events.prepend(p);
    }
   }
-  guide.refresh();setText(guideOpen,api.guide.enabled?'收起指引':'打开指引 →');
+  guide.refresh();if(remoteMode)guide.hidden=true;setText(guideOpen,api.guide.enabled?'收起指引':'打开指引 →');
  }
  all.refresh=refresh;refresh();return all;
 }

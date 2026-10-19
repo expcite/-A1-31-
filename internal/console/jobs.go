@@ -88,6 +88,9 @@ func (b *boundedOutput) result() ([]byte, error) {
 	return append([]byte(nil), b.data...), b.err
 }
 func (s *Server) startJob(kind string) (Job, error) {
+	if s.Manager.RemoteMode() {
+		return Job{}, errors.New("手机验证模式只采集电池温度和验证上报间隔控制；正式性能实验继续使用原竞赛包")
+	}
 	s.jobs.mu.Lock()
 	defer s.jobs.mu.Unlock()
 	if s.jobs.closing {

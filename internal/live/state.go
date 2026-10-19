@@ -42,6 +42,7 @@ type Event struct {
 	Temperature     *float64                `json:"temperature_c,omitempty"`
 }
 type Operation struct {
+	Transport   string     `json:"transport,omitempty"`
 	Run         string     `json:"run_id"`
 	ID          string     `json:"operation_id"`
 	Device      string     `json:"device_id"`
@@ -59,6 +60,9 @@ type Operation struct {
 	Error       string     `json:"error,omitempty"`
 }
 type DeviceView struct {
+	LastReceived *time.Time         `json:"last_received_at,omitempty"`
+	Transport    string             `json:"transport,omitempty"`
+	Sensor       string             `json:"sensor,omitempty"`
 	Role         string             `json:"role"`
 	ID           string             `json:"id"`
 	Status       string             `json:"status"`
@@ -112,12 +116,15 @@ type ResourceSnapshot struct {
 	PendingACKReason  string         `json:"pending_ack_reason"`
 }
 type Options struct {
+	ListenAddress         string
+	RemoteDevice          string
 	PrivateDir, PublicDir string
 	Count                 int
 	SessionAge            time.Duration
 	RecordThreshold       uint64
 }
 type Manager struct {
+	remoteDevice          string
 	mu                    sync.Mutex
 	adminMu               sync.Mutex
 	closeOnce             sync.Once
@@ -159,6 +166,8 @@ func randomID() (string, error) {
 	return hex.EncodeToString(b[:]), nil
 }
 func sid(ch handshake.Channel) string { v := ch.SessionID(); return hex.EncodeToString(v[:]) }
+
+func (m *Manager) RemoteMode() bool { return m.remoteDevice != "" }
 func (m *Manager) emitLocked(e Event) {
 	m.cursor++
 	e.Schema = "interactive-event-v1"
@@ -195,6 +204,9 @@ func (m *Manager) Snapshot() Snapshot {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	s := Snapshot{Schema: "interactive-state-v1", Run: m.run, Mode: "interactive-v1.2", Address: m.address, Devices: []DeviceView{}, Operations: []Operation{}, Events: append([]Event{}, m.events...), Cursor: m.cursor, Dropped: m.dropped, Maintenance: m.maintenance, Capacity: map[string]int{"operations_used": len(m.operations), "operations_limit": 256, "queue_limit": 32, "events_limit": 2000, "log_bytes": int(m.logBytes), "log_bytes_limit": 20 << 20, "jobs_limit": 8, "exports_limit": 16}}
+	if m.remoteDevice != "" {
+		s.Mode = "phone-bridge-v27"
+	}
 	if m.err != nil {
 		s.Error = m.err.Error()
 	}

@@ -127,8 +127,10 @@ function update(){
  for(const b of document.querySelectorAll('#nav button[data-write="1"], #run-menu button[data-write="1"]'))b.disabled=!!b.dataset.busy||!valid;
  if(!valid){mounted=null;pages.clear();content.replaceChildren();api.drawer.clear();document.querySelectorAll('dialog:not(.detail-drawer)').forEach(d=>d.close());if(authChecked)api.guide.clear();welcome.hidden=true;return}
  if(run!==store.snapshot?.run_id){run=store.snapshot?.run_id||'';pages.clear();mounted=null;mountTicket++;api.drawer.clear()}
+ const phoneMode=store.snapshot?.mode==='phone-bridge-v27';
+ if(phoneMode){document.title='EdgeHybrid · 手机实机验证';setText(document.querySelector('.workspace-name>div'),'手机接入验证');setText(document.querySelector('.workspace-crumb'),'电脑热点');setText(document.querySelector('.scene-marker'),'手机安全通信');setText(document.querySelector('.sidebar-footer>small'),'电池温度 · 实机结果另行验收');document.querySelector('#nav [data-page=lab]').hidden=true;document.querySelector('#guide-toggle').hidden=true;if(page==='communication')setText(document.querySelector('#page-description'),'等待手机D001连接，查看真实电池温度并验证上报间隔控制。')}
  if(store.snapshot){mount();const view=pages.get(store.snapshot.run_id+'|'+page);view?.refresh?.(store.snapshot);api.drawer.refresh()}
- footer.textContent=(store.build?.version||'产品构建未知')+' · '+FRONTEND_VERSION;api.showWelcome();
+ footer.textContent=(store.build?.version||'产品构建未知')+' · '+FRONTEND_VERSION;api.showWelcome();if(phoneMode)welcome.hidden=true;
 }
 store.subscribe(update);
 async function readState(){
