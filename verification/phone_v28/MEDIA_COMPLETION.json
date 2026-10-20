@@ -22,10 +22,11 @@
     "public_keyframe_pixel_comparison": "PASS_EXACT_AT_47_5_48_0_49_0_SECONDS"
   },
   "screenshots": 3,
-  "report_pages": 56,
+  "report_pages": 54,
   "runtime_changes": false,
   "license_changed": false,
   "code_public_url": "https://github.com/expcite/-A1-31-",
   "report_validation": "REPORT_CHECK.json",
-  "historical_receipts_preserved": true
+  "historical_receipts_preserved": true,
+  "report_revision_date": "2026-10-20"
 }

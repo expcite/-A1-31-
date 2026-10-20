@@ -1,10 +1,10 @@
 {
   "schema": "edgehybrid.reference-map.v28",
-  "updated_on": "2026-10-19",
+  "updated_on": "2026-10-20",
   "source_document": {
     "path": "report/作品设计报告_可编辑.html",
-    "sha256": "e0245821ca28d725675bee1f81d3af50ea3e4a6958d50ce106a2b8e9fdd52c6a",
-    "version": "v28-media-completion"
+    "sha256": "41aa171086de79a14208de4a6b1750ef0cbb30a40a9245aef30e14593c5cce59",
+    "version": "v28-report-20261020"
   },
   "previous_document": {
     "path": "report/作品设计报告_可编辑.html",
@@ -656,5 +656,6 @@
       ]
     }
   ],
-  "media_completion": "Three desktop screenshots, video viewing note, and public repository URL added; references and 34 citation anchors unchanged."
+  "media_completion": "Three desktop screenshots, video viewing note, and public repository URL added; references and 34 citation anchors unchanged.",
+  "report_revision": "Report reorganized around research, implementation and results; reference entries and citation order retained."
 }

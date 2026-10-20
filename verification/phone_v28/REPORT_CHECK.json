@@ -1,5 +1,5 @@
 {
-  "pages": 56,
+  "pages": 54,
   "old_numbered_tables_present": 52,
   "old_table_numeric_tokens_unchanged_except_updated_scope_table": true,
   "references_unchanged": 20,
@@ -10,14 +10,14 @@
     3,
     4,
     21,
-    44
+    43
   ],
-  "visual_review": "PASS_ALL_56_PAGE_OVERVIEWS_AND_NEW_PAGES_45_46_AT_FULL_SIZE",
-  "new_figures": [
-    "fig-3-1",
-    "fig-3-2",
-    "fig-3-3"
-  ],
-  "new_video": "demo/IMG_1445.MP4 (public metadata-stripped copy)",
-  "runtime_code_changes": false
+  "visual_review": "PASS_ALL_54_PAGE_OVERVIEWS_AND_ABSTRACT_SECURITY_PHONE_CONCLUSION_FULL_PAGES",
+  "revision_date": "2026-10-20",
+  "report_focus": "Research questions, implementation methods, measured results and applications",
+  "all_pre_revision_numbered_table_numeric_tokens_unchanged": true,
+  "all_pre_revision_reference_entries_and_citation_order_unchanged": true,
+  "all_images_preserved": true,
+  "toc_targets": 90,
+  "runtime_implementation_changes": false
 }
