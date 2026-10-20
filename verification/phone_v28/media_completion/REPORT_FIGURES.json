@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-20",
+  "report_figures": 4,
+  "figures": [
+    {
+      "id": "fig-3-1",
+      "caption": "图3.1 手机实时电池温度上报（PC 控制台接收视角）：D001 在线，电池温度 26 ℃",
+      "path": "report_figures/fig-3-1.jpg",
+      "sha256": "cda2c0275c73abc02c48d440646b4e88402973c4728e00736edd5c6a9abd90e7"
+    },
+    {
+      "id": "fig-3-2",
+      "caption": "图3.2 上报间隔控制确认（PC 控制台回执核验）：5 秒设置已生效，双端核验确认",
+      "path": "report_figures/fig-3-2.jpg",
+      "sha256": "26844e1ba1e79ebef906e30a9b30aee4a22fdaeb80a7ae91e1f337bfc2f99755"
+    },
+    {
+      "id": "fig-3-3",
+      "caption": "图3.3 Android 移动端运行界面（Termux 环境执行日志）",
+      "path": "report_figures/fig-3-3.jpg",
+      "sha256": "38ccf0f465a7ac00bfd157d510aff93e851cef0ba70243439d7ddb0c3c54ed69"
+    },
+    {
+      "id": "fig-3-4",
+      "caption": "图3.4 远程控制触发物理手电筒发光实况（实测视频第 48 秒）",
+      "path": "report_figures/fig-3-4.jpg",
+      "sha256": "da69dcdb0e5b93adbe77b1af3bab43ff51992bff4a28dd2a62f591b01fe87afa"
+    }
+  ]
+}

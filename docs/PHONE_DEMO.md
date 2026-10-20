@@ -58,4 +58,4 @@ cd ~/edgehybrid-phone28-clean && bash run-phone.sh 192.168.137.1:10443
 
 手机默认10分钟后退出，需要时重跑同一命令。新设置触发约1秒闪灯，温度上报不触发。先在手机CTRL+C，再在电脑网关CTRL+C结束；关闭网页不会停止网关。重复启动前先检查原网关窗口，避免占用10443。
 
-三张原始网页截图、报告裁剪图和视频核对记录见verification/phone_v28/media_completion/。源码已公开至https://github.com/expcite/-A1-31-，仍按仓库现有授权声明提供。
+四幅报告实机图、原始网页截图和视频核对记录见verification/phone_v28/media_completion/。源码已公开至https://github.com/expcite/-A1-31-，仍按仓库现有授权声明提供。

@@ -1,23 +1,22 @@
 {
+  "status": "PASS_CONTENT_AND_PAGINATION",
   "pages": 54,
-  "old_numbered_tables_present": 52,
-  "old_table_numeric_tokens_unchanged_except_updated_scope_table": true,
-  "references_unchanged": 20,
-  "citation_links": 34,
   "toc_links_checked": 90,
-  "anonymous_text_check": "PASS",
-  "phone_pages": [
-    3,
-    4,
-    21,
-    43
-  ],
-  "visual_review": "PASS_ALL_54_PAGE_OVERVIEWS_AND_ABSTRACT_SECURITY_PHONE_CONCLUSION_FULL_PAGES",
-  "revision_date": "2026-10-20",
-  "report_focus": "Research questions, implementation methods, measured results and applications",
-  "all_pre_revision_numbered_table_numeric_tokens_unchanged": true,
-  "all_pre_revision_reference_entries_and_citation_order_unchanged": true,
+  "toc_mismatches": 0,
+  "body_text_preserved_except_toc": true,
+  "numbered_table_values_preserved": true,
   "all_images_preserved": true,
-  "toc_targets": 90,
-  "runtime_implementation_changes": false
+  "phone_report_figures": 4,
+  "references": 20,
+  "citation_links": 34,
+  "visible_folios": "PASS",
+  "selected_physical_pages": [
+    43,
+    44,
+    45,
+    48
+  ],
+  "pdf_sha256": "47ded833b0cef3462d1ae81d560fcc7c966d227ad0ff545db509136f55646a4e",
+  "html_sha256": "2b2bcf3352d26ef475ff449070c155d1483b4c2f905191986c957a122a7eedee",
+  "visual_review": "PASS_ALL_54_PAGE_OVERVIEWS_AND_PHONE_PAGES_43_45"
 }

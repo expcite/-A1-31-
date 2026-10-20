@@ -36,7 +36,7 @@ python -X utf8 -B scripts/backend_build.py --out <不存在的输出目录> --ev
 
 ## 可选手机实机入口
 
-[手机端部署与验收](docs/PHONE_DEMO.md)说明依赖安装、生成独立配对、首次完整部署和录像步骤。构建完整公开软件包使用`scripts/build_phone_release.py`；公开包没有预置私钥，使用者首次部署时生成。独立目录验收已通过，演示视频与3张网页截图已补齐，见[视频说明](demo/README.md)和[补充核对记录](verification/phone_v28/media_completion/)。
+[手机端部署与验收](docs/PHONE_DEMO.md)说明依赖安装、生成独立配对、首次完整部署和录像步骤。构建完整公开软件包使用`scripts/build_phone_release.py`；公开包没有预置私钥，使用者首次部署时生成。独立目录验收已通过，演示视频与四幅报告实机图已补齐，见[视频说明](demo/README.md)和[补充核对记录](verification/phone_v28/media_completion/)。
 
 ## 代码公开与演示材料
 
@@ -44,9 +44,11 @@ python -X utf8 -B scripts/backend_build.py --out <不存在的输出目录> --ev
 
 - [手机实机演示视频](demo/IMG_1445.MP4)：约51.72秒，约第48秒可见手电筒亮起后熄灭。公开副本去除拍摄元数据。
 - [视频说明与公开副本哈希](demo/README.md)。
-- [3张真实验证页面截图及记录](verification/phone_v28/media_completion/)。
-- 当前报告54页，补充温度上报、控制确认和设备摘要截图及仓库入口。
+- [四幅报告实机图及原始核验记录](verification/phone_v28/media_completion/)。
+- 当前报告54页，补充温度上报、控制确认、Android日志与手电筒亮灯实况及仓库入口。
 
 本次仅补充文档与媒体，通信实现、已验收二进制和历史测量值不变。交付包source/与源码ZIP保留构建输入快照；最新使用说明见本仓库及交付包根README。旧验收文件保留其当时状态，当前视频状态见MEDIA_COMPLETION.json。
 
 2026年10月20日报告修订：围绕研究问题、设计实现、实验结果和应用方向组织正文，突出混合建钥、业务确认与实机验证成果。实验表数值、参考文献、运行程序及演示视频保持对应版本。
+
+2026年10月20日交付对齐：报告54页，90处目录页码已核对；四幅实机图完整保留，分页与交付文件统一。

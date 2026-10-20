@@ -3,8 +3,8 @@
   "updated_on": "2026-10-20",
   "source_document": {
     "path": "report/作品设计报告_可编辑.html",
-    "sha256": "41aa171086de79a14208de4a6b1750ef0cbb30a40a9245aef30e14593c5cce59",
-    "version": "v28-report-20261020"
+    "sha256": "2b2bcf3352d26ef475ff449070c155d1483b4c2f905191986c957a122a7eedee",
+    "version": "v28-layout-20261020"
   },
   "previous_document": {
     "path": "report/作品设计报告_可编辑.html",
@@ -657,5 +657,5 @@
     }
   ],
   "media_completion": "Three desktop screenshots, video viewing note, and public repository URL added; references and 34 citation anchors unchanged.",
-  "report_revision": "Report reorganized around research, implementation and results; reference entries and citation order retained."
+  "report_revision": "Pagination and TOC aligned; current report text, figures, table values and citations preserved."
 }
