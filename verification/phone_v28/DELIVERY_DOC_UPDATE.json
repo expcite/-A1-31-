@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-21",
+  "file": "source/README.md",
+  "previous_sha256": "77266ab74807100a82027e165b65aedb1432b9620bada3eee41e20699b9e3cc2",
+  "current_sha256": "efe0422daf4b3118f328ac9669f75968385a1dd1c1d1b9c6f22bdd4419b36c13",
+  "exact_build_input_archive": "software/EdgeHybrid_Source_v28.zip",
+  "archive_sha256": "8258b4a5a4b266d1262e00704488679934463f92be1856ad79d3da6eb5b850cc",
+  "go_source_and_dependency_inputs_unchanged": true,
+  "program_binaries_unchanged": true,
+  "historical_evidence_archive_unchanged": true
+}

@@ -1,22 +1,32 @@
 {
-  "status": "PASS_CONTENT_AND_PAGINATION",
+  "status": "PASS_CONTENT_REFERENCES_AND_PAGINATION",
+  "date": "2026-10-21",
   "pages": 54,
   "toc_links_checked": 90,
   "toc_mismatches": 0,
-  "body_text_preserved_except_toc": true,
-  "numbered_table_values_preserved": true,
-  "all_images_preserved": true,
+  "duplicate_figure_numbers": 0,
   "phone_report_figures": 4,
   "references": 20,
   "citation_links": 34,
-  "visible_folios": "PASS",
-  "selected_physical_pages": [
-    43,
-    44,
-    45,
-    48
+  "reference_map_contexts_checked": 34,
+  "reference_map_stale_contexts": 0,
+  "edited_test_result_rows": [
+    "TC-09",
+    "TC-10",
+    "TC-11",
+    "TC-12",
+    "TC-13",
+    "TC-16",
+    "TC-17",
+    "TC-18",
+    "TC-23",
+    "TC-24"
   ],
-  "pdf_sha256": "47ded833b0cef3462d1ae81d560fcc7c966d227ad0ff545db509136f55646a4e",
-  "html_sha256": "2b2bcf3352d26ef475ff449070c155d1483b4c2f905191986c957a122a7eedee",
-  "visual_review": "PASS_ALL_54_PAGE_OVERVIEWS_AND_PHONE_PAGES_43_45"
+  "all_other_table_cells_unchanged": true,
+  "all_numeric_values_in_edited_cells_preserved": true,
+  "all_images_preserved": true,
+  "visible_folios": "PASS",
+  "pdf_sha256": "9adb22621f0bcc7974eb761149bbc826c7723596dacc846b5d57434cadd33670",
+  "html_sha256": "0337c30b53e9ae915f33b6a12b6322cbdcc3ed2f63c2ca3e6c2ed4df25a589fe",
+  "visual_review": "PASS_ALL_54_PAGE_OVERVIEWS_AND_TEST_PHONE_REFERENCE_PAGES"
 }
